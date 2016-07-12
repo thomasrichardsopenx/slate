@@ -113,7 +113,7 @@ The OpenX Platform API provides the following types of resources:
   - Objects. Support CRUD operations using the following HTTP verbs:
   - POST. Create the specified item
   - GET. Read a representation of the resource
-  -   - PUT. Update the specified item
+  - PUT. Update the specified item
   - DELETE. Delete the specified item
   - Services. Support only read operations (i.e., GET)
 
@@ -124,7 +124,6 @@ To access a resource, construct a request according to the following URI format:
 base_URIresource/identifier/parameterparametermethod&
 
 Where:
-
   - method is an HTTP method, such as GET.
   - base-URI is your base URI provided by your account manager.
   - resource is the name of an API object or service.
@@ -6460,14 +6459,16 @@ Use Case: You would use programmatic authentication if you are accessing OpenX p
 To run automated processes, include a valid username and password in your code or make them available to the code. If successful, programmatic logins return oauth_token and oauth_verifier in the body of the response.
 Important: Your client application must be able to persist cookies across an HTTP 302 redirect in a cookie named openx3_access_token, which must be present in all API requests.
 Authenticating a User using OAuth involves the following steps:
-Step 1 - Request an unauthorized request token
-Step 2 - Authorize the User
-Step 3 - Request an access token
-Step 4 - Use the access token to access protected resources
+  - Step 1 - Request an unauthorized request token
+  - Step 2 - Authorize the User
+  - Step 3 - Request an access token
+  - Step 4 - Use the access token to access protected resources
 These steps are the same as Browser-Based Authentication except for a few details, which will be explained in each step. Only the differences will be explained in this procedure.
+
 Step 1 - Request an unauthorized request token
 Difference between programmatic and browser-based authentication:
 Because this is programmatic authentication instead of browser-based, you must set the callbackUrl to oob (out-of-band), which tells the OAuth server that you are not redirecting a User to a URL. The OAuth Server returns the request token.
+
 Step 2 - Authorize the User
 Difference between programmatic and browser-based authentication:
 Authorize the request token by sending an HTTP POST request to https://sso.openx.com/login/process with the following parameters:
@@ -6478,17 +6479,22 @@ Password	The User's password
 oauth_token	The OAuth request token
 Sub-steps
 For programmatic authentication, the client application must pass in the request token (oauth_token) and the User's email and password to https://sso.openx.com/login/process (NOT https://sso.openx.com/login/login).
+
 Step 3 - Request an access token
 Difference between programmatic and browser-based authentication:
 This process is the same as browser-based authentication with the addition of a third sub-step:
 Sub-step 3.3: Consumer (your application) persists the access token in a cookie
 The Consumer (your application) should now persist the access token in a cookie so that it can be used to access the protected resources. The cookie should be named openx3_access_token, which must be present in all API requests.
+
 Step 4 - Use the access token to access protected resources
 Difference between programmatic and browser-based authentication:
 None
 The client application uses the access token to perform OpenX API operations.
+
 Important: You must refresh the OpenX session at least once every two hours or your session will expire.
+
 Important: Passwords expire after six months. Ten days before your password expires, OpenX will send you an email reminder to change your password.
+
 Logging out
 When finished with your API session, you should terminate it explicitly by sending DELETE /session to log out.
 
@@ -6496,10 +6502,13 @@ When finished with your API session, you should terminate it explicitly by sendi
 
 All calls to the Platform API must be authenticated with a security token, which you can retrieve through the OpenX OAuth Server located at https://sso.openx.com. You can then include the token in subsequent API calls.
 The following sample OAuth session log shows successfully signed OAuth requests using the following calls:
+
 Step 1 - POST /api/index/initiate
 Step 2 - POST /login/process
 Step 3 - POST /api/index/token
+
 In the final call to sso.openx.com/api/index/token, the oauth_token value in the response is the value used for the openx3_access_token cookie for API requests.
+
 Step 1 - Request an unauthorized request token
 The following sample shows the values for the header fields. To send these values on a command line, you could use curl but your client application will most likely transfer these values using your preferred language (PHP, Python, Ruby on Rails, etc.)
 Request: POST /api/index/initiate
@@ -6627,6 +6636,3 @@ Retrieve a list of comments for an object
 Comments can be used to add notes to objects (e.g. line items, creatives, etc.) for other users to see; however, users will not be notified about new comments. Furthermore, one can only view comments when in the edit mode of an object.
 If you are using the API to add/edit a comment, the following objects can have comments applied: account, ad, adunit, adunitgroup, audiencesegment, creative, creativetemplate, lineitem, optimization, order, site, deal, floorrule, and package
 Refer to the Working With Comments section for more detailed information on using this feature.
-See also:
-OpenX release notes
-OpenX Ad Exchange for Buyers release notes
