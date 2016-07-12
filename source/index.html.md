@@ -29,27 +29,28 @@ To see what's new in the platform API, see the API Release Notes.
 # Getting started
 
 Use the links in this quick overview to get started using the OpenX API.
-Authenticating users - Describes your options for authenticating a user to the Openx Platform API, with links to more information.
-API client libraries - Describes the available OpenX client libaries that can help you integrate your application with the OpenX API.
-Third-party libraries - Provides a list of links to recommended third-party libraries to consider for your OpenX API application integration.
-Requests and responses - Explains the basic structure of an HTTP request and a JSON response.
-Response codes and error handling - Describes the types of errors that are returned and what they mean.
+  - Authenticating users - Describes your options for authenticating a user to the Openx Platform API, with links to more information.
+  - API client libraries - Describes the available OpenX client libaries that can help you integrate your application with the OpenX API.
+  - Third-party libraries - Provides a list of links to recommended third-party libraries to consider for your OpenX API application integration.
+  - Requests and responses - Explains the basic structure of an HTTP request and a JSON response.
+  - Response codes and error handling - Describes the types of errors that are returned and what they mean.
 
 # Authenticating users
 
 If you are programmatically accessing the OpenX API, you must provide a method to authenticate a user. The OpenX API uses OAuth 1.0 to authenticate users. The following explains your options.
-Your Authentication Options
-You can programmatically authenticate an OpenX user in one of three ways:
-(Recommended) Use the client libraries provided by OpenX.
-(Recommended) Use a third-party library that already implements an OAuth 1.0 scheme. Note that OpenX does not support or manage the content of these libraries.
-Write your own authentication code. OpenX provides a brief OAuth reference for those who want to take this approach.
-Credentials Supplied by OpenX
 
+Your Authentication Options
+
+You can programmatically authenticate an OpenX user in one of three ways:
+  - (Recommended) Use the client libraries provided by OpenX.
+  - (Recommended) Use a third-party library that already implements an OAuth 1.0 scheme. Note that OpenX does not support or manage the content of these libraries.
+  - Write your own authentication code. OpenX provides a brief OAuth reference for those who want to take this approach.
+
+Credentials Supplied by OpenX
 When you become an API customer, OpenX provides you with the following credentials which you will use in initial authentication calls.
 Credentials Supplied by OpenX
 
 Parameters:
-
 Parameter | Description |
 --------- | ------- | 
 username | Your account username provided by your account manager.
@@ -58,18 +59,18 @@ Consumer Key | The ID portion of your Consumer credentials, provided by your acc
 Consumer Secret | The Consumer secret can be thought of as the password for the Consumer credentials. This is also provided by your account manager.
 OAuth Realm | The realm value is a string, generally assigned by the origin server. In this case, the realm parameter is used for your OpenX server instance. For example, OAuth realm="http://server_name.com"
 
-#API Client Libraries
+# API Client Libraries
 
 The OpenX Platform API provides a number of different API client libraries you can use to start integrating your application with the API. Currently, there are three available client libraries in the OpenX public GitHub repository you can use for application integration with the Platform API:
-Java
-PHP
-Python
+  - Java
+  - PHP
+  - Python
 
 ##Java Client Library
 
 The Java client library enables you to implement OAuth authentication logic to work with the API so you will not need to implement the authentication logic yourself. This simplifies and speeds up the process of integrating your application with the OpenX Platform API. Within the client library, you will find a README.txt file that describes how you can install, configure and use the Java client library to work with your application, as well as demo authentication files (e.g. test.java/com/openx/oauthdemo) and a default.properties file you can use in your implementation.
 
-To use the Java client library, simply navigate to the OpenX public GitHub location for the client libary and review the included README.txt file, which explains how to install and configure your OpenX instance, build the JAR file, and then use the Java package to integrate your application with the OpenX Platform API.
+To use the Java client library, navigate to the OpenX public GitHub location for the client libary and review the included README.txt file, which explains how to install and configure your OpenX instance, build the JAR file, and then use the Java package to integrate your application with the OpenX Platform API.
 
 In the client library, you will also see a number of example scripts and demo files in the src folder that you can use in your implementation of the OpenX Platform API.
 
@@ -109,45 +110,53 @@ Important: The Platform API client libraries support single sign-on (SSO) when 4
 #Conventions
 
 The OpenX Platform API provides the following types of resources:
-Objects. Support CRUD operations using the following HTTP verbs:
-POST. Create the specified item
-GET. Read a representation of the resource
-PUT. Update the specified item
-DELETE. Delete the specified item
-Services. Support only read operations (i.e., GET)
+  - Objects. Support CRUD operations using the following HTTP verbs:
+  - POST. Create the specified item
+  - GET. Read a representation of the resource
+  -   - PUT. Update the specified item
+  - DELETE. Delete the specified item
+  - Services. Support only read operations (i.e., GET)
+
 For a list of resources, see the API reference.
+
 To access a resource, construct a request according to the following URI format:
+
 base_URIresource/identifier/parameterparametermethod&
+
 Where:
-method is an HTTP method, such as GET.
-base-URI is your base URI provided by your account manager.
-resource is the name of an API object or service.
-identifier may provide a UID or a request for specific values if needed.
-parameter indicates the first URI parameter string.
-&parameter is an additional URI parameter string.
+
+  - method is an HTTP method, such as GET.
+  - base-URI is your base URI provided by your account manager.
+  - resource is the name of an API object or service.
+  - identifier may provide a UID or a request for specific values if needed.
+  - parameter indicates the first URI parameter string.
+  - &parameter is an additional URI parameter string.
+
 For example, in the call GET http://openx_server_name/ox/4.0/user/available_fieldsaction=create
-GET is the method.
-http://openx_server_name/ox/4.0/ is the base URI. The relative path /4.0/ indicates that your are using version 4 of the Platform API. If your base URI includes /3.0/, this API guide does not apply to your instance.
-user is an API resource.
-available_fields indicates a specific a request for information about the object's fields.
-action=create is a URI parameter string indicating that the request is for fields available upon the object's creation.
+  - GET is the method.
+  - http://openx_server_name/ox/4.0/ is the base URI. The relative path /4.0/ indicates that your are using version 4 of the Platform API. If your base URI includes /3.0/, this API guide does not apply to your instance.
+ - user is an API resource.
+  - available_fields indicates a specific a request for information about the object's fields.
+  - action=create is a URI parameter string indicating that the request is for fields available upon the object's creation.
 
 ## Requests and responses
 
 Requests to the OpenX API require a Content-Type header set to application/json. The response format for all requests is a JSON object and an HTTP response code.
 OpenX API v4 calls use the following general patterns:
-GET /resource_type/. List all objects or services of the specified type.
-GET /object_type/object_UID. Retrieve information about the object specified by its UID.
-POST /object_type. Create a new object using the values encoded in a JSON object, which must include all fields that are required for the create operation. You can make batch create requests by including multiple JSON objects.
-PUT /object_type. Batch update operation. Requests include a set of valid JSON objects with any fields that are being changed by the update. You can optionally include unchanged data.
-PUT /object_type/object_UID. Update the specified object with changed values specified in a JSON object. You can optionally include unchanged data.
-DELETE /object_type. Batch delete operation, where the request includes multiple UIDs.
-DELETE /object_type/object_UID. Delete the specified object.
+  - GET /resource_type/. List all objects or services of the specified type.
+  - GET /object_type/object_UID. Retrieve information about the object specified by its UID.
+  - POST /object_type. Create a new object using the values encoded in a JSON object, which must include all fields that are required for the create operation. You can make batch create requests by including multiple JSON objects.
+  - PUT /object_type. Batch update operation. Requests include a set of valid JSON objects with any fields that are being changed by the update. You can optionally include unchanged data.
+  - PUT /object_type/object_UID. Update the specified object with changed values specified in a JSON object. You can optionally include unchanged data.
+  - DELETE /object_type. Batch delete operation, where the request includes multiple UIDs.
+  - DELETE /object_type/object_UID. Delete the specified object.
+
 The request samples in this guide use cURL (client URL request library) to send HTTP requests to access, create, and manipulate OpenX API resources.
 
 ### Create
 
 To create a new object, send a POST request including the JSON-encoded contents of the object:
+
 Sample create request
 curl -X POST --header "Content-Type: application/json" http://openx_server_name/ox/4.0/account \
 	--cookie "openx3_access_token=token_string" \
@@ -165,7 +174,9 @@ curl -X POST --header "Content-Type: application/json" http://openx_server_name/
 	"type_full":"account.advertiser"
 }'
 Where: token_string is a string of characters returned by the GET session request at login.
+
 When you create a single object, the response should contain a list with a single object.
+
 Sample create response
 When successful, 200 Created is returned along with the response body:
 [
@@ -181,20 +192,23 @@ When successful, 200 Created is returned along with the response body:
 	}
 ]
 Where:
-account_uid is the UID of the account that was created.
-account_id is the ID of the account that was created.
-For more details, see About IDs and UIDs.
+  - account_uid is the UID of the account that was created.
+  - account_id is the ID of the account that was created.
+  - For more details, see About IDs and UIDs.
 
 ### Update
 
 To change the data on an object that already exists, send a PUT request to the object URI with the values you want to change:
+
 Sample update request
 curl -X PUT --header "Content-Type: application/json" http://openx_server_name/ox/4.0/account/account_uid \
 --cookie "openx3_access_token=token_string" \
   --data='{
     "status":"Inactive",
   }'
+
 Where: account_uid is the UID of the account to be updated. Alternatively, you can send the account_id.
+
 Sample update response
 The response body includes all of the object's fields:
 [
@@ -224,12 +238,15 @@ The response body includes all of the object's fields:
 ###Delete
 
 To delete an object, send a DELETE request to its URI:
+
 Sample delete request
 curl -X DELETE --header "Content-Type: application/json" http://openx_server_name/ox/4.0/account \
 			--cookie "openx3_access_token=token_string" \
 		--data='["account_uid_1", "account_uid_2"]'
+
 Where:
 account_uid_n is the UID of the account to be deleted. Alternatively, you can send account IDs.
+
 Sample delete response
 [
 	{
@@ -241,9 +258,11 @@ Sample delete response
 ### Read
 
 To get the field values for a specific object:
+
 Sample read request
 curl -X GET http://openx_server_name/ox/4.0/account/account_uid--cookie "openx3_access_token=token_string"
 Where: account_uid_n is the UID of the account to be read.
+
 Sample read response
 [
 	{
@@ -268,6 +287,7 @@ Sample read response
 	"total_conversions":null
 	}
 ]
+
 Sample list request
 To list all the objects of the specified type:
 curl -X GET http://openx_server_name/ox/4.0/account --cookie "openx3_access_token=token_string"
@@ -275,6 +295,7 @@ curl -X GET http://openx_server_name/ox/4.0/account --cookie "openx3_access_toke
 #### Batch Operations
 
 Batch operations allow you to create, update, or delete multiple objects in one call.
+
 Sample batch create
 curl -X POST --header "Content-Type: application/json" openx_server_name/ox/4.0/account \
 --cookie "openx3_access_token=token_string\
@@ -296,6 +317,7 @@ curl -X POST --header "Content-Type: application/json" openx_server_name/ox/4.0/
                     "experience": "advertiser"
                 }
  ]'
+
 Sample batch create response
 When the creation is successful, the HTTP response includes 200 Created and a response body such as the following example:
 [
@@ -362,6 +384,7 @@ When the creation is successful, the HTTP response includes 200 Created and a re
      "v": "3"
  }
 ]
+
 Sample batch delete
 curl -X DELETE --header "Content-Type: application/json" http://openx_server_name/ox/4.0/account \
 --cookie "openx3_access_token=token_string \
@@ -370,6 +393,7 @@ curl -X DELETE --header "Content-Type: application/json" http://openx_server_nam
 #### Available Fields
 
 You can make an available_fields request to determine an object's fields and values. Some available_fields requests require URI parameters, but if you do not include them the error response will indicate what is needed. For example, if you call GET /account/available_fields, you will receive the following error response:
+
 Sample available_fields error response
 {
   "attribute": "type_full", 
@@ -386,8 +410,10 @@ Sample available_fields error response
   "value": null
 }          
 This response points out that you need to include a type_full request parameter in your call to the account object. For example, if you append ?type_full=account.publisher to your request, the Ad Server will provide information about all the account fields for an account of type account.publisher.
+
 Sample available_fields request specifying a type_full value:
 openx_server_name/ox/4.0/account/available_fields?type_full=account.publisher --cookie "openx3_access_token=curl -X GET http://token_string"
+
 Sample available_fields response:
 {
   "account_id": {
@@ -1008,16 +1034,20 @@ Sample available_fields response:
   }
 }
 Where:
-acl. A field used for permissions that you can typically ignore.
-url. A path that you can follow to the base URI to return a list of options. The corresponding field will only accept values that are found in the response to the specified options call.
+
+  - acl. A field used for permissions that you can typically ignore.
+  - url. A path that you can follow to the base URI to return a list of options. The corresponding field will only accept values that are found in the response to the specified options call.
+
 Tip: You can also include action=create or action=update when calling the API for available and required fields of an object. For example, the set of required fields for creating a user is different than for updating a user, such as the user.email field, which is required when creating but not when updating.
 
 #### Pagination
 
 The size of the data displayed in a response is limited by the following request parameters:
-limit. The maximum number of items to be returned on a single request. Its default value is 10.
-offset. The number of the first item to display for the current request, where the offset for first item on the first page is 0. Its default value is 0.
+  - limit. The maximum number of items to be returned on a single request. Its default value is 10.
+  - offset. The number of the first item to display for the current request, where the offset for first item on the first page is 0. Its default value is 0.
+
 If there is too much information to display in a single page, the response body will include "has_more": true. You can access the additional values by modifying the offset and limit paging values.
+
 Sample list request including pagination parameters
 For example, to list account records 50 through 75, specify an offset of 50 and a limit of 25:
 curl -X GET http://openx_server_name/ox/4.0/accountoffset=50&limit=25 --cookie "openx3_access_token=token_string"
@@ -1026,13 +1056,15 @@ curl -X GET http://openx_server_name/ox/4.0/accountoffset=50&limit=25 --cookie "
 
 The URIs described in the API reference represent the supported request syntax, to which you can add certain supported request parameters. You can include request parameters in your API calls as query string arguments; you can append the first parameter after a question mark (?) and additional parameters separated by ampersands (&) in any order or combination.
 The OpenX API supports the various parameters, such as the following:
-action. When calling the API for available and required fields for an object, set this parameter to action=create or action=update to specify the action for which you want to retrieve values.
-For example, the set of required fields for creating a user (/user/available_fields?action=create) is different than the set of required fields for updating a user (/user/available_fields?action=update), such as the user.email field, which is required for creating a user but not for updating a user.
-pretty. (For debugging purposes only) Display the JSON response into a more human readable format, encapsulated by HTML <pre> tags.
+  - action. When calling the API for available and required fields for an object, set this parameter to action=create or action=update to specify the action for which you want to retrieve values. For example, the set of required fields for creating a user (/user/available_fields?action=create) is different than the set of required fields for updating a user (/user/available_fields?action=update), such as the user.email field, which is required for creating a user but not for updating a user.
+  - pretty. (For debugging purposes only) Display the JSON response into a more human readable format, encapsulated by HTML <pre> tags.
+
 Important: Routine use of the pretty parameter negatively impacts performance. Do not use it in your production calls.
+
 Pagination parameters. See pagination.
 type_full. Some available_fields calls require this parameter. If so, the error response will list the choices for type_full if you do not specify an attribute. For example, when calling /ad/available_fields, you can specify the type_full=ad.image attribute. This parameter is also used for list operations.
 Depending on the resource you are calling, many additional parameters may be available. Making calls without required parameters results in an error response, which typically indicates what was missing from the request. You can call available_fields for an object to see fields listed as required: true.
+
 About IDs and UIDs
 OpenX API objects have object_name_id ("ID") and object_name_uid ("UID") fields. For example, you can include account_id=string or account_uid=string values in some API calls.
 IDs were supported in API v3 and OpenX continues to maintain IDs. UIDs were introduced with API v4 for internal reasons and they are typically interchangeable with IDs. You can usually specify both IDs and UIDs in API requests that include a full JSON object (for an example, see Create).
