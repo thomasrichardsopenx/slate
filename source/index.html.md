@@ -157,6 +157,7 @@ The request samples in this guide use cURL (client URL request library) to send 
 To create a new object, send a POST request including the JSON-encoded contents of the object:
 
 Sample create request
+''' curl
 curl -X POST --header "Content-Type: application/json" http://openx_server_name/ox/4.0/account \
 	--cookie "openx3_access_token=token_string" \
 	--data='{
@@ -172,12 +173,14 @@ curl -X POST --header "Content-Type: application/json" http://openx_server_name/
 	"timezone":"America/Los_Angeles",
 	"type_full":"account.advertiser"
 }'
+'''
 Where: token_string is a string of characters returned by the GET session request at login.
 
 When you create a single object, the response should contain a list with a single object.
 
 Sample create response
 When successful, 200 Created is returned along with the response body:
+'''
 [
 	{            
 	"account_id": "account_id",
@@ -190,6 +193,7 @@ When successful, 200 Created is returned along with the response body:
 	"single_ad_limitation":"0",
 	}
 ]
+'''
 Where:
   - account_uid is the UID of the account that was created.
   - account_id is the ID of the account that was created.
@@ -200,16 +204,19 @@ Where:
 To change the data on an object that already exists, send a PUT request to the object URI with the values you want to change:
 
 Sample update request
+'''curl
+
 curl -X PUT --header "Content-Type: application/json" http://openx_server_name/ox/4.0/account/account_uid \
 --cookie "openx3_access_token=token_string" \
   --data='{
     "status":"Inactive",
   }'
-
+'''
 Where: account_uid is the UID of the account to be updated. Alternatively, you can send the account_id.
 
 Sample update response
 The response body includes all of the object's fields:
+'''
 [
 	{
 	"uid" : "account_uid",
@@ -233,36 +240,41 @@ The response body includes all of the object's fields:
 	"total_conversions":null
 	}
 ]
-
+'''
 ###Delete
 
 To delete an object, send a DELETE request to its URI:
 
 Sample delete request
+'''curl
 curl -X DELETE --header "Content-Type: application/json" http://openx_server_name/ox/4.0/account \
 			--cookie "openx3_access_token=token_string" \
 		--data='["account_uid_1", "account_uid_2"]'
-
+'''
 Where:
 account_uid_n is the UID of the account to be deleted. Alternatively, you can send account IDs.
 
 Sample delete response
+'''
 [
 	{
 	"account_uid_1": true,
 	"account_uid_2": true
 	}
 ]
-
+'''
 ### Read
 
 To get the field values for a specific object:
 
 Sample read request
+'''curl
 curl -X GET http://openx_server_name/ox/4.0/account/account_uid--cookie "openx3_access_token=token_string"
+'''
 Where: account_uid_n is the UID of the account to be read.
 
 Sample read response
+'''
 [
 	{
 	"uid" : "account_uid"
@@ -286,7 +298,7 @@ Sample read response
 	"total_conversions":null
 	}
 ]
-
+'''
 Sample list request
 To list all the objects of the specified type:
 curl -X GET http://openx_server_name/ox/4.0/account --cookie "openx3_access_token=token_string"
