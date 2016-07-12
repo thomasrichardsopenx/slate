@@ -50,14 +50,13 @@ Credentials Supplied by OpenX
 When you become an API customer, OpenX provides you with the following credentials which you will use in initial authentication calls.
 Credentials Supplied by OpenX
 
-Parameters:
 Parameter | Description |
---------- | ------- | 
-username | Your account username provided by your account manager.
-Password | Your account password provided by your account manager.
-Consumer Key | The ID portion of your Consumer credentials, provided by your account manager.
-Consumer Secret | The Consumer secret can be thought of as the password for the Consumer credentials. This is also provided by your account manager.
-OAuth Realm | The realm value is a string, generally assigned by the origin server. In this case, the realm parameter is used for your OpenX server instance. For example, OAuth realm="http://server_name.com"
+--------- | ----------- | 
+username | Your account username provided by your account manager. |
+Password | Your account password provided by your account manager. |
+Consumer Key | The ID portion of your Consumer credentials, provided by your account manager. |
+Consumer Secret | The Consumer secret can be thought of as the password for the Consumer credentials. This is also provided by your account manager. |
+OAuth Realm | The realm value is a string, generally assigned by the origin server. In this case, the realm parameter is used for your OpenX server instance. For example, OAuth realm="http://server_name.com" |
 
 # API Client Libraries
 
@@ -158,7 +157,7 @@ To create a new object, send a POST request including the JSON-encoded contents 
 
 Sample create request
 ''' curl
-curl -X POST --header "Content-Type: application/json" http://openx_server_name/ox/4.0/account \
+# curl -X POST --header "Content-Type: application/json" http://openx_server_name/ox/4.0/account \
 	--cookie "openx3_access_token=token_string" \
 	--data='{
 	"account_uid": "account_uid",
@@ -181,7 +180,7 @@ When you create a single object, the response should contain a list with a singl
 Sample create response
 When successful, 200 Created is returned along with the response body:
 '''
-[
+# [
 	{            
 	"account_id": "account_id",
 	"name": "API+Demo+Advertiser",
@@ -205,8 +204,7 @@ To change the data on an object that already exists, send a PUT request to the o
 
 Sample update request
 '''curl
-
-curl -X PUT --header "Content-Type: application/json" http://openx_server_name/ox/4.0/account/account_uid \
+# curl -X PUT --header "Content-Type: application/json" http://openx_server_name/ox/4.0/account/account_uid \
 --cookie "openx3_access_token=token_string" \
   --data='{
     "status":"Inactive",
@@ -217,7 +215,7 @@ Where: account_uid is the UID of the account to be updated. Alternatively, you c
 Sample update response
 The response body includes all of the object's fields:
 '''
-[
+# [
 	{
 	"uid" : "account_uid",
 	"name": "API+Demo+Advertiser",
@@ -247,7 +245,7 @@ To delete an object, send a DELETE request to its URI:
 
 Sample delete request
 '''curl
-curl -X DELETE --header "Content-Type: application/json" http://openx_server_name/ox/4.0/account \
+# curl -X DELETE --header "Content-Type: application/json" http://openx_server_name/ox/4.0/account \
 			--cookie "openx3_access_token=token_string" \
 		--data='["account_uid_1", "account_uid_2"]'
 '''
@@ -256,7 +254,7 @@ account_uid_n is the UID of the account to be deleted. Alternatively, you can se
 
 Sample delete response
 '''
-[
+# [
 	{
 	"account_uid_1": true,
 	"account_uid_2": true
@@ -269,13 +267,13 @@ To get the field values for a specific object:
 
 Sample read request
 '''curl
-curl -X GET http://openx_server_name/ox/4.0/account/account_uid--cookie "openx3_access_token=token_string"
+# curl -X GET http://openx_server_name/ox/4.0/account/account_uid--cookie "openx3_access_token=token_string"
 '''
 Where: account_uid_n is the UID of the account to be read.
 
 Sample read response
 '''
-[
+# [
 	{
 	"uid" : "account_uid"
 	"name": "API+Demo+Advertiser",
@@ -301,14 +299,17 @@ Sample read response
 '''
 Sample list request
 To list all the objects of the specified type:
-curl -X GET http://openx_server_name/ox/4.0/account --cookie "openx3_access_token=token_string"
+
+'''curl
+# curl -X GET http://openx_server_name/ox/4.0/account --cookie "openx3_access_token=token_string"
 
 #### Batch Operations
 
 Batch operations allow you to create, update, or delete multiple objects in one call.
 
 Sample batch create
-curl -X POST --header "Content-Type: application/json" openx_server_name/ox/4.0/account \
+'''curl
+# curl -X POST --header "Content-Type: application/json" openx_server_name/ox/4.0/account \
 --cookie "openx3_access_token=token_string\
 --data='[
                {    "account_uid": "[Code]parent_account_uid
@@ -328,10 +329,11 @@ curl -X POST --header "Content-Type: application/json" openx_server_name/ox/4.0/
                     "experience": "advertiser"
                 }
  ]'
-
+'''
 Sample batch create response
 When the creation is successful, the HTTP response includes 200 Created and a response body such as the following example:
-[
+'''
+# [
 {
     "account_uid": "
   parent_account_uid
@@ -395,12 +397,13 @@ When the creation is successful, the HTTP response includes 200 Created and a re
      "v": "3"
  }
 ]
-
+'''
 Sample batch delete
-curl -X DELETE --header "Content-Type: application/json" http://openx_server_name/ox/4.0/account \
+'''curl
+# curl -X DELETE --header "Content-Type: application/json" http://openx_server_name/ox/4.0/account \
 --cookie "openx3_access_token=token_string \
   --data='["account_uid_1", account_uid_2", "account_uid_3", "account_uid_n]'
-  
+'''  
 #### Available Fields
 
 You can make an available_fields request to determine an object's fields and values. Some available_fields requests require URI parameters, but if you do not include them the error response will indicate what is needed. For example, if you call GET /account/available_fields, you will receive the following error response:
