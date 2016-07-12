@@ -6392,80 +6392,112 @@ Does not require that you persist the access token in a cookie. When the user ha
 
 Use Case: You would use browser-based authentication if you are providing an interactive web-based login form for users other than yourself.
 Browser-based SSO logins redirect the User back to their application and pass oauth_token and oauth_verifier onto the end of the specified callbackUrl.
+
 Authenticating a User using OAuth involves the following steps:
-Step 1 - The Consumer (your application) requests and obtains an unauthorized request token
-Step 2 - Authorize the User
-Step 3 - Request an access token
-Step 4 - Use the access token to access protected resources
+
+1. The Consumer (your application) requests and obtains an unauthorized request token
+2. Authorize the User
+3. Request an access token
+4. Use the access token to access protected resources
+
 These steps are described in detail below.
-Step 1 - The Consumer (your application) requests and obtains an unauthorized request token
+
+1. The Consumer (your application) requests and obtains an unauthorized request token
 The client application requests and obtains a request token from the OAuth server (https://sso.openx.com/api/index/initiate). The request command also passes in the value of the callbackUrl parameter (the URL to which the OAuth server will redirect the User upon successful authentication).
-Sub-step Overview
-Sub-step 1.1: The client application sends a POST request to https://sso.openx.com/api/index/initiate including the parameters listed below.
-Sub-step 1.2: When OpenX receives the request, it verifies the request using its copy of the Consumer secret and returns a response to the client application, including the request token
+
+The client application sends a POST request to https://sso.openx.com/api/index/initiate including the parameters listed below.
+
+When OpenX receives the request, it verifies the request using its copy of the Consumer secret and returns a response to the client application, including the request token.
+
 Each sub-step is explained below.
-Sub-step 1.1 The client application sends a POST request for a request token
-The first step requests a request token using the parameters listed below.
-Request parameters
-Parameter	Description
-oauth_realm	The realm value is a string, generally assigned by the origin server. The realm parameter allows the protected resources on a server to be partitioned. For example, oauth realm="http://server.example.com/".
-oauth_consumer_key	The Consumer Key, supplied to you by OpenX.
-oauth_signature_method	The signature method the Consumer used to sign the request.
-oauth_signature	The signature is created using the signature process which encodes the Consumer Secret and Token Secret into a verifiable value which is included with the request. For the first request (for the request token), no Token Secret yet exists. So, the signature creation process uses the Consumer Secret and an empty Token Secret.
-oauth_timestamp	The timestamp is expressed in the number of seconds since January 1, 1970 00:00:00 GMT. The timestamp value MUST be a positive integer and MUST be equal or greater than the timestamp used in previous requests.
-oauth_nonce	The Consumer must generate a Nonce value that is unique for all requests with the timestamp. A nonce is a random string, uniquely generated for each request. The nonce allows the Service Provider to verify that a request has never been made before and helps prevent replay attacks when requests are made over a non-secure channel (such as HTTP).
-oauth_version	Optional. If present, value must be 1.0. Service Providers must assume the protocol version to be 1.0 if this parameter is not present. Service Providers' response to non-1.0 value is left undefined.
-oauth_callback	For browser-based authentication, use this parameter to specify to which URL the User will be re-directed. For programmatic authentication, use oob (out of band).
-Sub-step 1.2 Service Provider (OpenX) returns an unauthorized request token
+
+The client application sends a POST request for a request token. The first step requests a request token using the parameters listed below.
+
+Parameter |	Description |
+--------- |    ------------ |
+oauth_realm |	The realm value is a string, generally assigned by the origin server. The realm parameter allows the protected resources on a server to be partitioned. For example, oauth realm="http://server.example.com/". |
+oauth_consumer_key |	The Consumer Key, supplied to you by OpenX. |
+oauth_signature_method | The signature method the Consumer used to sign the request. |
+oauth_signature | The signature is created using the signature process which encodes the Consumer Secret and Token Secret into a verifiable value which is included with the request. For the first request (for the request token), no Token Secret yet exists. So, the signature creation process uses the Consumer Secret and an empty Token Secret. |
+oauth_timestamp |  The timestamp is expressed in the number of seconds since January 1, 1970 00:00:00 GMT. The timestamp value MUST be a positive integer and MUST be equal or greater than the timestamp used in previous requests. |
+oauth_nonce |	The Consumer must generate a Nonce value that is unique for all requests with the timestamp. A nonce is a random string, uniquely generated for each request. The nonce allows the Service Provider to verify that a request has never been made before and helps prevent replay attacks when requests are made over a non-secure channel (such as HTTP). |
+oauth_version |	Optional. If present, value must be 1.0. Service Providers must assume the protocol version to be 1.0 if this parameter is not present. Service Providers' response to non-1.0 value is left undefined. |
+oauth_callback | For browser-based authentication, use this parameter to specify to which URL the User will be re-directed. For programmatic authentication, use oob (out of band). |
+
+Sub-step 1.2 Service Provider (OpenX) returns an unauthorized request token.
+
 The result of step one provides your client application (the Consumer) with an unauthorized request token and oauth_token_secret. The next step allows your User to authorize the request token. To do so, the client application redirects the User to the authorization server (OpenX) login page.
-Step 2 - Authorize the User
+
+2. Authorize the User
 The User can now authenticate to SSO using the Authorize URL (https://sso.openx.com/login/login), passing in the request token. If successful, the SSO server redirects the User to the callbackUrl (with the oauth_token and oauth_verifier query string parameters appended).
-Sub-step Overview
-Sub-step 2.1: For browser-based authentication, the client application (Consumer) should redirect the User to a login page using a POST request using the url: https://sso.openx.com/login/login. The POST request also passes in the unauthorized request token (oauth_token).
-Sub-step 2.2: The User grants access to the client application by entering a valid username and password. The OpenX authorization server generates an authorized request token.
-Sub-step 2.3: The Service Provider redirects the User to the URL specified by the callback URL (callbackUrl). The response includes both the oath_token and the oath_verifier.
+
+* For browser-based authentication, the client application (Consumer) should redirect the User to a login page using a POST request using the url: https://sso.openx.com/login/login. The POST request also passes in the unauthorized request token (oauth_token).
+
+* The User grants access to the client application by entering a valid username and password. The OpenX authorization server generates an authorized request token.
+
+* The Service Provider redirects the User to the URL specified by the callback URL (callbackUrl). The response includes both the oath_token and the oath_verifier.
+
 Each sub-step is explained below.
 Sub-step 2.1 Consumer directs the User to Service Provider (OpenX)
 The Consumer (your app) redirects the User to the Service Provider by constructing an HTTP GET request to the Service Provider's User Authorization URL with the following parameters:
-Parameters
-Parameter	Description
-oauth_token	The unauthorized request token obtained in the previous step.
-oauth_callback	The Consumer should specify a URL the Service Provider will use to redirect the User back to the Consumer when Obtaining User Authorization is complete.
+
+Parameter | 	Description |
+--------- |    ------------ |
+oauth_token | The unauthorized request token obtained in the previous step. |
+oauth_callback | The Consumer should specify a URL the Service Provider will use to redirect the User back to the Consumer when Obtaining User Authorization is complete. |
+
 Sub-step 2.2 The Service Provider obtains the User's user name and password
 The Service Provider verifies the User's identity by obtaining the User's username and password.
+
 Sub-step 2.3 The Service Provider redirects the User back to the Consumer site
+
 After the User authenticates with the Service Provider and grants permission for Consumer access, the Service Provider notifies the Consumer that the Request Token has been authorized by doing the following: The Service Provider constructs an HTTP GET request URL using the provided oauth_callback, and redirects the User's web browser back to that URL with the following parameters:
-Parameters
-Parameter	Description
-oauth_token	The Request Token the User authorized or denied.
-oauth_verifier	The verification code.
-Step 3 - Request an access token
+
+Parameter | 	Description |
+--------- |     ----------- |
+oauth_token | The Request Token the User authorized or denied. |
+oauth_verifier | The verification code. |
+
+3. Request an access token
+
 After the User has been authenticated in Step 2, in Step 3, the client application exchanges the authorized request token for an access token. The client application makes a POST request to https://sso.openx.com/api/index/token while passing the required parameters including oath_token and oath_verifier. The OpenX authorization server verifies the parameters and returns the access token in the response.
+
 The Consumer exchanges the (temporary) Request Token for a (permanent) Access Token capable of accessing the Protected Resources. Obtaining an Access Token includes the following sub-steps:
-Sub-step Overview
-Sub-step 3.1: Consumer (your application) requests an access token
-Sub-step 3.2: The Service Provider (OpenX) grants an access token
+
+* Consumer (your application) requests an access token
+* The Service Provider (OpenX) grants an access token
+
 Each step is explained below.
-3.1. The Consumer (Your application) requests an access token
+
+The Consumer (Your application) requests an access token
+
 The Request Token and Token Secret are exchanged for an Access Token and Token Secret. To request an Access Token, the Consumer makes an HTTP request to the Service Provider's Access Token URL. The Service Provider documentation specifies the HTTP method for this request, an HTTP POST is recommended. The request MUST be signed per Signing Requests, and contains the following parameters:
-Request parameters
-Parameter	Description
-oauth_consumer_key	The Consumer Key, supplied to you by OpenX.
-oauth_token	The Request Token obtained previously.
-oauth_signature_method	The signature method the Consumer used to sign the request.
-oauth_signature	The signature is created using the signature process which encodes the Consumer Secret and Token Secret into a verifiable value which is included with the request.
-oauth_timestamp	The timestamp. See previous description.
-oauth_nonce	The Consumer must generate a Nonce value that is unique for all requests with the timestamp. See previous description.
-oauth_version	Optional. If present, value must be 1.0. Service Providers must assume the protocol version to be 1.0 if this parameter is not present. Service Providers' response to non-1.0 value is left undefined.
-oauth_callback	For browser-based authentication, use this parameter to specify to which URL the User will be re-directed. For programmatic authentication, use oob (out of band).
+
+
+Parameter |	Description |
+--------- |     ----------- |
+oauth_consumer_key | The Consumer Key, supplied to you by OpenX. |
+oauth_token | The Request Token obtained previously. |
+oauth_signature_method | The signature method the Consumer used to sign the request. |
+oauth_signature	| The signature is created using the signature process which encodes the Consumer Secret and Token Secret into a verifiable value which is included with the request. |
+oauth_timestamp	| The timestamp. See previous description. |
+oauth_nonce | The Consumer must generate a Nonce value that is unique for all requests with the timestamp. See previous description. |
+oauth_version |	Optional. If present, value must be 1.0. Service Providers must assume the protocol version to be 1.0 if this parameter is not present. Service Providers' response to non-1.0 value is left undefined. |
+oauth_callback | For browser-based authentication, use this parameter to specify to which URL the User will be re-directed. For programmatic authentication, use oob (out of band). |
+
 No additional Service Provider specific parameters are allowed when requesting an Access Token to ensure all Token related information is present prior to seeking User approval.
-3.2. Service Provider Grants an Access Token (Response)
+
+Service Provider Grants an Access Token (Response)
+
 The Service Provider generates an Access Token and Token Secret and returns them in the HTTP response body. Your application must store the Access Token and Token Secret and use them when signing Protected Resources requests. The response contains the following parameters:
-Parameters
-Parameter	Description
-oauth_token	The Access Token.
-oauth_token_secret	The Token Secret.
-Step 4 - Use the access token to access protected resources
+
+Parameter |	Description |
+--------- |     ----------- |
+oauth_token |	The Access Token. |
+oauth_token_secret |	The Token Secret. |
+
+4. Use the access token to access protected resources
+
 The client application uses the access token to perform OpenX API operations.
 
 #### Programmatic authentication
@@ -6474,20 +6506,24 @@ Use Case: You would use programmatic authentication if you are accessing OpenX p
 To run automated processes, include a valid username and password in your code or make them available to the code. If successful, programmatic logins return oauth_token and oauth_verifier in the body of the response.
 Important: Your client application must be able to persist cookies across an HTTP 302 redirect in a cookie named openx3_access_token, which must be present in all API requests.
 Authenticating a User using OAuth involves the following steps:
-  - Step 1 - Request an unauthorized request token
-  - Step 2 - Authorize the User
-  - Step 3 - Request an access token
-  - Step 4 - Use the access token to access protected resources
+  * Step 1 - Request an unauthorized request token
+  * Step 2 - Authorize the User
+  * Step 3 - Request an access token
+  * Step 4 - Use the access token to access protected resources
 These steps are the same as Browser-Based Authentication except for a few details, which will be explained in each step. Only the differences will be explained in this procedure.
 
-Step 1 - Request an unauthorized request token
+1. Request an unauthorized request token
+
 Difference between programmatic and browser-based authentication:
+
 Because this is programmatic authentication instead of browser-based, you must set the callbackUrl to oob (out-of-band), which tells the OAuth server that you are not redirecting a User to a URL. The OAuth Server returns the request token.
 
-Step 2 - Authorize the User
+2. Authorize the User
+3. 
 Difference between programmatic and browser-based authentication:
+
 Authorize the request token by sending an HTTP POST request to https://sso.openx.com/login/process with the following parameters:
-Request parameters
+
 Parameter	Description
 Email	The User's email address
 Password	The User's password
@@ -6516,16 +6552,19 @@ When finished with your API session, you should terminate it explicitly by sendi
 #### Programmatic authentication sample
 
 All calls to the Platform API must be authenticated with a security token, which you can retrieve through the OpenX OAuth Server located at https://sso.openx.com. You can then include the token in subsequent API calls.
+
 The following sample OAuth session log shows successfully signed OAuth requests using the following calls:
 
-Step 1 - POST /api/index/initiate
-Step 2 - POST /login/process
-Step 3 - POST /api/index/token
+* Step 1 - POST /api/index/initiate
+* Step 2 - POST /login/process
+* Step 3 - POST /api/index/token
 
 In the final call to sso.openx.com/api/index/token, the oauth_token value in the response is the value used for the openx3_access_token cookie for API requests.
 
-Step 1 - Request an unauthorized request token
+1. Request an unauthorized request token
+
 The following sample shows the values for the header fields. To send these values on a command line, you could use curl but your client application will most likely transfer these values using your preferred language (PHP, Python, Ruby on Rails, etc.)
+
 Request: POST /api/index/initiate
 > POST /api/index/initiate HTTP/1.1
 > Accept-Encoding: identity
@@ -6551,7 +6590,9 @@ Response to POST /api/index/initiate
 < Content-Type: application/x-www-form-urlencoded
 <
 < oauth_token=944b...ccf3&oauth_token_secret=8111...03f&oauth_callback_confirmed=true
-Step 2 - Authorize User
+
+2. Authorize User
+
 Request: POST /login/process
 > POST /login/process HTTP/1.1
 > Accept-Encoding: identity
@@ -6579,7 +6620,9 @@ Response to POST /login/process
 < Content-Type: text/html; charset=UTF-8
 <
 < oob?oauth_token=944b...ccf3&oauth_verifier=fb6f21ce8e
-Step 3 - Request an access token
+
+3. Request an access token
+4. 
 Request: POST /api/index/token
 > POST /api/index/token HTTP/1.1
 > Accept-Encoding: identity
@@ -6605,7 +6648,9 @@ Response to POST /api/index/token
 < Content-Type: application/x-www-form-urlencoded
 < oauth_token=7e1a...ccf4&oauth_token_secret=dc5d...43ad&email=test_account_google@openx.com
 Access is granted and the final oauth_token above (7e1a...ccf4) becomes the openx3_access_token cookie in your API requests and must be sent every time.
-Step 4 - Use the access token to access protected resources
+
+4. Use the access token to access protected resources
+
 Syntax
 curl -X GET http://<openx_server_name>/ox/4.0/account/<account_uid> --cookie
         "openx3_access_token=token_string"
@@ -6613,41 +6658,61 @@ Example
 curl -X GET http://openx_myserver.com/ox/4.0/account/879546 --cookie
         "openx3_access_token=e735c37c5cl...9778j1on41v6rj5"
 
-### Release notes
+## Release notes
 
-See also:
-Release Notes for Publishers
-Android SDK Release Notes
-iOS SDK Release Notes
-May 4, 2016
-TFCD Query Argument Added
+### May 4, 2016
+
+#### TFCD Query Argument Added
+
 The tfcd query argument has been added to the Ad Request API request parameters to ensure COPPA compliance. Possible values are 0 and 1.
-0 = Not COPPA compliant
-1 = COPPA compliant
+  - 0 = Not COPPA compliant
+  - 1 = COPPA compliant
+
 For more information about the tfcd query argument, refer to the Ad Tag Parameters page.
-February 11, 2016
-'Adproduct' call removed
+
+### February 11, 2016
+
+#### 'Adproduct' call removed
+
 For this release, all adproduct calls have been removed and are no longer accessible to users via the OpenX UI and Platform API.
 Updated ad tags
+
 OpenX ad tags are now automatically updated to detect HTTP/HTTPS. Ad tags are now protocol-less and will work automatically for both secure and non-secure sites without requiring users to manually change the tags from HTTP to HTTPS.
-January 28, 2016
+
+### January 28, 2016
+
 API Functionality and Technical Documentation
+
 The OpenX Platform API now supports enhanced API functionality for forecasting and legacy SRS reporting. UI functionality remains unchanged for both of these features, however, users will be able to access forecasting and reporting features via the OpenX Platform API, as well as detailed technical documentation describing how to use these features in the API Developer's Guide.
-Forecasting
+
+#### Forecasting
+
 Users may now run forecasts using the OpenX Platform API. Users wil still be able to use this feature via the user interface; however, if you choose to use the OpenX Platform API, you only need to make a single POST call to run a forecast.
+
 For more detailed information about forecasting via the OpenX Platform API, please see the Forecasting documentation.
-Reporting
+
+#### Reporting
+
 With this release, you may generate three different reports using the Platform API. You will still be able to access and generate these reports via the user interface, but you will now also be able to generate these reports via the Platform API. The three type of reports you can generate using the Platform API are:
-Bid Performance Report
-Exchange Report
-SSP Revenue Report
+
+  - Bid Performance Report
+  - Exchange Report
+  - SSP Revenue Report
+
 Please see the Reporting documentation for more detailed information on how to use the OpenX Platform API for reporting.
-November 9, 2015
-Comments
+
+### November 9, 2015
+
+#### Comments
+
 The OpenX API now supports adding, editing, and retrieving comments using the OpenX API. With the OpenX API, you can:
-Add a new comment to an object
-Edit your own comments
-Retrieve a list of comments for an object
+
+ - Add a new comment to an object
+ - Edit your own comments
+ - Retrieve a list of comments for an object
+
 Comments can be used to add notes to objects (e.g. line items, creatives, etc.) for other users to see; however, users will not be notified about new comments. Furthermore, one can only view comments when in the edit mode of an object.
+
 If you are using the API to add/edit a comment, the following objects can have comments applied: account, ad, adunit, adunitgroup, audiencesegment, creative, creativetemplate, lineitem, optimization, order, site, deal, floorrule, and package
+
 Refer to the Working With Comments section for more detailed information on using this feature.
