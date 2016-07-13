@@ -119,35 +119,37 @@ The OpenX Platform API provides the following types of resources:
 For a list of resources, see the API reference.
 
 To access a resource, construct a request according to the following URI format:
-
+```
 base_URIresource/identifier/parameterparametermethod&
-
+```
 Where:
-  - method is an HTTP method, such as GET.
-  - base-URI is your base URI provided by your account manager.
-  - resource is the name of an API object or service.
-  - identifier may provide a UID or a request for specific values if needed.
-  - parameter indicates the first URI parameter string.
-  - &parameter is an additional URI parameter string.
+* method is an HTTP method, such as GET.
+* base-URI is your base URI provided by your account manager.
+* resource is the name of an API object or service.
+* identifier may provide a UID or a request for specific values if needed.
+* parameter indicates the first URI parameter string.
+* &parameter is an additional URI parameter string.
 
-For example, in the call GET http://openx_server_name/ox/4.0/user/available_fieldsaction=create
-  - GET is the method.
-  - http://openx_server_name/ox/4.0/ is the base URI. The relative path /4.0/ indicates that your are using version 4 of the Platform API. If your base URI includes /3.0/, this API guide does not apply to your instance.
- - user is an API resource.
-  - available_fields indicates a specific a request for information about the object's fields.
-  - action=create is a URI parameter string indicating that the request is for fields available upon the object's creation.
+For example, in the call ```GET http://openx_server_name/ox/4.0/user/available_fieldsaction=create```
+* ```GET``` is the method.
+* ```http://openx_server_name/ox/4.0/``` is the base URI. The relative path /4.0/ indicates that your are using version 4 of the Platform API. If your base URI includes /3.0/, this API guide does not apply to your instance.
+* ```user``` is an API resource.
+* ```available_fields``` indicates a specific a request for information about the object's fields.
+* ```action=create``` is a URI parameter string indicating that the request is for fields available upon the object's creation.
 
 ## Requests and responses
 
 Requests to the OpenX API require a Content-Type header set to application/json. The response format for all requests is a JSON object and an HTTP response code.
+
 OpenX API v4 calls use the following general patterns:
-  - GET /resource_type/. List all objects or services of the specified type.
-  - GET /object_type/object_UID. Retrieve information about the object specified by its UID.
-  - POST /object_type. Create a new object using the values encoded in a JSON object, which must include all fields that are required for the create operation. You can make batch create requests by including multiple JSON objects.
-  - PUT /object_type. Batch update operation. Requests include a set of valid JSON objects with any fields that are being changed by the update. You can optionally include unchanged data.
-  - PUT /object_type/object_UID. Update the specified object with changed values specified in a JSON object. You can optionally include unchanged data.
-  - DELETE /object_type. Batch delete operation, where the request includes multiple UIDs.
-  - DELETE /object_type/object_UID. Delete the specified object.
+
+* ```GET /resource_type/```. List all objects or services of the specified type.
+* ```GET /object_type/object_UID```. Retrieve information about the object specified by its UID.
+* ```POST /object_type```. Create a new object using the values encoded in a JSON object, which must include all fields that are required for the create operation. You can make batch create requests by including multiple JSON objects.
+* ```PUT /object_type```. Batch update operation. Requests include a set of valid JSON objects with any fields that are being changed by the update. You can optionally include unchanged data.
+* ```PUT /object_type/object_UID```. Update the specified object with changed values specified in a JSON object. You can optionally include unchanged data.
+* ```DELETE /object_type```. Batch delete operation, where the request includes multiple UIDs.
+* ```DELETE /object_type/object_UID```. Delete the specified object.
 
 The request samples in this guide use cURL (client URL request library) to send HTTP requests to access, create, and manipulate OpenX API resources.
 
@@ -155,8 +157,8 @@ The request samples in this guide use cURL (client URL request library) to send 
 
 To create a new object, send a POST request including the JSON-encoded contents of the object:
 
-Sample create request
-''' curl
+#### Sample create request
+```
 # curl -X POST --header "Content-Type: application/json" http://openx_server_name/ox/4.0/account \
 	--cookie "openx3_access_token=token_string" \
 	--data='{
@@ -172,14 +174,15 @@ Sample create request
 	"timezone":"America/Los_Angeles",
 	"type_full":"account.advertiser"
 }'
-'''
-Where: token_string is a string of characters returned by the GET session request at login.
+```
+Where: ```token_string``` is a string of characters returned by the GET session request at login.
 
 When you create a single object, the response should contain a list with a single object.
 
-Sample create response
+#### Sample create response
+
 When successful, 200 Created is returned along with the response body:
-'''
+```
 # [
 	{            
 	"account_id": "account_id",
@@ -192,29 +195,31 @@ When successful, 200 Created is returned along with the response body:
 	"single_ad_limitation":"0",
 	}
 ]
-'''
+```
 Where:
-  - account_uid is the UID of the account that was created.
-  - account_id is the ID of the account that was created.
-  - For more details, see About IDs and UIDs.
+* ```account_uid``` is the UID of the account that was created.
+* ```account_id``` is the ID of the account that was created.
+
+For more details, see About IDs and UIDs.
 
 ### Update
 
 To change the data on an object that already exists, send a PUT request to the object URI with the values you want to change:
 
-Sample update request
-'''curl
-# curl -X PUT --header "Content-Type: application/json" http://openx_server_name/ox/4.0/account/account_uid \
+#### Sample update request
+```
+curl -X PUT --header "Content-Type: application/json" http://openx_server_name/ox/4.0/account/account_uid \
 --cookie "openx3_access_token=token_string" \
   --data='{
     "status":"Inactive",
   }'
-'''
-Where: account_uid is the UID of the account to be updated. Alternatively, you can send the account_id.
+```
+Where: ```account_uid``` is the UID of the account to be updated. Alternatively, you can send the ```account_id```.
 
-Sample update response
+#### Sample update response
+
 The response body includes all of the object's fields:
-'''
+```
 # [
 	{
 	"uid" : "account_uid",
@@ -238,42 +243,43 @@ The response body includes all of the object's fields:
 	"total_conversions":null
 	}
 ]
-'''
+```
 ###Delete
 
 To delete an object, send a DELETE request to its URI:
 
-Sample delete request
-'''curl
+#### Sample delete request
+```
 # curl -X DELETE --header "Content-Type: application/json" http://openx_server_name/ox/4.0/account \
 			--cookie "openx3_access_token=token_string" \
 		--data='["account_uid_1", "account_uid_2"]'
-'''
+```
 Where:
-account_uid_n is the UID of the account to be deleted. Alternatively, you can send account IDs.
 
-Sample delete response
-'''
+```account_uid_n``` is the UID of the account to be deleted. Alternatively, you can send account IDs.
+
+#### Sample delete response
+```
 # [
 	{
 	"account_uid_1": true,
 	"account_uid_2": true
 	}
 ]
-'''
+```
 ### Read
 
 To get the field values for a specific object:
 
-Sample read request
-'''curl
+#### Sample read request
+```
 # curl -X GET http://openx_server_name/ox/4.0/account/account_uid--cookie "openx3_access_token=token_string"
-'''
-Where: account_uid_n is the UID of the account to be read.
+```
+Where: ```account_uid_n``` is the UID of the account to be read.
 
-Sample read response
-'''
-# [
+#### Sample read response
+```
+[
 	{
 	"uid" : "account_uid"
 	"name": "API+Demo+Advertiser",
@@ -296,19 +302,21 @@ Sample read response
 	"total_conversions":null
 	}
 ]
-'''
-Sample list request
+```
+#### Sample list request
+
 To list all the objects of the specified type:
 
-'''curl
+```
 # curl -X GET http://openx_server_name/ox/4.0/account --cookie "openx3_access_token=token_string"
+```
 
 #### Batch Operations
 
 Batch operations allow you to create, update, or delete multiple objects in one call.
 
-Sample batch create
-'''curl
+##### Sample batch create
+```
 # curl -X POST --header "Content-Type: application/json" openx_server_name/ox/4.0/account \
 --cookie "openx3_access_token=token_string\
 --data='[
@@ -329,10 +337,11 @@ Sample batch create
                     "experience": "advertiser"
                 }
  ]'
-'''
-Sample batch create response
+```
+##### Sample batch create response
+
 When the creation is successful, the HTTP response includes 200 Created and a response body such as the following example:
-'''
+```
 # [
 {
     "account_uid": "
@@ -397,18 +406,19 @@ When the creation is successful, the HTTP response includes 200 Created and a re
      "v": "3"
  }
 ]
-'''
-Sample batch delete
-'''curl
+```
+
+##### Sample batch delete
+
+```
 # curl -X DELETE --header "Content-Type: application/json" http://openx_server_name/ox/4.0/account \
 --cookie "openx3_access_token=token_string \
   --data='["account_uid_1", account_uid_2", "account_uid_3", "account_uid_n]'
-'''  
+``` 
 #### Available Fields
 
-You can make an available_fields request to determine an object's fields and values. Some available_fields requests require URI parameters, but if you do not include them the error response will indicate what is needed. For example, if you call GET /account/available_fields, you will receive the following error response:
-
-Sample available_fields error response
+You can make an available_fields request to determine an object's fields and values. Some available_fields requests require URI parameters, but if you do not include them the error response will indicate what is needed. For example, if you call ```GET /account/available_fields```, you will receive the following error response:
+```
 {
   "attribute": "type_full", 
   "choices": [
@@ -422,10 +432,12 @@ Sample available_fields error response
   "message": "Field type_full value must be one of \"account.agency\", \"account.advertiser\", \"account.network\" or \"account.publisher\" (\"None\" not allowed)", 
   "type": "Value Error", 
   "value": null
-}          
-This response points out that you need to include a type_full request parameter in your call to the account object. For example, if you append ?type_full=account.publisher to your request, the Ad Server will provide information about all the account fields for an account of type account.publisher.
+}   
+```
+This response points out that you need to include a ```type_full``` request parameter in your call to the account object. For example, if you append ```?type_full=account.publisher``` to your request, the Ad Server will provide information about all the account fields for an account of type ```account.publisher```.
 
-Sample available_fields request specifying a type_full value:
+##### Sample ```available_fields``` request specifying a ```type_full``` value:
+```
 openx_server_name/ox/4.0/account/available_fields?type_full=account.publisher --cookie "openx3_access_token=curl -X GET http://token_string"
 
 Sample available_fields response:
@@ -1047,110 +1059,120 @@ Sample available_fields response:
     "type": "int"
   }
 }
+```
 Where:
 
-  - acl. A field used for permissions that you can typically ignore.
-  - url. A path that you can follow to the base URI to return a list of options. The corresponding field will only accept values that are found in the response to the specified options call.
+* acl. A field used for permissions that you can typically ignore.
+* url. A path that you can follow to the base URI to return a list of options. The corresponding field will only accept values that are found in the response to the specified options call.
 
 Tip: You can also include action=create or action=update when calling the API for available and required fields of an object. For example, the set of required fields for creating a user is different than for updating a user, such as the user.email field, which is required when creating but not when updating.
 
 #### Pagination
 
 The size of the data displayed in a response is limited by the following request parameters:
-  - limit. The maximum number of items to be returned on a single request. Its default value is 10.
-  - offset. The number of the first item to display for the current request, where the offset for first item on the first page is 0. Its default value is 0.
+
+* limit. The maximum number of items to be returned on a single request. Its default value is 10.
+* offset. The number of the first item to display for the current request, where the offset for first item on the first page is 0. Its default value is 0.
 
 If there is too much information to display in a single page, the response body will include "has_more": true. You can access the additional values by modifying the offset and limit paging values.
 
-Sample list request including pagination parameters
-For example, to list account records 50 through 75, specify an offset of 50 and a limit of 25:
-curl -X GET http://openx_server_name/ox/4.0/accountoffset=50&limit=25 --cookie "openx3_access_token=token_string"
+##### Sample list request including pagination parameters
 
-#### URI parameters
+For example, to list account records 50 through 75, specify an offset of 50 and a limit of 25:
+```
+curl -X GET http://openx_server_name/ox/4.0/accountoffset=50&limit=25 --cookie "openx3_access_token=token_string"
+```
+### URI parameters
 
 The URIs described in the API reference represent the supported request syntax, to which you can add certain supported request parameters. You can include request parameters in your API calls as query string arguments; you can append the first parameter after a question mark (?) and additional parameters separated by ampersands (&) in any order or combination.
 The OpenX API supports the various parameters, such as the following:
-  - action. When calling the API for available and required fields for an object, set this parameter to action=create or action=update to specify the action for which you want to retrieve values. For example, the set of required fields for creating a user (/user/available_fields?action=create) is different than the set of required fields for updating a user (/user/available_fields?action=update), such as the user.email field, which is required for creating a user but not for updating a user.
-  - pretty. (For debugging purposes only) Display the JSON response into a more human readable format, encapsulated by HTML <pre> tags.
+
+* action. When calling the API for available and required fields for an object, set this parameter to action=create or action=update to specify the action for which you want to retrieve values. For example, the set of required fields for creating a user (/user/available_fields?action=create) is different than the set of required fields for updating a user (/user/available_fields?action=update), such as the user.email field, which is required for creating a user but not for updating a user.
+* pretty. (For debugging purposes only) Display the JSON response into a more human readable format, encapsulated by HTML <pre> tags.
+* Pagination parameters.
+* type_full. Some available_fields calls require this parameter. If so, the error response will list the choices for type_full if you do not specify an attribute. For example, when calling /ad/available_fields, you can specify the type_full=ad.image attribute. This parameter is also used for list operations.
 
 Important: Routine use of the pretty parameter negatively impacts performance. Do not use it in your production calls.
 
-Pagination parameters. See pagination.
-type_full. Some available_fields calls require this parameter. If so, the error response will list the choices for type_full if you do not specify an attribute. For example, when calling /ad/available_fields, you can specify the type_full=ad.image attribute. This parameter is also used for list operations.
 Depending on the resource you are calling, many additional parameters may be available. Making calls without required parameters results in an error response, which typically indicates what was missing from the request. You can call available_fields for an object to see fields listed as required: true.
 
-About IDs and UIDs
+#### About IDs and UIDs
 OpenX API objects have object_name_id ("ID") and object_name_uid ("UID") fields. For example, you can include account_id=string or account_uid=string values in some API calls.
+
 IDs were supported in API v3 and OpenX continues to maintain IDs. UIDs were introduced with API v4 for internal reasons and they are typically interchangeable with IDs. You can usually specify both IDs and UIDs in API requests that include a full JSON object (for an example, see Create).
+
 You do not have to specify UIDs unless they are listed as required by the available_fields create or update response for the object. For example, to create an order, the account_uid is required. If you specify the account_id instead, the call will not work. As a best practice, you should use IDs whenever possible; however, if IDs are not available or do not work, use UIDs in their place.
 
 ### Response codes and error handling
 
-Most create and update operations require particular parameters. The API responds with an HTTP response code of 2xx when the operation is successful or an error code of 4xx, a text description of the error, and JSON content listing the incorrect or missing fields, along with the reason they were rejected. For example, if you POST an order without any parameters, the API responds with error code 400, and JSON in the response body indicating the required fields.
+Most ```create``` and ```update``` operations require particular parameters. The API responds with an HTTP response code of 2xx when the operation is successful or an error code of 4xx, a text description of the error, and JSON content listing the incorrect or missing fields, along with the reason they were rejected. For example, if you ```POST``` an order without any parameters, the API responds with error code 400, and JSON in the response body indicating the required fields.
+
 The following table describes the possible error types:
-API error types
-Error	Description
-Dependency	Validation of the field failed due to restrictions based on the value of another field. The related field is specified in the field dictionary, and the field-specific error is detailed in the dependency dictionary.
-Field Permission	The current user does not have permission to modify the given field.
-Not Unique	
-The field requires a unique value. For example, the value might need to be unique:
-Across the entire instance
-Within the object's parent account
-Within the parent object
-Within the object (in the case of an array field)
-Object Not Found	The object matching the given UID either does not exist, or was deleted.
-Object One To One	The object's parent must have exactly one child.
-Object Type	The object matching the given UID is not of the expected type.
-Object Validation	
-Some of the input fields did not pass validation. Each field validation error includes:
-Field definition in the field dictionary
-Error type in type
-A human-readable error in message
-Each field validation error is detailed in the field_errors dictionary, where the keys are field names and the values are errors. When available, the object's UID is provided in uid.
-Permission	The current user does not have permission to perform the specified action on the specified object.
-Range	The input field value is either less than the minimum or greater than the maximum allowed value.
-Read Only	The field value may not be modified.
-Reference	Indicates that an object is referred to by another object and cannot be deleted. The referring objects are listed in referencing_objects.
-Require	The field requires a non-null value.
-Size	The input field value is too large or too small. For string fields, this is the allowed number of characters. For array fields, this is the allowed number of items in the array.
-Type	The input field value is of the wrong type, and cannot be coerced into the correct type. For example, if a date/time field cannot parse a value into a native date, this error will be raised.
-Unknown Field	The input field does not exist for the object or sub-object.
-Validation	
-One or more errors occurred within nested data structures. Sub-field validation errors are detailed in the error response under the following dictionaries:
-field_errors dictionary. Error details for sub-object fields
-item_errors dictionary. Error details for array fields
-Value	The allowable values for the field are constrained to a given set or must match a regular expression pattern. If the value must be one of a given set, the allowed values are specified in a request to the url in the field definition.
+
+Error |	Description |
+----- | ----------- |
+Dependency | Validation of the field failed due to restrictions based on the value of another field. The related field is specified in the ```field``` dictionary, and the field-specific error is detailed in the ```dependency``` dictionary. |
+Field Permission | The current user does not have permission to modify the given field. |
+Not Unique | The field requires a unique value. For example, the value might need to be unique: Across the entire instance, Within the object's parent account, Within the parent object, Within the object (in the case of an array field). |
+Object Not Found | The object matching the given UID either does not exist, or was deleted. |
+Object One To One | The object's parent must have exactly one child. |
+Object Type | The object matching the given UID is not of the expected type. |
+Object Validation | Some of the input fields did not pass validation. Each field validation error includes: Field definition in the ```field``` dictionary, Error type in ```type```, or a human-readable error in ```message```. Each field validation error is detailed in the ```field_errors``` dictionary, where the keys are field names and the values are errors. When available, the object's UID is provided in ```uid```. |
+Permission | The current user does not have permission to perform the specified action on the specified object. |
+Range | The input field value is either less than the minimum or greater than the maximum allowed value. |
+Read Only | The field value may not be modified. |
+Reference | Indicates that an object is referred to by another object and cannot be deleted. The referring objects are listed in ```referencing_objects```.
+Require | The field requires a non-null value. |
+Size | The input field value is too large or too small. For string fields, this is the allowed number of characters. For array fields, this is the allowed number of items in the array. |
+Type | The input field value is of the wrong type, and cannot be coerced into the correct type. For example, if a date/time field cannot parse a value into a native date, this error will be raised. |
+Unknown Field | The input field does not exist for the object or sub-object. |
+Validation | One or more errors occurred within nested data structures. Sub-field validation errors are detailed in the error response under the following dictionaries:
+* ```field_errors``` dictionary. Error details for sub-object fields
+* ```item_errors``` dictionary. Error details for array fields |
+Value | The allowable values for the field are constrained to a given set or must match a regular expression pattern. If the value must be one of a given set, the allowed values are specified in a request to the ```url``` in the field definition.
+
 For information about HTTP status codes, see RFC 1945.
 
 ## Use Cases
 
 This section describes the following common tasks using the Platform API:
-Working with accounts
-Working with inventory
-Working with event-level feeds
-Working with demand objects
-Working with comments
-Working with forecasts
-Working with reports
+
+* Working with accounts
+* Working with inventory
+* Working with event-level feeds
+* Working with demand objects
+* Working with comments
+* Working with forecasts
+* Working with reports
 
 ### Working with accounts
 
 Depending on your use case, the account object is used in the following way:
-Advertiser accounts are containers for orders and other demand objects.
-Publisher accounts are containers for sites, ad units, and other inventory objects.
-Ad networks are containers for other accounts.
+
+* Advertiser accounts are containers for orders and other demand objects.
+* Publisher accounts are containers for sites, ad units, and other inventory objects.
+* Ad networks are containers for other accounts.
+
 The account object fields can change as a result of different parameters such as the following:
-action
-instance configuration
-object type_full
+
+* action
+* instance configuration
+* object type_full
+
 To determine the available fields and appropriate values, you should make available_fields calls and options calls as needed. The Platform API provides informative responses even when the input has errors. Building a request may take a few attempts but the error messages will guide you to the correct request format.
+
 To create an account:
-Refer to the authentication topic to obtain an openx3_access_token.
-Get the available fields for an account:
+
+1. Refer to the authentication topic to obtain an openx3_access_token.
+2. Get the available fields for an account:
+
 Example 1. Sample available_fields request
-openx_server_name/ox/4.0/account/available_fields --cookie "openx3_access_token=curl http://token_string"
-Where: token_string is a string of characters returned by the GET session request at login.
+```openx_server_name/ox/4.0/account/available_fields --cookie "openx3_access_token=curl http://token_string"```
+
+Where: ```token_string``` is a string of characters returned by the ```GET``` session request at login.
+
 Example 2. Sample available_fields response
+```
 {
     "attribute": "type_full", 
     "choices": [      "account.agency",       "account.advertiser",       "account.network",       "account.publisher"    ], 
@@ -1160,11 +1182,17 @@ Example 2. Sample available_fields response
     "type": "Value Error", 
     "value": null
 }'
+```
 Accounts fields change based the different account types. The response indicates that a type_full value is required.
-Modify the request by adding a type_full URI parameter:
+
+3. Modify the request by adding a ```type_full``` URI parameter:
+
 Example 3. Sample type_full account request
-openx_server_name/ox/4.0/account/available_fieldstype_full=account.network --cookie "openx3_access_token=curl http://token_string"
+
+```openx_server_name/ox/4.0/account/available_fieldstype_full=account.network --cookie "openx3_access_token=curl http://token_string"```
+
 OpenExample 4. Sample type_full account response
+```
 {
   "account_id": {
     "auto": true, 
@@ -1342,22 +1370,36 @@ OpenExample 4. Sample type_full account response
     "type": "int"
   }
 }
-Within the response, several fields are marked "required": true, such as account_uid. Of the required fields, most include a url field, such as account_uid's "url": "/options/account_options".
-To see a list of available options, make the options calls indicated by the URLs. The following call shows an options call for only one of the required fields:
+```
+Within the response, several fields are marked "required": true, such as ```account_uid```. Of the required fields, most include a ```url``` field, such as ```account_uid's "url": "/options/account_options"```.
+
+4. To see a list of available options, make the options calls indicated by the URLs. The following call shows an options call for only one of the required fields:
+
 Example 5. Sample experience options request
+```
 openx_server_name/ox/4.0/options/network_experience_options --cookie "openx3_access_token=curl http://token_string"
+```
 Example 6. Sample experience options response
+```
 [  {    "id": "network.display",     "name": "Display Network"  },   {    "id": "network.mobile",     "name": "Mobile App Developer"  }]
-By default, the acceptable values are the id values, such as network.display and network.mobile in the above sample. Some fields reference other API objects, such as the account_uid field. For such fields, their options call will return a list very similar to list calls (such as GET /account).
-Build a request to create an account using the following five fields along with type_full:
+```
+
+By default, the acceptable values are the ```id``` values, such as ```network.display``` and ```network.mobile``` in the above sample. Some fields reference other API objects, such as the ```account_uid``` field. For such fields, their options call will return a list very similar to list calls (such as ```GET /account```).
+
+5. Build a request to create an account using the following five fields along with ```type_full```:
+
 Example 7. Sample create account request with experience and status typos
+```
 openx_server_name/ox/4.0/account --cookie "openx3_access_token=curl http://token_string" -X POST
       --header "Content-Type:application/json" --data '{"account_uid":
       "200571f0-accf-fff1-8123-0c9a66", "currency": "USD", "experience":
       "network.displayy", "name": "My Network", "status": "Activee", "type_full":
       "account.network", "timezone": "America/Los_Angeles"}'
+```
 The API returns multiple errors and a field errors dictionary with experience and status keys indicating the values passed in are invalid.
+
 OpenExample 8. Sample error response
+```
 [  {    "field_errors": {      "experience": {        "attribute": "experience",         "choices": [          "network.mobile",           "network.display"        ], 
         "field": {
           "has_dependencies": false, 
@@ -1396,14 +1438,21 @@ OpenExample 8. Sample error response
     "uid": null
   }
 ]
-Fix the mistakes and try again:
+```
+
+6. Fix the mistakes and try again:
+
 Example 9. Sample create account request
+```
 openx_server_name/ox/4.0/account --cookie "openx3_access_token=curl http://token_string" -X POST --header "Content-Type:application/json" --data
       '{"account_uid": "200571f0-accf-fff1-8123-0c9a66", "currency": "USD", "experience":
       "network.display", "name": "My Network", "status": "Active", "type_full":
       "account.network", "timezone": "America/Los_Angeles"}'
+```
 The API returns the full object in the create response. Many fields that were not passed in are filled in with defaults, which depend on things such as instance settings, parent account, and other fields.
+
 Example 10. Sample create response
+```
 [  {    "account_id": "537227760",     "account_uid": "200571f0-accf-fff1-8123-0c9a66",     "acl_override": {},     "country_of_business": "us",     "created_date": "2013-10-04 05:52:57",     "currency": "USD",     "currency_id": "1",     "deleted": "0",     "experience": "network.display",     "external_id": null,     "hidden": "0",     "id": "537241695",     "instance_uid": "[Code]instance_uid", 
     "modified_date": "2013-10-04 05:52:57", 
     "name": "My Network", 
@@ -1418,14 +1467,19 @@ Example 10. Sample create response
     "v": "3"
   }
 ]
-Make a read call using the UID field of the newly created account:
+```
+7. Make a read call using the ```UID``` field of the newly created account:
+
 Sample read account request
+```
 curl http://openx_server_name/ox/4.0/account/2005a85f-accf-fff1-8123-0c9a66 --cookie "openx3_access_token=token_string"
+```
 The account appears in the response and also for list calls:
+
 Sample list accounts request
+```
 curl http://openx_server_name/ox/4.0/account --cookie "openx3_access_token=token_string"
-See also
-Accounts in the OpenX help.
+```
 
 ### Working with inventory
 
@@ -9476,37 +9530,37 @@ for (i=1;i++;i<=refresh_max) {
 
 ## Video ad requests
 To serve a video ad to your ad space:
-Use the OpenX UI to create the following types of video ad units:
-Linear. Full-page interstitial video ads that display during video content in a video player as in-read or in-feed ad units
-Retrieve the ad request URL for a single ad unit (a standalone ad request). Alternatively, you can include:
-An ad unit group. Requests companion ad placement for multiple ad units (referenced by the pgid parameter) in a single call
-Multi-ad unit. Requests ads for multiple ad units in a single call
-(Optional) Set various ad request parameters in your video ad request URL.
-Configure your VAST-compliant video player to send the ad request URL to OpenX and receive its VAST 2.0 XML response.
-Implement the video ad requests in your ad space.
-When a user visits the ad space, the video player invokes an ad request for the ad unit referenced in the video ad request.
-OpenX receives the video ad request, performs ad selection, and returns a VAST 2.0-compliant XML response, which your VAST 2.0-compliant video player can interpret and render in the appropriate location.
-The video player renders the selected ad in the appropriate location.
-To count video impressions, configure your video player to perform client-side counting.
+1. Use the OpenX UI to create the following types of video ad units: Linear. Full-page interstitial video ads that display during video content in a video player as in-read or in-feed ad units.
+2. Retrieve the ad request URL for a single ad unit (a standalone ad request). Alternatively, you can include an ad unit group, which requests companion ad placement for multiple ad units (referenced by the pgid parameter) in a single call; or, a multi-ad unit that requests ads for multiple ad units in a single call.
+3. (Optional) Set various ad request parameters in your video ad request URL.
+4. Configure your VAST-compliant video player to send the ad request URL to OpenX and receive its VAST 2.0 XML response.
+5. Implement the video ad requests in your ad space.
+6. When a user visits the ad space, the video player invokes an ad request for the ad unit referenced in the video ad request.
+7. OpenX receives the video ad request, performs ad selection, and returns a VAST 2.0-compliant XML response, which your VAST 2.0-compliant video player can interpret and render in the appropriate location.
+8. The video player renders the selected ad in the appropriate location. To count video impressions, configure your video player to perform client-side counting.
+
 Tip: For mobile apps, OpenX provides a mobile SDK for Android and iOS, which includes a VAST-compatible player and various integration scenarios.
-Standalone video ad request example
+
+### Standalone video ad request example
+
 Video ad requests typically contain an ad request URL and various parameters.
+
 http://delivery_server_domain/v/1.0/av?auid=543776&cs=xyz&c.gender=m
+
 Where:
-http (or https) is the protocol.
-delivery_server_domain is the hostname of your OpenX delivery server.
-/v indicates the video delivery medium.
-/1.0 indicates version 1.0 of the OpenX video protocol.
-/av indicates the video ad request.
-? separates the ad request from the following ad request parameters:
-auid. The unique ID of the ad unit
-For a multi-ad unit request, use a comma-separated list (e.g., auid=1,5,7).
-For an ad unit group request, use the pgid parameter instead (e.g., pgid=5).
-&. separates the first ad request parameter from subsequent parameters
-cs. Client state, indicates a unique ID used to communicate between the click URL and the ad
-c.gender. a custom variable for the user's gender
+
+* http (or https) is the protocol.
+* delivery_server_domain is the hostname of your OpenX delivery server.
+* /v indicates the video delivery medium.
+* /1.0 indicates version 1.0 of the OpenX video protocol.
+* /av indicates the video ad request.
+* ? separates the ad request from the following ad request parameters: auid - The unique ID of the ad unit. For a multi-ad unit request, use a comma-separated list (e.g., auid=1,5,7). For an ad unit group request, use the pgid parameter instead (e.g., pgid=5).
+* &. separates the first ad request parameter from subsequent parameters.
+* cs. Client state, indicates a unique ID used to communicate between the click URL and the ad.
+* c.gender. a custom variable for the user's gender.
+
 This request returns a response similar to the following example:
-Sample VAST-compliant response
+```
 <?xml version="1.0" encoding="UTF-8"?>
 <VAST version="2.0">
 <Ad id="543776">
@@ -9589,6 +9643,7 @@ Sample VAST-compliant response
 </InLine>
 </Ad>
 </VAST>
+```
 
 The response contains the following elements:
 
