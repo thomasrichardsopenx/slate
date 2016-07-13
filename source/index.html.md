@@ -1685,18 +1685,18 @@ Event feed API topics include:
 Response listing available files for an event feed
 ```
 {
-		  "dataset": [
-		    {
-		      "@dataSize": "352", 
-		      "@id": "3169793", 
-		      "@recordCount": "0", 
-		      "@revision": "177", 
-		      "@status": "READY", 
-		      "dateCreated": "2015-10-26 08:08:07 UTC", 
-		      "endTimestamp": "2015-10-22 21:01:00 UTC", 
-		      "feed": {
-		        "@id": "496", 
-		        "@name": "d8568240-c334-11e2-8b8b-0800200c9a66_ox_click_log_minutely"
+	"dataset": [
+	{
+		"@dataSize": "352", 
+		"@id": "3169793", 
+		"@recordCount": "0", 
+		"@revision": "177", 
+		"@status": "READY", 
+		"dateCreated": "2015-10-26 08:08:07 UTC", 
+		"endTimestamp": "2015-10-22 21:01:00 UTC", 
+		"feed": {
+		"@id": "496", 
+		"@name": "d8568240-c334-11e2-8b8b-0800200c9a66_ox_click_log_minutely"
 		      }, 
 		      "parts": {
 		        "part": {
@@ -2418,14 +2418,18 @@ The API creates the image ad and returns the ID for the new image ad object.
 ### Uploading a creative
 
 Upload a creative file to the OpenX Ad Server to reference in creatives and use in ads.
+```
 curl -X POST --header "Content-Type: application/json" http://openx_server_name/ox/4.0/creative/upload_creative \
 --cookie "openx3_access_token=token_string"
+```
 The API uploads the creative and returns the details for the creative.
 
 ### Creating a creative
 
 Create a creative object which references an uploaded creative.
+
 For example, create an image creative for account ID 22770.
+```
 curl -X POST --header "Content-Type: application/json" http://openx_server_name/ox/4.0/creative/upload_creative \ --cookie "openx3_access_token=token_string" \
   --data='{
     "account_id": "537242118", 
@@ -2438,32 +2442,41 @@ curl -X POST --header "Content-Type: application/json" http://openx_server_name/
     "bitrate":"null",
     "orig_name":"8a1a22f85a5da31ae06693fcf9ec8354.jpg",
     }'
+```
 The API creates the creative and returns the ID for the new creative object.
 
 ## Working with comments
 
 If you do not wish to use the UI to add or edit comments, you may use the API to add (POST) and edit (PUT) comments for an object, as well as retrieve a list of all comments for a specific object (GET). The steps for adding and editing comments for objects are described below.
 You can:
-  - Add a new comment
-  - Edit an existing comment
-  - Get a list of comments
+* Add a new comment
+* Edit an existing comment
+* Get a list of comments
 
 Add a new comment
 
 To add a comment to an existing object, follow the steps described below.
-Open a terminal window on your system.
-Make the following POST API request to the OpenXserver to add a comment to the selected object (in this case, a line item). Note that there is a 1000 character limit for a comment, and a comment can be alphanumeric.
+1. Open a terminal window on your system.
+2. Make the following POST API request to the OpenXserver to add a comment to the selected object (in this case, a line item). Note that there is a 1000 character limit for a comment, and a comment can be alphanumeric.
+
 curl -s -X POST 'http://qa-v2-i16-lmi.api-v4-qa-ca.openx.net/ox/4.0/comment' --cookie $COOKIE --header "Content-Type:application/json" -d '{"obj_type": "lineitem","obj_uid": "600738b9-c002-fff1-8123-0c9a66","text": "A comment on a lineitem"}' | python -mjson.tool
+
 The values listed in the table below make up the POST request to the OpenX server.
+
 Add Comments Values
-Value	Description	Example
-resource URL	The URL used to make the API request to the OpenX server.	http://qa-v2-i16-lmi.api-v4-qa-ca.openx.net/ox/4.0/comment
-cookie	The session cookie used in the header.	$COOKIE
-header	The authentication header used to access the OpenX server.	Content-Type:application/json" -d
-obj_type	The type of object that the comment is being added to.	lineitem
-obj_uid	The unique identifier for the comment associated with the object.	600738b9-c002-fff1-8123-0c9a66
-text	The actual text in the comment being added to the object.	A comment on a lineitem
+Value | Description | Example |
+------ | ---------- | -------- |
+resource URL | The URL used to make the API request to the OpenX server. | http://qa-v2-i16-lmi.api-v4-qa-ca.openx.net/ox/4.0/comment |
+cookie | The session cookie used in the header. | $COOKIE |
+header | The authentication header used to access the OpenX server. | Content-Type:application/json" -d |
+obj_type | The type of object that the comment is being added to. | lineitem
+obj_uid | The unique identifier for the comment associated with the object. | 600738b9-c002-fff1-8123-0c9a66 |
+text | The actual text in the comment being added to the object. | A comment on a lineitem |
+
+3. The OpenX server processes this POST API request and returns a response output similar to the example response shown below.
+
 The OpenX server processes this POST API request and returns a response output similar to the example response shown below.
+```
 [
     {
         "account_id": "1611253648",
@@ -2485,27 +2498,30 @@ The OpenX server processes this POST API request and returns a response output s
         "v": "3"
     }
 ]
+```
 The values listed in the table below are returned in the response output from the OpenX server.
+
 Add Comment Values
-Value	Description	Example
-account_id	A unique ID of the account.	1611253648
-account_uid	The unique identifier for the account, determined from account_id.	6009c790-accf-fff1-8123-0c9a66
-created_date	The date/time when the comment was added to the object.	2015-10-15 20:58:39
-deleted	A flag that specifies whether the comment has been deleted: 0 = FALSE 1 = TRUE.	0
-id	The unique identifier for the comment.	1610638236
-instance_uid	The platform_hash for the session.	a505e730-0b7a-11e3-8ffd-0800200c9a66
-modified_date	The timestamp when the last change was made to the comment.	2015-10-15 20:58:39
-obj_id	The ID determined from obj_uid.	1611086009
-obj_type	The type of object referred to by comment.	lineitem
-obj_uid	The unique identifier for the object.	600738b9-c002-fff1-8123-0c9a66
-revision	The revision of the comment.	1
-text	The text that makes up the comment being added to the object.	A comment on a lineitem
-text_type	The type of text used in the comment (e.g. text, html).	text
-type	The type of comment added to the object.	comment
-uid	The unique identifier for the comment.	6000639c-bbbb-fff1-8123-0c9a66
-user_id	The ID associated with the user who created the comment.	1610845423
-user_uid	The UID associated with the user who created the comment.	200165d2-acc0-fff1-8123-0c9a66
-v	The API version.	3
+Value | Description | Example |
+------ | ---------- | --------- |
+account_id | A unique ID of the account. | 1611253648 |
+account_uid | The unique identifier for the account, determined from account_id. | 6009c790-accf-fff1-8123-0c9a66 |
+created_date | The date/time when the comment was added to the object. | 2015-10-15 20:58:39 |
+deleted | A flag that specifies whether the comment has been deleted: 0 = FALSE 1 = TRUE. | 0 | 
+id | The unique identifier for the comment. | 1610638236 | 
+instance_uid | The platform_hash for the session. | a505e730-0b7a-11e3-8ffd-0800200c9a66 |
+modified_date | The timestamp when the last change was made to the comment. | 2015-10-15 20:58:39
+obj_id | The ID determined from obj_uid. | 1611086009 |
+obj_type | The type of object referred to by comment. | lineitem |
+obj_uid | The unique identifier for the object. | 600738b9-c002-fff1-8123-0c9a66 |
+revision | The revision of the comment. | 1 |
+text | The text that makes up the comment being added to the object. | A comment on a lineitem. |
+text_type | The type of text used in the comment (e.g. text, html). | text |
+type | The type of comment added to the object. | comment|
+uid | The unique identifier for the comment. | 6000639c-bbbb-fff1-8123-0c9a66 |
+user_id | The ID associated with the user who created the comment. | 1610845423 |
+user_uid | The UID associated with the user who created the comment. | 200165d2-acc0-fff1-8123-0c9a66
+v | The API version. | 3
 
 ### Editing an existing comment
 
