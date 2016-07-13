@@ -1481,64 +1481,128 @@ Sample list accounts request
 curl http://openx_server_name/ox/4.0/account --cookie "openx3_access_token=token_string"
 ```
 
-### Working with inventory
+## Working with inventory
 
-This section describes how to use the Platform API to manage inventory objects.
-To retrieve the lists of inventory objects to which the current user has access:
-List all sites:
-curl http://openx_server_name/ox/4.0/site --cookie "openx3_access_token=token_string"
-List all site sections:
-curl http://openx_server_name/ox/4.0/sitesection --cookie "openx3_access_token=token_string"
-List all ad units:
-curl http://openx_server_name/ox/4.0/adunit --cookie "openx3_access_token=token_string"
-List all packages:
-curl http://openx_server_name/ox/4.0/package --cookie "openx3_access_token=token_string"
-List all audience segments:
-curl http://openx_server_name/ox/4.0/audiencesegment --cookie "openx3_access_token=token_string"
+This section describes how to use the Platform API to manage inventory objects. To retrieve the lists of inventory objects to which the current user has access:
+
+* List all sites:
+```curl http://openx_server_name/ox/4.0/site --cookie "openx3_access_token=token_string"```
+* List all site sections:
+```curl http://openx_server_name/ox/4.0/sitesection --cookie "openx3_access_token=token_string"```
+* List all ad units:
+```curl http://openx_server_name/ox/4.0/adunit --cookie "openx3_access_token=token_string"```
+* List all packages:
+```curl http://openx_server_name/ox/4.0/package --cookie "openx3_access_token=token_string"```
+* List all audience segments:
+```curl http://openx_server_name/ox/4.0/audiencesegment --cookie "openx3_access_token=token_string"```
+
 To retrieve information about specific inventory objects, use the UIDs from the list responses for the following calls:
-Read the site with the specified UID:
-curl http://openx_server_name/ox/4.0/site/2000002b-e000-fff1-8123-0c9a66 --cookie "openx3_access_token=token_string"
-Read the site section with the specified ID:
-curl http://openx_server_name/ox/4.0/sitesection/536870925 --cookie "openx3_access_token=token_string"
-Read the ad unit with the specified ID:
-curl http://openx_server_name/ox/4.0/adunit/536871402 --cookie "openx3_access_token=token_string"
-Read the package with the specified ID:
-curl http://openx_server_name/ox/4.0/package/536870936 --cookie "openx3_access_token=token_string"
-Read the audience segment with the specified ID:
-curl http://openx_server_name/ox/4.0/audiencesegment/536871535 --cookie "openx3_access_token=token_string"
-See also
-Inventory in the OpenX help.
+
+* Read the site with the specified UID:
+```curl http://openx_server_name/ox/4.0/site/2000002b-e000-fff1-8123-0c9a66 --cookie "openx3_access_token=token_string"```
+* Read the site section with the specified ID:
+```curl http://openx_server_name/ox/4.0/sitesection/536870925 --cookie "openx3_access_token=token_string"```
+* Read the ad unit with the specified ID:
+```curl http://openx_server_name/ox/4.0/adunit/536871402 --cookie "openx3_access_token=token_string"```
+* Read the package with the specified ID:
+```curl http://openx_server_name/ox/4.0/package/536870936 --cookie "openx3_access_token=token_string"```
+* Read the audience segment with the specified ID:
+```curl http://openx_server_name/ox/4.0/audiencesegment/536871535 --cookie "openx3_access_token=token_string"```
 
 ### Create a site
 
 To create a site:
-See working with accounts to determine the account for which you want to create a site.
-Retrieve the list of available fields for creating a site.
-curl http://openx_server_name/ox/4.0/site/available_fields?account_uid=publisher_account_UID
+
+1. See working with accounts to determine the account for which you want to create a site.
+2. Retrieve the list of available fields for creating a site.
+```curl http://openx_server_name/ox/4.0/site/available_fields?account_uid=publisher_account_UID```
 This returns the list of fields that you can set, and those that are required, for creating a site.
-ClosedSample
-Create the site object, passing in, at a minimum, the required parameters, which include:
-The UID of the publisher account (account_uid)
-The name for the new site (name)
-The status for the site (status), which is described by /options/status_options_common
-The URL for the site (url)
+```
+{
+  "account_id": {
+    "auto": true, 
+    "has_dependencies": false, 
+    "readonly": true, 
+    "required": false, 
+    "type": "int"
+  }, 
+  "account_uid": {
+    "has_dependencies": false, 
+    "readonly": false, 
+    "required": true, 
+    "type": "account_uid"
+  }, 
+  "autorefresh": {
+    "acl": "site.auto_refresh", 
+    "has_dependencies": false, 
+    "items": {
+      "available_fields": {
+        "refresh_country": {
+          "has_dependencies": false, 
+          "readonly": false, 
+          "required": false, 
+          "type": "varchar", 
+          "url": "/options/country_options"
+        }, 
+        "refresh_delay": {
+          "has_dependencies": false, 
+          "readonly": false, 
+          "required": true, 
+          "type": "int"
+        }, 
+        "refresh_max": {
+          "has_dependencies": false, 
+          "readonly": false, 
+          "required": true, 
+          "type": "int"
+        }
+      }, 
+      "has_dependencies": false, 
+      "readonly": false, 
+      "required": false, 
+      "type": "object"
+    }, 
+    "readonly": false, 
+    "required": false, 
+    "type": "array"
+  }, 
+  "category_override": {
+    "has_dependencies": false, 
+    "readonly": false, 
+    "required": false, 
+    "type": "int"
+  }, 
+  "content_topic": {
+    "acl": "site.default_content_settings", 
+    "has_dependencies": false, 
+    "readonly": false, 
+    "required": false, 
+    "type": "int", 
+    "url": "/options/content_topic_options"
+  },...
+```
+3. Create the site object, passing in, at a minimum, the required parameters, which include:
+* The UID of the publisher account (account_uid)
+* The name for the new site (name)
+* The status for the site (status), which is described by /options/status_options_common
+* The URL for the site (url)
+
 For example, create a site for the web delivery medium.
-curl http://openx_server_name/ox/4.0/site --cookie "openx3_access_token=token_string" -X POST
-      --header "Content-Type:application/json" --data '{"account_uid":
-      "200571f0-accf-fff1-8123-0c9a66", "name": "API_demo", "status":
-      "Active", "url": "http://www.example.com", "content_type_id": "99",
-      "delivery_medium_id": "2"}'
+
+```curl http://openx_server_name/ox/4.0/site/available_fields?account_uid=publisher_account_UID```
+
 The API creates the site and returns the ID for the new site object.
-See also
-Sites in the OpenX help.
 
 ### Creating an ad unit
 
 To create an ad unit:
-Retrieve the list of sites to determine the one to create the ad unit for.
-Retrieve the list of available fields for creating an ad unit:
-curl http://openx_server_name/ox/4.0/adunit/available_fields --cookie "openx3_access_token=token_string"
+1. Retrieve the list of sites to determine the one to create the ad unit for.
+2. Retrieve the list of available fields for creating an ad unit:
+
+```curl http://openx_server_name/ox/4.0/adunit/available_fields --cookie "openx3_access_token=token_string"```
+
 The following error response indicates that the type_full attribute is needed:
+```
 {
   "attribute": "type_full", 
   "choices": [
@@ -1554,11 +1618,16 @@ The following error response indicates that the type_full attribute is needed:
 	"type": "Value Error", 
 	"value": null
 }
-Specify the desired type_full value, such as adunit.web in the following sample:
+```
+3. Specify the desired ```type_full``` value, such as adunit.web in the following sample:
+```
 curl http://openx_server_name/ox/4.0/adunit/available_fields?type_full=adunit.web --cookie "openx3_access_token=token_string"
+```
 Note: : When using adunit.mobile for the type_full value, you must also pass in the site_uid. For example:
-curl http://openx_server_name/ox/4.0/adunit/available_fields?type_full=adunit.mobile&site_uid=site_uid --cookie "openx3_access_token=token_string"
+```curl http://openx_server_name/ox/4.0/adunit/available_fields?type_full=adunit.mobile&site_uid=site_uid --cookie "openx3_access_token=token_string"```
+
 This returns the list of fields that you can set, and those that are required, for creating a web ad unit:
+```
 {
   "account_id": {
     "auto": true, 
@@ -1583,28 +1652,38 @@ This returns the list of fields that you can set, and those that are required, f
     "url": "/options/web_size_options"
   },...
 }
-Create the ad unit object by passing in, at a minimum, the required parameters:
-The ID for the site that the ad unit belongs to (site_uid)
-The name for the ad unit (name)
-The status for the ad unit (status), which is either Active or Inactive
-The ID for the delivery medium that the new ad unit is intended to run on (delivery_medium_id)
-The ID for the type of ad tag to use to request ads for this ad unit, such ad image or JavaScript (tag_type_id)
-The type of ad unit (type_full) such as adunit.web
+```
+4. Create the ad unit object by passing in, at a minimum, the required parameters:
+
+* The ID for the site that the ad unit belongs to (site_uid)
+* The name for the ad unit (name)
+* The status for the ad unit (status), which is either Active or Inactive
+* The ID for the delivery medium that the new ad unit is intended to run on (delivery_medium_id)
+* The ID for the type of ad tag to use to request ads for this ad unit, such ad image or JavaScript (tag_type_id)
+* The type of ad unit (type_full) such as adunit.web
+
 For example, create a web ad unit:
+```
 curl http://openx_server_name/ox/4.0/adunit --cookie "openx3_access_token=token_string" -X POST --header "Content-Type:application/json" --data '{"site_uid":
  "536870955", "name": "desired_adunit_name", "status": "Active", "delivery_medium_id": "2", "tag_type_id": "1", "content_type_id": "99", "type_full": "adunit.web", "size_id": "3"}'
+```
 The API creates the ad unit and returns the ID for the new ad unit object.
 
 ## Working with event-level feeds
 
 This section describes how to use the eventfeed service to retrieve aggregated data. For more details, see event-level feeds.
+
 Note: Accessing event-level feeds requires a specific OpenX configuration. Please contact your OpenX account manager for configuration and pricing details.
+
 Event feed API topics include:
-Listing the available files for an event feed
-Sample response
-Downloading the event feed file
-Event feed file format
-OpenResponse listing available files for an event feed
+
+* Listing the available files for an event feed
+* Sample response
+* Downloading the event feed file
+* Event feed file format
+
+Response listing available files for an event feed
+```
 {
 		  "dataset": [
 		    {
@@ -1713,31 +1792,39 @@ OpenResponse listing available files for an event feed
 		    
 		 ]
 		}
-  
+  ```
   ### Listing available fields for an event feed
   
   After you log in to the OpenX system that you want to access data for, you can retrieve the list of event feed files available to you per event type. For example, if you are interested in click events, retrieve the list of click event feed files. Then you can determine what files you want to download.
+
 To retrieve the list of available data sets for a particular event type:
-Build the URL and call the API, using the following format:
+
+1. Build the URL and call the API, using the following format:
+
 http://openx_server_name/ox/4.0/eventfeed?type=click&range=number&format=json&pretty
+
 Where:
-http is the protocol.
- openx_server_name is the hostname of the Platform API server.
-/ox/4.0 is the base path for the API.
-/eventfeed is the method, or action to perform, in this case, a request for the list of event feed files.
-? indicates the start of URI parameters.
-type=click represents the ad serving event feed that you want to track; in this case, click event feed. This can be either request, impression, click, or conversion, depending on your OpenX configuration.
-format=json represents the format that you want to view the response in. This must be json.
-pretty indicates that you want the response that OpenX returns to be formatted in an easily-readable form. This parameter is useful if you are performing a manual inspection of the event feed response (that is, if you paste the URL in your browser and click ENTER).
-range=number indicates the serial number for the last feed that you looked at (located in the serial: key). The range parameter is like a bookmark that indicates where you want to continue viewing feeds. For example, use the value for the serial: key in the last feed that you viewed. Alternatively, specify the start and end parameters, but do not specify them in addition to range.
+* http is the protocol.
+* openx_server_name is the hostname of the Platform API server.
+* /ox/4.0 is the base path for the API.
+* /eventfeed is the method, or action to perform, in this case, a request for the list of event feed files.
+* ? indicates the start of URI parameters.
+* type=click represents the ad serving event feed that you want to track; in this case, click event feed. This can be either request, impression, click, or conversion, depending on your OpenX configuration.
+* format=json represents the format that you want to view the response in. This must be json.
+* pretty indicates that you want the response that OpenX returns to be formatted in an easily-readable form. This parameter is useful if you are performing a manual inspection of the event feed response (that is, if you paste the URL in your browser and click ENTER).
+* range=number indicates the serial number for the last feed that you looked at (located in the serial: key). The range parameter is like a bookmark that indicates where you want to continue viewing feeds. For example, use the value for the serial: key in the last feed that you viewed. Alternatively, specify the start and end parameters, but do not specify them in addition to range.
+
 Tip: Do not use a range value of 0 because this can negatively impact the event feed.
+
 Optional
 breakdown=minutely is the default feed interval, which is not necessary to specify unless your account manager enabled a custom configuration for your account. The minutely value indicates that you want the response limited to minutely feeds only. The hourly value limits the response to hourly feeds, but it is disabled for most accounts. This field is required if you have both hourly and minutely feeds enabled. Please check with your OpenX account manager if you are unsure of what type of feed you have.
 OpenX returns a JSON response similar to the one described in the sample response.
-As necessary, look at event feed timestamps or serial numbers and rebuild the URL as necessary.
-To avoid inconsistencies, especially when your implementation uses an automatic system to process event feeds, use the range parameter to retrieve serial numbers in the JSON response (serial: key) as your bookmarks for viewing feeds rather than the start and end parameters.
-Parse the response for timestamps or serial numbers and file paths and download the event feed files that you want to access.
+
+2. As necessary, look at event feed timestamps or serial numbers and rebuild the URL as necessary. To avoid inconsistencies, especially when your implementation uses an automatic system to process event feeds, use the range parameter to retrieve serial numbers in the JSON response (serial: key) as your bookmarks for viewing feeds rather than the start and end parameters.
+3. Parse the response for timestamps or serial numbers and file paths and download the event feed files that you want to access.
+
 For more details, see eventfeed in the API reference.
+```
  OpenResponse listing available files for an event feed
 "@id": "496", 
 	"@name": "d8568240-c334-11e2-8b8b-0800200c9a66_ox_click_log_minutely"
@@ -1835,52 +1922,64 @@ For more details, see eventfeed in the API reference.
 ...
 	]
 }
-
+```
 ### Downloading the event feed file
 
-After you parse the response for the serial numbers and feed files, you can download the files with the data you want to access. Use the URL located in the @locator: key in the JSON response (see bold text in the sample response). For example, in the sample response described in the previous section, if you wanted to download the last event feed file in the response, you would use the following URL:
+After you parse the response for the serial numbers and feed files, you can download the files with the data you want to access. Use the URL located in the ```@locator:``` key in the JSON response (see bold text in the sample response). For example, in the sample response described in the previous section, if you wanted to download the last event feed file in the response, you would use the following URL:
+```
 http://openx_server_name/ox/4.0/eventfeed/fetch?file=/d8568240-c334-11e2-8b8b-0800200c9a66/ox_click_log_minutely/2015-10/clicks_v4_2015-10-22_21-00_d8568240-c334-11e2-8b8b-0800200c9a66.txt.gz
-This returns the event feed file with the data fields for the event. OpenX recommends that you validate each file by comparing the value in the @digest key with a locally executed MD5 checksum. This ensures that you have correctly downloaded a complete and valid file before moving on with further processing.
+```
+This returns the event feed file with the data fields for the event. OpenX recommends that you validate each file by comparing the value in the ```@digest``` key with a locally executed MD5 checksum. This ensures that you have correctly downloaded a complete and valid file before moving on with further processing.
 
 ### Event feed file format
 
 After you uncompress a GZIP feed file, you can see that the contents are UTF-8 encoded and that each file contains a header row. The feed schema indicates the field delimiter, which is a tab.
+
 If any of the following characters occur in the source data, they are escaped with a backslash:
-tab (U+0009). Becomes a literal string \t
-newline (U+000A). Becomes a literal string \n
-backslash (U+005C). Becomes a literal string \\
+
+* tab (U+0009). Becomes a literal string \t
+* newline (U+000A). Becomes a literal string \n
+* backslash (U+005C). Becomes a literal string \\
 
 ## Working with demand objects
 
 This section describes how to use the API to list or create orders, line items, ads, and creatives.
 You can:
-Retrieve lists of orders, line items, and ads
-Retrieve lists of deals
-Create an order
-Create a line item
-Create an ad
-Upload a creative
+
+* Retrieve lists of orders, line items, and ads
+* Retrieve lists of deals
+* Create an order
+* Create a line item
+* Create an ad
+* Upload a creative
 
 ### Retrieving the list of demand objects
 
 To retrieve the list of demand objects that the current user has access to, issue one of the following HTTP GET requests:
-GET /order
-GET /lineitem
-GET /ad
+
+* ```GET /order```
+* ```GET /lineitem```
+* ```GET /ad```
+
 For example:
-To retrieve the list of orders:
-curl -X GET http://openx_server_name/ox/4.0/order --cookie "openx3_access_token=token_string"
-To retrieve the list of line items:
-curl -X GET http://openx_server_name/ox/4.0/lineitem --cookie "openx3_access_token=token_string"
-To retrieve the list of ads in alphabetical order:
-curl -X GET http://openx_server_name/ox/4.0/ad --cookie "openx3_access_token=token_string
+
+* To retrieve the list of orders:
+```curl -X GET http://openx_server_name/ox/4.0/order --cookie "openx3_access_token=token_string"```
+
+* To retrieve the list of line items:
+```curl -X GET http://openx_server_name/ox/4.0/lineitem --cookie "openx3_access_token=token_string"```
+
+* To retrieve the list of ads in alphabetical order:
+```curl -X GET http://openx_server_name/ox/4.0/ad --cookie "openx3_access_token=token_string```
 
 ### Retrieve information about available deals
 
 To retrieve a list of private marketplace deals that you are eligible to bid on, make the following options call:
+```
 curl -X GET http://openx_server_name/ox/4.0/options/available_deals?account_uid=account_uid --cookie "openx3_access_token=token_string"
+```
 The API returns details about your eligible deals, such as shown in the following sample:
-OpenSample
+```
 [
 {
 	buyer: [ ],
@@ -1945,18 +2044,24 @@ OpenSample
 ...
   }
 ]
+```
 If you are not eligible for any deals, the API returns an empty array:
 [ ]
 
 ### Retrieve information about a demand object
 
 Query the API for details about a specific demand object:
-GET /order/<order_uid>
-GET /lineitem/<lineitem_uid>
-GET /ad/<ad_uid>
+
+* ```GET /order/<order_uid>```
+* ```GET /lineitem/<lineitem_uid>```
+* ```GET /ad/<ad_uid>```
+
 For example, query the API for details about order UID 20003303-c001-fff1-8123-0c9a66:
+```
 curl -X GET http://openx_server_name/ox/4.0/order/20003303-c001-fff1-8123-0c9a66 --cookie "openx3_access_token=token_string"
+```
 The API returns the attributes and value details for the specific order:
+```
 [
 	{
 	"account_id": "537242118", 
@@ -1990,14 +2095,18 @@ The API returns the attributes and value details for the specific order:
 	"view_through_window": "86400"
 	}
 ]
-
+```
 ### Creating an order
 
 To create an order:
-Retrieve the list of accounts to determine the account UID for which you want to create the order.
-Retrieve the list of available fields for creating an order.
+
+1. Retrieve the list of accounts to determine the account UID for which you want to create the order.
+2. Retrieve the list of available fields for creating an order.
+
 curl http://openx_server_name/ox/4.0/order/available_fields --cookie "openx3_access_token=token_string"
+
 This returns the list of fields that you can set, and those that are required, for creating an order.
+```
 {
   "account_id": {
     "auto": true, 
@@ -2035,27 +2144,37 @@ This returns the list of fields that you can set, and those that are required, f
     "type": "datetime"
   },...
 }
-Create the order object, passing in, at a minimum, the required parameters, which include:
-The name of the new order (name)
-The status for the new order (status)
-The beginning date for the new order (start_date)
-The ID for the advertiser account that the new order belongs to (account_uid)
+```
+
+3. Create the order object, passing in, at a minimum, the required parameters, which include:
+
+* The name of the new order (name)
+* The status for the new order (status)
+* The beginning date for the new order (start_date)
+* The ID for the advertiser account that the new order belongs to (account_uid)
+
 For example, create an order for a specified account:
+```
 curl http://openx_server_name/ox/4.0/order --cookie "openx3_access_token=token_string" -X POST
       --header "Content-Type:application/json" --data '{"account_uid":
       "20058a53-accf-fff1-8123-0c9a66", "name": "demo_order", "status": 
       "Pending", "start_date": "2014-01-21", "view_through_window": "86400",
       "click_through_window": "86400"}'
+```
 The API creates the order and returns the ID for the new order object.
 
 ### Creating a line item
 
 To create a line item:
-Create the order that you want to create the line item for, or retrieve the list of orders to determine the target order.
-Get the list of available fields for creating a line item:
+
+1. Create the order that you want to create the line item for, or retrieve the list of orders to determine the target order.
+2. Get the list of available fields for creating a line item:
+```
 curl -X GET http://openx_server_name/ox/4.0/lineitem/available_fields --cookie "openx3_access_token=token_string"
+```
 The following error response indicates that a type_full value is required:
-OpenError response
+```
+Error response
 {
 	"attribute": "type_full", 
 	"choices": [
@@ -2073,11 +2192,14 @@ OpenError response
 	"type": "Value Error", 
 	"value": null
 }
-Modify the request by adding a type_full URI parameter:
-curl -X GET http://openx_server_name/ox/4.0/lineitem/available_fieldstype_full=lineitem.house --cookie
-      "openx3_access_token=token_string"
+```
+3. Modify the request by adding a type_full URI parameter:
+```
+curl -X GET http://openx_server_name/ox/4.0/lineitem/available_fieldstype_full=lineitem.house --cookie "openx3_access_token=token_string"
+```
 The response lists the fields that you can set and those that are required for creating a line item:
-OpenResponse
+```
+Response
 {
   "account_id": {
     "auto": true, 
@@ -2126,19 +2248,29 @@ OpenResponse
     "url": "/options/market_advertiser_options"
   },...
 }
-You can retrieve details about fields that include a url value. For example, ad_delivery includes the following value: "url": "/options/ad_delivery_options"
+```
+
+4. You can retrieve details about fields that include a url value. For example, ```ad_delivery``` includes the following value: ```"url"```: 
+```
+"/options/ad_delivery_options"
+```
+```
 curl -X GET http://openx_server_name/ox/4.0/options/ad_delivery_options --cookie
       "openx3_access_token=token_string"
-Create the line item object, passing in, at a minimum, the required parameters, which include:
-The ad delivery method (ad_delivery)
-The name of the line item (name)
-The status of the line item (status)
-The ID for the order that the line item belongs to (order_uid)
-The beginning date for the line item (start_date)
-The delivery medium (delivery_medium)
-Targeting rules (targeting)
-The type of line item (type_full)
+```
+5. Create the line item object, passing in, at a minimum, the required parameters, which include:
+
+* The ad delivery method (ad_delivery)
+* The name of the line item (name)
+* The status of the line item (status)
+* The ID for the order that the line item belongs to (order_uid)
+* The beginning date for the line item (start_date)
+* The delivery medium (delivery_medium)
+* Targeting rules (targeting)
+* The type of line item (type_full)
+
 For example, create a house line item:
+```
 curl -X POST --header "Content-Type: application/json" http://openx_server_name/ox/4.0/lineitem \
 --cookie "openx3_access_token=token_string" \
   --data='{
@@ -2152,18 +2284,23 @@ curl -X POST --header "Content-Type: application/json" http://openx_server_name/
     "type_full":"lineitem.house",
     "account_uid":"2005aa92-accf-fff1-8123-0c9a66"
     }'
+```    
 The API creates the line item and returns the UID for the new line item object.
 
 ### Creating an ad
 
 To create an ad:
-Create a line item and retrieve its UID, or retrieve the list of line items to determine the one to create the ad for.
-Upload a creative.
-Create a creative.
-Get the list of available fields for creating an ad:
-curl -X GET http://openx_server_name/ox/4.0/ad/available_fields --cookie "openx3_access_token=token_string"
+1. Create a line item and retrieve its UID, or retrieve the list of line items to determine the one to create the ad for.
+2. Upload a creative.
+3. Create a creative.
+4. Get the list of available fields for creating an ad:
+```
+curl -X GET http://openx_server_name/ox/4.0/ad/available_fields?type_full=ad.image --cookie "openx3_access_token=token_string"
+```
 The following error response indicates that a type_full value is required:
-OpenError response
+
+Error response
+```
 {
 	"attribute": "type_full", 
 	"choices": [
@@ -2188,14 +2325,17 @@ OpenError response
 	"field": {}, 
 	"http_status": 400, 
 	"message": "Field type_full value must be one of \"ad.nonlinearvast\", \"ad.nonlinearvideo.html\", \"ad.linearvast\", \"ad.mobile\", \"ad.image\", \"ad.linearvideo\", \"ad.thirdparty\", \"ad.nonlinearvideo.flash\", \"ad.exchange.ssrtb\", \"ad.nonlinearvideo.image\", \"ad.flash\", \"ad.exchange.image\", \"ad.exchange.html\", \"ad.programmatic\", \"ad.html\", \"ad.exchange.thirdparty\" or \"ad.mobilehtml\" (\"None\" not allowed)", 
-					"type": "Value Error", 
-					"value": null
-					}
-Modify the request by adding a type_full URI parameter. For example, retrieve the list of available fields for an image ad:
-curl -X GET http://openx_server_name/ox/4.0/ad/available_fields?type_full=ad.image --cookie
-					"openx3_access_token=token_string"
-This returns the list of fields that you can set, and those that are required, for creating an image ad.
-OpenSample
+	"type": "Value Error", 
+	"value": null
+}
+```
+
+5. Modify the request by adding a type_full URI parameter. For example, retrieve the list of available fields for an image ad:
+```
+curl -X GET http://openx_server_name/ox/4.0/ad/available_fields --cookie "openx3_access_token=token_string"
+```
+Sample
+```
 {
   "account_id": {
     "auto": true, 
@@ -2244,30 +2384,35 @@ OpenSample
     "url": "/options/click_target_window_options"
   }, ...
  }
-Create the image ad object, passing in, at a minimum, the required parameters, which include:
-The name for the new image ad (name)
-The status of the new ad (status)
-The ID for the type of ad you are creating, such as image (ad_type_id)
-The UID for the line item that the new ad belongs to (line_item_uid)
-The size of the ad (size)
-The UID of the creative (primary_creative_uid)
-The click URL for the image ad (click_url)
-The click target window for the image ad (click_target_window)
-The type of ad (type_full)
+ ```
+6. Create the image ad object, passing in, at a minimum, the required parameters, which include:
+
+* The name for the new image ad (name)
+* The status of the new ad (status)
+* The ID for the type of ad you are creating, such as image (ad_type_id)
+* The UID for the line item that the new ad belongs to (line_item_uid)
+* The size of the ad (size)
+* The UID of the creative (primary_creative_uid)
+* The click URL for the image ad (click_url)
+* The click target window for the image ad (click_target_window)
+* The type of ad (type_full)
+
 For example, create an image ad:
+```
 curl -X POST --header "Content-Type: application/json" http://openx_server_name/ox/4.0/ad \
-		--cookie "openx3_access_token=token_string" \
-		--data='{
-		"name":"Demo image ad",
-		"status":"Active",
-		"start_date":"now",
-		"click_target_window":"_blank",
-		"click_url":"http://www.example.com",
-		"line_item_uid":"20004055-c001-fff1-8123-0c9a66",
-		"primary_creative_uid":"null",
-		"size":"300x600",
-		"type_full":"ad.image"
-		}'
+	--cookie "openx3_access_token=token_string" \
+	--data='{
+	"name":"Demo image ad",
+	"status":"Active",
+	"start_date":"now",
+	"click_target_window":"_blank",
+	"click_url":"http://www.example.com",
+	"line_item_uid":"20004055-c001-fff1-8123-0c9a66",
+	"primary_creative_uid":"null",
+	"size":"300x600",
+	"type_full":"ad.image"
+}'
+```
 The API creates the image ad and returns the ID for the new image ad object.
 
 ### Uploading a creative
