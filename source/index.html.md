@@ -2458,18 +2458,17 @@ Add a new comment
 To add a comment to an existing object, follow the steps described below.
 1. Open a terminal window on your system.
 2. Make the following POST API request to the OpenXserver to add a comment to the selected object (in this case, a line item). Note that there is a 1000 character limit for a comment, and a comment can be alphanumeric.
-
+```
 curl -s -X POST 'http://qa-v2-i16-lmi.api-v4-qa-ca.openx.net/ox/4.0/comment' --cookie $COOKIE --header "Content-Type:application/json" -d '{"obj_type": "lineitem","obj_uid": "600738b9-c002-fff1-8123-0c9a66","text": "A comment on a lineitem"}' | python -mjson.tool
-
+```
 The values listed in the table below make up the POST request to the OpenX server.
 
-Add Comments Values
 Value | Description | Example |
 ------ | ---------- | -------- |
 resource URL | The URL used to make the API request to the OpenX server. | http://qa-v2-i16-lmi.api-v4-qa-ca.openx.net/ox/4.0/comment |
 cookie | The session cookie used in the header. | $COOKIE |
 header | The authentication header used to access the OpenX server. | Content-Type:application/json" -d |
-obj_type | The type of object that the comment is being added to. | lineitem
+obj_type | The type of object that the comment is being added to. | lineitem | 
 obj_uid | The unique identifier for the comment associated with the object. | 600738b9-c002-fff1-8123-0c9a66 |
 text | The actual text in the comment being added to the object. | A comment on a lineitem |
 
@@ -2501,7 +2500,6 @@ The OpenX server processes this POST API request and returns a response output s
 ```
 The values listed in the table below are returned in the response output from the OpenX server.
 
-Add Comment Values
 Value | Description | Example |
 ------ | ---------- | --------- |
 account_id | A unique ID of the account. | 1611253648 |
@@ -2510,7 +2508,7 @@ created_date | The date/time when the comment was added to the object. | 2015-10
 deleted | A flag that specifies whether the comment has been deleted: 0 = FALSE 1 = TRUE. | 0 | 
 id | The unique identifier for the comment. | 1610638236 | 
 instance_uid | The platform_hash for the session. | a505e730-0b7a-11e3-8ffd-0800200c9a66 |
-modified_date | The timestamp when the last change was made to the comment. | 2015-10-15 20:58:39
+modified_date | The timestamp when the last change was made to the comment. | 2015-10-15 20:58:39 |
 obj_id | The ID determined from obj_uid. | 1611086009 |
 obj_type | The type of object referred to by comment. | lineitem |
 obj_uid | The unique identifier for the object. | 600738b9-c002-fff1-8123-0c9a66 |
@@ -2520,16 +2518,18 @@ text_type | The type of text used in the comment (e.g. text, html). | text |
 type | The type of comment added to the object. | comment|
 uid | The unique identifier for the comment. | 6000639c-bbbb-fff1-8123-0c9a66 |
 user_id | The ID associated with the user who created the comment. | 1610845423 |
-user_uid | The UID associated with the user who created the comment. | 200165d2-acc0-fff1-8123-0c9a66
-v | The API version. | 3
+user_uid | The UID associated with the user who created the comment. | 200165d2-acc0-fff1-8123-0c9a66 |
+v | The API version. | 3 |
 
-### Editing an existing comment
+### Edit an existing comment
 
 In addition to adding a comment to an object, you may also edit comments for an existing object. To edit a comment:
-Open a terminal window on your system.
-Make the following PUT API request to the OpenX server to edit/update a comment to the selected object (in this case, a line item).
+1. Open a terminal window on your system.
+2. Make the following PUT API request to the OpenX server to edit/update a comment to the selected object (in this case, a line item).
+```
 $ curl -v -X PUT 'http://qa-v2-i16-lmi.api-v4-qa-ca.openx.net/ox/4.0/comment/1610638236'  -H "Content-Type:application/json" --cookie $COOKIE -d '{"text": "blah"}' | python -mjson.tool
-The OpenX server processes the PUT request and updates the comment for the specified object. The response returned from the server is similar to the example below.
+```
+3. The OpenX server processes the PUT request and updates the comment for the specified object. The response returned from the server is similar to the example below.
 [
     {
         "account_id": "1611253648",
@@ -2553,48 +2553,57 @@ The OpenX server processes the PUT request and updates the comment for the speci
     }
 ]
 The values listed in the table below make up the POST request to the OpenX server.
-Edit Comment Values
-Value	Description	Example
-resource URL	The URL used to make the API request to the OpenX server.	curl -s -X PUT 'http://127.0.0.1:8001/comment
-header	The authentication header and cookie used to access the OpenX server.	Content-Type:application/json" -d
-cookie	The session cookie used in the header.	openx3_access_token=09af
-obj_type	The type of object.	lineitem
-obj_uid	The unique identifier for the object being used.	60062525-c002-fff1-8123-0c9a66
-text	The updated text for the comment.	The updated text for the comment
+
+Value |	Description | Example |
+resource URL | The URL used to make the API request to the OpenX server. | curl -s -X PUT 'http://127.0.0.1:8001/comment |
+header | The authentication header and cookie used to access the OpenX server. | Content-Type:application/json" -d |
+cookie | The session cookie used in the header.	openx3_access_token=09af |
+obj_type | The type of object. | lineitem |
+obj_uid | The unique identifier for the object being used. | 60062525-c002-fff1-8123-0c9a66 |
+text | The updated text for the comment. | The updated text for the comment |
+
 The values listed in the table below are returned in the response output from the OpenX server.
-Value	Description	Example
-account_id	The value determined from the account_uid	1611253648
-account_uid	The account_uid of the object.	6009c790-accf-fff1-8123-0c9a66
-created_date	The date/time when the comment was created.	2015-10-15 20:58:39
-deleted	A flag that specifies whether the comment has been deleted.	0
-id	The unique ID for the comment.	1610638236
-instance_uid	The platform_hash of session.	a505e730-0b7a-11e3-8ffd-0800200c9a66
-modified_date	The timestamp when the last change was made to the comment.	2015-10-15 21:09:36
-obj_id	The ID associated with the object.	1611086009
-obj_type	The type of object referred to by the comment.	lineitem
-obj_uid	The unique ID of the object referred to in the comment.	600738b9-c002-fff1-8123-0c9a66
-revision	The revision number for the comment.	2
-text	The text of the comment.	blah
-text_type	The type of text used in the comment (e.g. html).	text
-type	The type of comment added to the object.	comment
-uid	The unique ID associated with the comment.	6000639c-bbbb-fff1-8123-0c9a66
-user_id	The ID associated with the user who created the comment.	1610845423
-user_uid	The unique ID associated with the user who created the comment.	60038cef-acc0-fff1-8123-0c9a66
-v	The version of the API.	3
+
+Value |	Description | Example |
+------ | ------------ | --------- |
+account_id | The value determined from the account_uid | 1611253648 |
+account_uid | The account_uid of the object. | 6009c790-accf-fff1-8123-0c9a66 |
+created_date | The date/time when the comment was created. | 2015-10-15 20:58:39 |
+deleted	| A flag that specifies whether the comment has been deleted. | 0 |
+id | The unique ID for the comment. | 1610638236 |
+instance_uid | The platform_hash of session. | a505e730-0b7a-11e3-8ffd-0800200c9a66 |
+modified_date | The timestamp when the last change was made to the comment. | 2015-10-15 21:09:36 |
+obj_id | The ID associated with the object. | 1611086009 |
+obj_type | The type of object referred to by the comment. | lineitem |
+obj_uid | The unique ID of the object referred to in the comment. | 600738b9-c002-fff1-8123-0c9a66
+revision | The revision number for the comment.	| 2|
+text | The text of the comment.	| blah |
+text_type | The type of text used in the comment (e.g. html). | text |
+type | The type of comment added to the object.	| comment |
+uid | The unique ID associated with the comment. | 6000639c-bbbb-fff1-8123-0c9a66|
+user_id	| The ID associated with the user who created the comment. | 1610845423 |
+user_uid | The unique ID associated with the user who created the comment. | 60038cef-acc0-fff1-8123-0c9a66
+v | The version of the API. |3 |
 
 ### Get a list of comments
 
 You can also get a list of comments associated with an object by making a GET request to the OpenX Server.
-Open a terminal window on your system.
-Make the following GET request to the OpenX server (in this case, a line item):
+
+1. Open a terminal window on your system.
+2. Make the following GET request to the OpenX server (in this case, a line item):
+```
 curl -v -X GET 'http://qa-v2-i16-lmi.api-v4-qa-ca.openx.net/ox/4.0/comment/1610638236'  -H "Content-Type:application/json"--cookie $COOKIE | python -mjson.tool
+```
 The values listed in the table below make up the GET request to the OpenX server.
-GET Comments Values
-Value	Description	Example
-resource URL	The URL used to make the API request to the OpenX server.	http://qa-v2-i16-lmi.api-v4-qa-ca.openx.net/ox/4.0/comment
-cookie	The session cookie used in the header.	$COOKIE
-header	The authentication header and cookie used to access the OpenX server.	Content-Type:application/json" -d
-The OpenX server processes the GET request and returns a list of all comments for that specified comment. An example of a comment is shown below.
+
+Value | Description | Example |
+------ | ----------- | --------- |
+resource URL | The URL used to make the API request to the OpenX server. | http://qa-v2-i16-lmi.api-v4-qa-ca.openx.net/ox/4.0/comment|
+cookie | The session cookie used in the header. | $COOKIE |
+header | The authentication header and cookie used to access the OpenX server. | Content-Type:application/json" -d |
+
+3. The OpenX server processes the GET request and returns a list of all comments for that specified comment. An example of a comment is shown below.
+```
 [
     {
         "account_id":"1611253648",
@@ -2617,50 +2626,60 @@ The OpenX server processes the GET request and returns a list of all comments fo
         "v": "3"
 }
 ]
+```
 The values listed in the table below are returned in the response output from the OpenX server.
-GET Comment Response Values
-Values	Description	Example
-account_id	The value determined from account_uid.	1611253648
-account_uid	The account_uid for the associated object.	6009c790-accf-fff1-8123-0c9a66
-created_date	The date/time when the comment was created.	2015-10-15 20:58:39
-deleted	A flag that specifies whether the comment has been deleted.	0
-id	The ID associated with the comment.	1610638236
-instance_uid	Theplatform_hashof the session.	a505e730-0b7a-11e3-8ffd-0800200c9a66
-modified_date	The timestamp when the last change was made to the comment.	2015-10-15 20:58:39
-obj_id	The ID associated with the object.	1611086009
-obj_type	The type of object referred to by the comment.	lineitem
-obj_uid	The unique ID of the object.	600738b9-c002-fff1-8123-0c9a66
-revision	The revision number for the comment.	1
-text	The actual text in the comment.	a comment on a lineitem
-text_type	The type of text used for the comment (e.g. html).	text
-type	The type of comment added to the object.	comment
-uid	The unique ID for the comment.	6000639c-bbbb-fff1-8123-0c9a66
-user_id	The ID associated with the user who created the comment.	1610845423
-user_uid	The unique ID associated with the user who created the comment.	60038cef-acc0-fff1-8123-0c9a66
-v	The version of the API.
 
-## Working with forecasts
+Values | Description | Example |
+------- | ---------- | -------- |
+account_id | The value determined from account_uid. | 1611253648 |
+account_uid | The account_uid for the associated object. | 6009c790-accf-fff1-8123-0c9a66 |
+created_date | The date/time when the comment was created. | 2015-10-15 20:58:39 |
+deleted	| A flag that specifies whether the comment has been deleted. | 0 |
+id | The ID associated with the comment. | 1610638236 |
+instance_uid | Theplatform_hashof the session. | a505e730-0b7a-11e3-8ffd-0800200c9a66 |
+modified_date | The timestamp when the last change was made to the comment. | 2015-10-15 20:58:39 |
+obj_id | The ID associated with the object. | 1611086009 |
+obj_type | The type of object referred to by the comment. | lineitem |
+obj_uid	| The unique ID of the object. | 600738b9-c002-fff1-8123-0c9a66 |
+revision | The revision number for the comment.	| 1 |
+text | The actual text in the comment. | a comment on a lineitem | 
+text_type | The type of text used for the comment (e.g. html). | text |
+type | The type of comment added to the object.	| comment |
+uid | The unique ID for the comment. | 6000639c-bbbb-fff1-8123-0c9a66|
+user_id	| The ID associated with the user who created the comment. | 1610845423 |
+user_uid | The unique ID associated with the user who created the comment. | 60038cef-acc0-fff1-8123-0c9a66 |
+v } The version of the API. | 3 |
+
+
+### Working with forecasts
 
 The OpenX Platform API provides the ability to forecast the impact of creating a new line item on existing line items. Much like the OpenX UI, the API enables you to perform a number of different forecasting actions to create and manage forecasts. Before using the Forecasting API, you should already be familiar with how forecasting works using the OpenX user interface. If, however, you are unfamiliar with how forecasting works, refer to the Forecasting documentation for more information on forecasts and availability.
+
 Forecasting enables you to:
-Get a picture of how much inventory you will have available to sell.
-Plan your inventory setup so you can get a better idea of potential revenue.
-Calculate seasonality for your revenue, or the predicted number of impressions for the past year, based on historical trends.
-Forecast performance.
-Ensure you have enough inventory to fulfill any existing delivery goals for guaranteed line items.
+* Get a picture of how much inventory you will have available to sell.
+* Plan your inventory setup so you can get a better idea of potential revenue.
+* Calculate seasonality for your revenue, or the predicted number of impressions for the past year, based on historical trends.
+* Forecast performance.
+* Ensure you have enough inventory to fulfill any existing delivery goals for guaranteed line items.
+
 When working with forecasting, you have the option to either use the OpenX user interface or API to run forecasts. This section describes how to run forecasts using the Forecasting API.
 
-### API request structure
+#### API request structure
 
 When you make an API request, you must follow the standard HTTP API request structure to ensure the request is properly formatted. You can find more information about how to construct an HTTP request in the Conventions section of this Developer's Guide.
 
-### Running a forecast
+#### Running a forecast
 
 There are different operations you can perform using the Forecasting API. Typically, when you run a forecast, you want to see what impact, if any, adding a new line item will have on existing line items and revenue. By making a single call with your desired arguments, you will see the impact of your line item on other line items and revenue.
+
 The example steps below describe how to run a forecast with revenue information.
+
 Note: : These steps assume you have already been authenticated. If you have not been authenticated, refer to the Authentication section for the steps on how to authenticate your application.
-From your terminal window, make the following cURL request
+
+1. From your terminal window, make the following cURL request.
+
 curl '<your server instance>/ox/4.0/forecast_augur/my_availability_forecasts' -H 'Content-Type: application/json' -H 'Accept: application/json, text/javascript' -H 'Cache-Control: no-cache' -H 'Cookie: i=d7e17e57-71d3-4c33-22e3-d51789f40aba|1444755321; openx3_access_token=3fbacd1bad501a6f503b3300ace57a1e48cd4c9b0e541f0a9f39dd20668ba38750ee6ff445fcac2c20a429f11c8191825e828cc1ba845c674bc1a1c4eb9a12560561d38d1'--data-binary '{"start_date":"2015-10-13 00:00:00","end_date":"2015-10-31 00:00:00","buying_model":"exclusive","timezone":"America/Los_Angeles","pricing_rate":".50","full_oxtl_rule_id":"e02d9dc977cddb2860eafb70a7d920db","targeting_rule":"58a334fe-c92e-4e48-add8-cefe0c89b0fc","currency":"USD","make_good":true,"adunit_uid":"all"}'
+
 Note that you are passing the following arguments in the call:
 API Request Values
 Argument	Value
@@ -2681,36 +2700,46 @@ Targeting Rule	58a334fe-c92e-4e48-add8-cefe0c89b0fc
 Currency	USD
 Make Good	true
 AdUnit UID	all
-You can then perform one of the following API requests to return a list of available full_oxtl_rule_id and targeting_rule values. These values are defined as follows:
-full_oxtl_rule_id - The ID of the targeting rule that you are creating, and contains all the information that you have entered - name, inventory, and the rest of the targeting critieria.
-targeting_rule - The ID of the forecasting object that was created *from* the full oxtl rule. This is the object that is created that forecasting really cares about - which only contains a subset of the targeting critieria that you entered initially.
+
+2. You can then perform one of the following API requests to return a list of available full_oxtl_rule_id and targeting_rule values. These values are defined as follows:
+
+* full_oxtl_rule_id - The ID of the targeting rule that you are creating, and contains all the information that you have entered - name, inventory, and the rest of the targeting critieria.
+* targeting_rule - The ID of the forecasting object that was created *from* the full oxtl rule. This is the object that is created that forecasting really cares about - which only contains a subset of the targeting critieria that you entered initially.
+
 You will want to make these API calls so you can view the different targeting rules available before running a forecast.
+
 curl '<your server instance>/ox/4.0/forecast_augur/forecastrules?avail2=true' -H 'Accept: application/json, text/javascript, /; q=0.01' -H 'X-Requested-With: XMLHttpRequest' -H 'Accept-Language: en-us' -H 'X-Openx-Client: 4.43.0.2335' -H 'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.86 Safari/537.36' -H 'Content-Type: application/json' --compressed
+
 curl '<your server instance>/ox/4.0/forecast_augur/forecastrules?avail2=false' -H 'Accept: application/json, text/javascript, /; q=0.01' -H 'X-Requested-With: XMLHttpRequest' -H 'Accept-Language: en-us' -H 'X-Openx-Client: 4.43.0.2335' -H 'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.86 Safari/537.36' -H 'Content-Type: application/json' --compressed
+
 In each of these API calls, there are a number of arguments that can be passed with the call, which are listed in the table below.
-Forecast Request Values
-Request Value	Value
-Your server address.	your server instance
-The OpenX client.	ox
-The API version.	4.0
-The forecasting service.	forecast_augur
-The available targeting rules and rule IDs you can use in a forecast.	forecastrules
-The application header used in the request.	-H 'Accept: application/json, text/JavaScript, /; q=0.01'
-The HTTP request.	-H 'X-Requested-With: XMLHttpRequest'
-The client header, including language (en-us).	-H 'Accept-Language: en-us' -H 'X-Openx-Client: 4.43.0.2335'
-The user agent header used in the request, including browser and operating system.	-H 'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.86 Safari/537.36'
-The application header returned to the client.	-H 'Content-Type: application/json' --compressed
+
+Request Value |	Value |
+----------- | -------- |
+Your server address. |	your server instance |
+The OpenX client. | ox |
+The API version. | 4.0 |
+The forecasting service. | forecast_augur |
+The available targeting rules and rule IDs you can use in a forecast. | forecastrules |
+The application header used in the request. | -H 'Accept: application/json, text/JavaScript, /; q=0.01'|
+The HTTP request. | -H 'X-Requested-With: XMLHttpRequest'|
+The client header, including language (en-us). | -H 'Accept-Language: en-us' -H 'X-Openx-Client: 4.43.0.2335'|
+The user agent header used in the request, including browser and operating system. | -H 'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.86 Safari/537.36'|
+The application header returned to the client. | -H 'Content-Type: application/json' --compressed |
+
 When making this request, the server processes the request and runs a forecast, displaying the forecast. The table below describes each value returned in the response.
-Forecast Return Values
-Response Value	Description
-status	The status response is used to perform data massaging for response messages since there are special cases for the API. The following response values can be returned: 0=successful, 1=unsuccessful
-goal	The impression goal of the line item for the dates given.
-impacted line items	Line items in the forecast that are impacted with your new line item. For each impacted line item, you will see the following values: loss, goal, previousAllocated, revenueLost, newAllocated, pricingRate, buyingModel, id, name.
-pricingRate	The given pricing rate the user entered. 0.0 is returned if no pricing rate was given.
-msg	Message that acknowledges whether the forecast was run successfully.
-allocated	The total number of allocated impressions for this line item.
-forecasted	The total number of forecasted impressions for this line item. This value is what the line item was forecasted to deliver on, but because of competing line items, did not meet the full forecasted impressions. You can get the unsold impressions by calculating forecasted - allocated = unsold impressions.
-OpenSample
+
+Response Value | Description |
+------------ | ----------- |
+status | The status response is used to perform data massaging for response messages since there are special cases for the API. The following response values can be returned: 0=successful, 1=unsuccessful. |
+goal | The impression goal of the line item for the dates given. |
+impacted line items | Line items in the forecast that are impacted with your new line item. For each impacted line item, you will see the following values: loss, goal, previousAllocated, revenueLost, newAllocated, pricingRate, buyingModel, id, name. |
+pricingRate | The given pricing rate the user entered. 0.0 is returned if no pricing rate was given. |
+msg | Message that acknowledges whether the forecast was run successfully. |
+allocated | The total number of allocated impressions for this line item. |
+forecasted | The total number of forecasted impressions for this line item. This value is what the line item was forecasted to deliver on, but because of competing line items, did not meet the full forecasted impressions. You can get the unsold impressions by calculating forecasted - allocated = unsold impressions. |
+Sample
+```
 {   
    "status":0,
    "goal":4408897,
@@ -2788,28 +2817,32 @@ OpenSample
    "allocated":4408897,
    "forecasted":4408897
 }
-
+```
 ## Working with history
 
 You can get history information associated with an object by making a GET request to the OpenX Server. For more information about the history feature, see History.
+
 Note: All examples assume that you have been authenticated.
-From the terminal window on your system, make the following GET request to the OpenX server (in this case, an order):
+
+1. From the terminal window on your system, make the following ```GET``` request to the OpenX server (in this case, an order):
+```
 curl -v -X GET 'http://server_name.openx.net/ox/4.0/audittrail?obj_type=order&obj_id=1611010849'  -H "Content-Type:application/json"--cookie $COOKIE | python -mjson.tool
+```
 The values listed in the table below are available for the GET request to the OpenX server.
-History values
-Value	Description
-sort	Sorts the output by revision. Options:
-sort=revision: Returns search results by revision in ascending order
-sort=-revision: Returns search results by revision in descending order
-obj_type	Specifies the object type. For example: obj_type='ad'.
-offset=m	Specifies an offset value for a history record search. For example, to bypass the first ten records and start searching at the eleventh record, use "offset=10". To return the second ten records, use "offset=10 limit 10".
-limit=n	Returns the most recent n history records.
-revision	Specifies a revision number. For example, to return one history record, use the obj_id and revision.
-timestamp	Use timestamp to return history information for an object based on a date or date range. For example, use timestamp > or timestamp < to specify history after or before a specific date. Operators include >, <, =, >=, <=, and !=. timestamp format is YYYY-MM-DD.
-obj_id	Specifies an object's id. When just an object id is specified, returns all parsed history records for the specified object revision, displaying the most recent first.
-user	Specifies the user, indicated by an email address, who made a modification to an object.
-The OpenX server processes the GET request and returns a list of all history information for the specified order object. An example of history is shown below.
-OpenExample
+
+Value | Description |
+------- | ------------ |
+sort | Sorts the output by revision. Options: sort=revision: Returns search results by revision in ascending order, sort=-revision: Returns search results by revision in descending order. |
+obj_type | Specifies the object type. For example: obj_type='ad'. |
+offset=m | Specifies an offset value for a history record search. For example, to bypass the first ten records and start searching at the eleventh record, use "offset=10". To return the second ten records, use "offset=10 limit 10". |
+limit=n	| Returns the most recent n history records. |
+revision | Specifies a revision number. For example, to return one history record, use the obj_id and revision. |
+timestamp | Use timestamp to return history information for an object based on a date or date range. For example, use timestamp > or timestamp < to specify history after or before a specific date. Operators include >, <, =, >=, <=, and !=. timestamp format is YYYY-MM-DD.|
+obj_id	| Specifies an object's id. When just an object id is specified, returns all parsed history records for the specified object revision, displaying the most recent first.|
+user | Specifies the user, indicated by an email address, who made a modification to an object. |
+
+2. The OpenX server processes the ```GET``` request and returns a list of all history information for the specified order object. An example of history is shown below.
+```
 [{
 	"uid": "60061321-c001-fff1-8123-b0769b",
 	"primary_trafficker_uid": "6003bcb1-acc0-fff1-8123-b0769b",
@@ -2842,24 +2875,24 @@ OpenExample
 	"external_id": "",
 	"secondary_trafficker_uid": "6003bcb1-acc0-fff1-8123-b0769b"
 }]
+```
 The values listed in the table below are some of the values returned in the response output from the OpenX server. Some values depend on which object type was queried.
-GET History Response Values
-Value
-Description
-Example
-has_more	Indicates whether more records exist: true or false.	false
-obj_type	The type of object being quered for history.	order
-obj_id	The ID associated of the object.	1611010849
-ip	IP address.	10.0.50.56
-reason	The reason or method of modification.	api
-first_name	The user's first name.	John
-last_name	The user's last name.	Advertiser #1
-name	The user's first and last name.	John Advertiser #1
-email	The user's email address. This is used to identify the person who modified an object.	john.smith+i59_adv1@openx.com
-timestamp	The date and time that the object was modified.	2016-01-21 23:08:39
-action	The action that was performed to the object.	create
-real_user	The real user's email address.	john.smith+i59_adv1@openx.com
-type	The type of object query.	audittrail
+
+Value | Description | Example
+------- | ----------- | ---------- |
+has_more | Indicates whether more records exist: true or false.	| false |
+obj_type | The type of object being quered for history.	| order |
+obj_id | The ID associated of the object. | 1611010849 |
+ip | IP address. | 10.0.50.56 |
+reason | The reason or method of modification. | api |
+first_name | The user's first name. | John |
+last_name | The user's last name. | Advertiser #1 |
+name | The user's first and last name. | John Advertiser #1 |
+email | The user's email address. This is used to identify the person who modified an object. | john.smith+i59_adv1@openx.com
+timestamp | The date and time that the object was modified. | 2016-01-21 23:08:39 |
+action | The action that was performed to the object. | create |
+real_user | The real user's email address. | john.smith+i59_adv1@openx.com |
+type | The type of object query. | audittrail
 account_uid	The account_uid for the associated object.	600aa500-accf-fff1-8123-b0769b
 instance_uid	The platform_hash of the session.	af2fd08d-7186-4d75-9a06-61d83cb0769b
 revision	The revision number of the object.	1
