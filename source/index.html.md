@@ -2888,29 +2888,42 @@ reason | The reason or method of modification. | api |
 first_name | The user's first name. | John |
 last_name | The user's last name. | Advertiser #1 |
 name | The user's first and last name. | John Advertiser #1 |
-email | The user's email address. This is used to identify the person who modified an object. | john.smith+i59_adv1@openx.com
+email | The user's email address. This is used to identify the person who modified an object. | john.smith+i59_adv1@openx.com |
 timestamp | The date and time that the object was modified. | 2016-01-21 23:08:39 |
 action | The action that was performed to the object. | create |
 real_user | The real user's email address. | john.smith+i59_adv1@openx.com |
-type | The type of object query. | audittrail
-account_uid	The account_uid for the associated object.	600aa500-accf-fff1-8123-b0769b
-instance_uid	The platform_hash of the session.	af2fd08d-7186-4d75-9a06-61d83cb0769b
-revision	The revision number of the object.	1
-limit	The maximum number of records to return.	30
-offset	The distance (displacement) from the beginning of the object until a given element.	0
+type | The type of object query. | audittrail |
+account_uid | The account_uid for the associated object. | 600aa500-accf-fff1-8123-b0769b |
+instance_uid | The platform_hash of the session. | af2fd08d-7186-4d75-9a06-61d83cb0769b |
+revision | The revision number of the object. | 1 |
+limit | The maximum number of records to return. | 30 |
+offset | The distance (displacement) from the beginning of the object until a given element. | 0 |
+
 Samples
+
 Note: The following samples show both ways to create a history call:
-specify an object type and specific object (obj_id) and then append history (audittrail) parameters
-query the history (audittrail) endpoint and pass in the object type, object id, and additional parameters
+
+* specify an object type and specific object (obj_id) and then append history (audittrail) parameters
+* query the history (audittrail) endpoint and pass in the object type, object id, and additional parameters
+
 Note: Also, the following samples show the abbreviated form of the GET call as opposed to a full curl call.
+
 Return object history with limit and sort
+
 The following sample returns the history of changes for order number 1611010849. The default settings are: "limit=20 sort=-revision".
-GET Request
+
+```GET``` Request
+
 Object id first; history parameters second
+```
 http://server_name.openx.net/ox/4.0/order/1611010849/audittrail
+```
 History (audittrail) object first; object id second
+```
 http://server_name.openx.net/ox/4.0/audittrail?obj_type=order&obj_id=1611010849
-OpenSample response
+```
+Sample response
+```
 {
 	"has_more": false,
 	"objects": [{
@@ -2972,14 +2985,24 @@ OpenSample response
 	"limit": 20,
 	"offset": 0
 }
+```
+
 Return history by revision
+
 The following sample specifies a specific revision (1) in the history.
-GET Request
+
+```GET``` Request
+
 Object id first; history parameters second
+```
 http://server_name.openx.net/ox/4.0/order/1611010849/audittrail?revision=1
+```
 History (audittrail) object first; object id second
+```
 http://server_name.openx.net/ox/4.0/audittrail?obj_type=order&obj_id=1611010849&revision=1
-OpenSample response
+```
+Sample response
+```
 {
 	"has_more": false,
 	"objects": [{
@@ -3041,14 +3064,24 @@ OpenSample response
 	"limit": 20,
 	"offset": 0
 }
+```
+
 Return history by user
+
 The following sample specifies more filters including "user" which is an email address. Note that the email value "john.smith+i59_adv1@openx.com" must be url-encoded because the plus sign (+) has a special meaning (space) in URLs. Therefore, it must be encoded as %2b.
-GET Request
+
+```GET``` Request
+
 Object id first; history parameters second
+```
 http://server_name.openx.net/ox/4.0/order/1611010849/audittrail?limit=30&timestamp>=2016-01-21&user=john.smith+2bi59_adv1@openx.com
+```
 History (audittrail) object first; object id second
+```
 http://server_name.openx.net/ox/4.0/audittrail?obj_type=order&obj_id=1611010849&limit=30&timestamp>=2016-01-21&user=john.smith+2bi59_adv1@openx.com
-OpenSample response
+```
+Sample response
+```
 {
 	"has_more": false,
 	"objects": [{
@@ -3110,44 +3143,78 @@ OpenSample response
 	"limit": 30,
 	"offset": 0
 }
-Additional Samples
-Note: The following samples show only the second way to create a history call (by querying the history (audittrail) endpoint and passing in the object type, object id, and additional parameters).
-Note: The following samples show the full curl call.
-Return all history for an object
-The following sample returns all history records for the specified object id. If more than ten records exist in the database, it returns the most recent ten. To return more than ten records, use limit=int.
-GET Request
-curl -v -X GET 'http://server_name.openx.net/ox/4.0/audittrail?&obj_id=object_id'  -H "Content-Type:application/json"--cookie $COOKIE | python -mjson.tool
-Return history for a specified revision
-The following sample returns one history record for the specified object id and the specified revision.
-GET Request
-curl -v -X GET 'http://server_name.openx.net/ox/4.0/audittrail?&obj_id=object_id&revision=integer'  -H "Content-Type:application/json"--cookie $COOKIE | python -mjson.tool
-Return history modified by a specified user
-The following sample returns all history records for the specified object id that were modified by the specified user (indicated by the email address).
-GET Request
-curl -v -X GET 'http://server_name.openx.net/ox/4.0/audittrail?&obj_id=object_id&user=email_address'  -H "Content-Type:application/json"--cookie $COOKIE | python -mjson.tool
-Return object history after a specified date
-The following sample returns all history records for the specified object id, with a timestamp greater than (>) a specified date.
-GET Request
-curl -v -X GET 'http://server_name.openx.net/ox/4.0/audittrail?&obj_id=object_id&timestamp>2016-01-01'  -H "Content-Type:application/json"--cookie $COOKIE | python -mjson.tool
-Return object history with offset and limit
-The following sample returns all history records for the specified object id, with a limit of 30 and an offset of 10.
-GET Request
-curl -v -X GET 'http://server_name.openx.net/ox/4.0/audittrail?&obj_id=object_id&limit=30&offset=10'  -H "Content-Type:application/json"--cookie $COOKIE | python -mjson.tool
-Return object history with offset, limit, and sort
-The following sample returns all history records for the specified object id, with a limit of 30 and an offset of 10, sorted by timestamp (descending).
-GET Request
-curl -v -X GET 'http://server_name.openx.net/ox/4.0/audittrail?&obj_id=object_id&limit=30&offset=10&sort=-timestamp'  -H "Content-Type:application/json"--cookie $COOKIE | python -mjson.tool
+```
 
-Accessing Reports via OpenX Reporting API
+Additional Samples
+
+Note: The following samples show only the second way to create a history call (by querying the history (audittrail) endpoint and passing in the object type, object id, and additional parameters).
+
+Note: The following samples show the full curl call.
+
+Return all history for an object
+
+The following sample returns all history records for the specified object id. If more than ten records exist in the database, it returns the most recent ten. To return more than ten records, use limit=int.
+
+```GET``` Request
+```
+curl -v -X GET 'http://server_name.openx.net/ox/4.0/audittrail?&obj_id=object_id'  -H "Content-Type:application/json"--cookie $COOKIE | python -mjson.tool
+```
+Return history for a specified revision
+
+The following sample returns one history record for the specified object id and the specified revision.
+
+```GET``` Request
+```
+curl -v -X GET 'http://server_name.openx.net/ox/4.0/audittrail?&obj_id=object_id&revision=integer'  -H "Content-Type:application/json"--cookie $COOKIE | python -mjson.tool
+```
+Return history modified by a specified user
+
+The following sample returns all history records for the specified object id that were modified by the specified user (indicated by the email address).
+
+GET Request
+```
+curl -v -X GET 'http://server_name.openx.net/ox/4.0/audittrail?&obj_id=object_id&user=email_address'  -H "Content-Type:application/json"--cookie $COOKIE | python -mjson.tool
+```
+Return object history after a specified date
+
+The following sample returns all history records for the specified object id, with a timestamp greater than (>) a specified date.
+
+```GET``` Request
+```
+curl -v -X GET 'http://server_name.openx.net/ox/4.0/audittrail?&obj_id=object_id&timestamp>2016-01-01'  -H "Content-Type:application/json"--cookie $COOKIE | python -mjson.tool
+```
+Return object history with offset and limit
+
+The following sample returns all history records for the specified object id, with a limit of 30 and an offset of 10.
+
+```GET``` Request
+```
+curl -v -X GET 'http://server_name.openx.net/ox/4.0/audittrail?&obj_id=object_id&limit=30&offset=10'  -H "Content-Type:application/json"--cookie $COOKIE | python -mjson.tool
+```
+Return object history with offset, limit, and sort
+
+The following sample returns all history records for the specified object id, with a limit of 30 and an offset of 10, sorted by timestamp (descending).
+
+```GET``` Request
+```
+curl -v -X GET 'http://server_name.openx.net/ox/4.0/audittrail?&obj_id=object_id&limit=30&offset=10&sort=-timestamp'  -H "Content-Type:application/json"--cookie $COOKIE | python -mjson.tool
+```
+### Accessing Reports via OpenX Reporting API
 Even though you can access reports using the OpenX user interface, you may also run these same reports using the OpenX API. You can perform many of the same steps in accessing reports using the API as you would when using the OpenX user interface, with the main difference being that you will only need to make a single API request to configure the date range and attributes you want to see in the report.
 If you decide to access reports via the OpenX API, it is assumed you are already intimately familiar with reporting and understand how these reports are configured and generated. If you are unfamiliar with OpenX reporting, please refer to the OpenX Reporting documentation for more detailed information about how reports are managed in the user interface.
+
 To run simple reporting service (SRS) reports, make the following report object calls:
-GET /report/get_reportlistList all reports that are available to you based on your account and user permissions.
-The reports listed by this request typically correspond to the SRS reports available to you in the OpenX UI.
+
+1. ```GET /report/get_reportlistList``` all reports that are available to you based on your account and user permissions. The reports listed by this request typically correspond to the SRS reports available to you in the OpenX UI.
+
 Sample request:
+```
 curl http://openx_server_name/ox/4.0/report/get_reportlist --cookie "openx3_access_token=token_string"
-Where:token_string is a string of characters returned by the GET request at login. To obtain an openx3_access_token, see the authentication topic.
-OpenSample response
+```
+Where:
+token_string is a string of characters returned by the GET request at login. To obtain an openx3_access_token, see the authentication topic.
+```
+Sample response
 {
   "content": [
     {
@@ -3426,10 +3493,15 @@ OpenSample response
   "lang": "en", 
   "status": "OK"
 }
-GET /report/get_report_inputs. Determine the needed parameters for the specified report.
+```
+2. ```GET /report/get_report_inputs```. Determine the needed parameters for the specified report.
+
 Sample request for report inputs:
+```
 curl http://openx_server_name/ox/4.0/report/get_report_inputs?report=inv_perf_pub --cookie "openx3_access_token=token_string"
-OpenSample response for the Inventory Detailed Performance report (inv_perf_pub) inputs
+```
+Sample response for the Inventory Detailed Performance report (inv_perf_pub) inputs
+```
 {
   "acl_resource_type": "inventory", 
   "content": [
@@ -3680,286 +3752,1048 @@ OpenSample response for the Inventory Detailed Performance report (inv_perf_pub)
   "report": "inv_perf_pub", 
   "status": "OK"
 }
+```
 Where: "required": "1" indicates a parameter that is required when running a report. You can include other values as needed.
-GET /report/run. Run the specified report with required and desired URI parameters.
-Available parameters for the report are listed in the response to GET /report/get_report_inputs.
-Recommended run parameters:
-report. The report code, such as report=adunit_size_sum. You can retrieve the available report codes using the GET /report/get_reportlist call.
-start_date
-A specific date in yyyy-mm-dd HH:MM:SS format
+
+3. ```GET /report/run```. Run the specified report with required and desired URI parameters.
+
+Available parameters for the report are listed in the response to ```GET /report/get_report_inputs```.
+
+Recommended ```run``` parameters:
+* ```report```. The report code, such as ```report=adunit_size_sum```. You can retrieve the available report codes using the ```GET /report/get_reportlist``` call.
+* start_date
+
+* A specific date in yyyy-mm-dd HH:MM:SS format
 OR
-An integer for the days backward from today. For example, 7 means "seven days ago" and 0 means "starting today" (inclusive).
-end_date
+* An integer for the days backward from today. For example, 7 means "seven days ago" and 0 means "starting today" (inclusive).
+
+* end_date
 A specific date in yyyy-mm-dd HH:MM:SS format
 OR
 A negative integer for the days from now. For example, -7 means "until seven days from now" and 0 means "before today" (exclusive).
-report_format. The format of the report data to download, such as report_format=csv. Size limitations include:
-csv. No limitations
-json. Maximum of 1000 rows
-pdf. No limitations
-xls. Maximum of 65,000 rows
-variable_parameter. (Optional) Depending on the report code, the response from GET /report/get_report_inputs provides additional parameters
-Sample run request for the Inventory Detailed Performance report:
-curl http://openx_server_name/ox/4.0/report/run?report=inv_perf_pub&start_date=0&end_date=0&do_break=SiteName,AdUnit,AdUnitSize&report_format=json --cookie "openx3_access_token=token_string"
-Where:
-report=inv_perf_pub indicates the Inventory Detailed Performance report
-start_date=0 and end_date=0 indicates today
-do_break=SiteName,AdUnit,AdUnitSize indicates you want to break the report out according to site, ad units, and ad unit sizes
-report_format=json indicates you want to generate a JSON response
-ClosedSample Inventory Detailed Performance report in JSON format
-Parse the JSON response for use with your reporting integration.
-See also
-List of SRS reports in OpenX UI help
-report object reference
 
-Authentication Via Client Libraries
+* report_format. The format of the report data to download, such as report_format=csv. Size limitations include:
+** csv. No limitations
+** json. Maximum of 1000 rows
+** pdf. No limitations
+** xls. Maximum of 65,000 rows
+* variable_parameter. (Optional) Depending on the report code, the response from GET /report/get_report_inputs provides additional parameters
+
+Sample run request for the Inventory Detailed Performance report:
+```
+curl http://openx_server_name/ox/4.0/report/run?report=inv_perf_pub&start_date=0&end_date=0&do_break=SiteName,AdUnit,AdUnitSize&report_format=json --cookie "openx3_access_token=token_string"
+```
+Where:
+* report=inv_perf_pub indicates the Inventory Detailed Performance report
+* start_date=0 and end_date=0 indicates today
+* do_break=SiteName,AdUnit,AdUnitSize indicates you want to break the report out according to site, ad units, and ad unit sizes
+* report_format=json indicates you want to generate a JSON response
+* ClosedSample Inventory Detailed Performance report in JSON format
+```
+{
+  "ReportOutput": {
+    "partialReportBody": "false", 
+    "reportBody": {
+      "ReportColumns": [
+        {
+          "column_name": "currency", 
+          "display_by_default": "true", 
+          "display_name": "Currency", 
+          "isBreakOut": "true", 
+          "summary": null, 
+          "type": "java.lang.String"
+        }, 
+        {
+          "column_name": "SiteName", 
+          "display_by_default": "true", 
+          "display_name": "Site Name", 
+          "isBreakOut": "true", 
+          "summary": "", 
+          "type": "java.lang.String"
+        }, 
+        {
+          "column_name": "site_id", 
+          "display_by_default": "false", 
+          "display_name": "Site ID", 
+          "isBreakOut": "false", 
+          "summary": "", 
+          "type": "java.lang.Integer"
+        }, 
+        {
+          "column_name": "AdUnit", 
+          "display_by_default": "true", 
+          "display_name": "Ad Unit", 
+          "isBreakOut": "true", 
+          "summary": "", 
+          "type": "java.lang.String"
+        }, 
+        {
+          "column_name": "ad_unit_id", 
+          "display_by_default": "false", 
+          "display_name": "Ad Unit ID", 
+          "isBreakOut": "false", 
+          "summary": "", 
+          "type": "java.lang.Integer"
+        }, 
+        {
+          "column_name": "AdUnitSize", 
+          "display_by_default": "true", 
+          "display_name": "Ad Unit Size", 
+          "isBreakOut": "true", 
+          "summary": "", 
+          "type": "java.lang.String"
+        }, 
+        {
+          "column_name": "date", 
+          "display_by_default": "true", 
+          "display_name": "Date\n(America/Los_Angeles)", 
+          "isBreakOut": "true", 
+          "summary": "", 
+          "type": "java.lang.String"
+        }, 
+        {
+          "column_name": "requests", 
+          "display_by_default": "true", 
+          "display_name": "Ad Requests", 
+          "isBreakOut": "false", 
+          "summary": "0", 
+          "type": "java.lang.Long"
+        }, 
+        {
+          "column_name": "impressions", 
+          "display_by_default": "false", 
+          "display_name": "Total Impressions Delivered", 
+          "isBreakOut": "false", 
+          "summary": "0", 
+          "type": "java.lang.Long"
+        }, 
+        {
+          "column_name": "billable_impressions", 
+          "display_by_default": "true", 
+          "display_name": "Billable Impressions Delivered", 
+          "isBreakOut": "false", 
+          "summary": "0", 
+          "type": "java.lang.Long"
+        }, 
+        {
+          "column_name": "publisher_revenue", 
+          "display_by_default": "true", 
+          "display_name": "Revenue", 
+          "isBreakOut": "false", 
+          "summary": "0", 
+          "type": "java.math.BigDecimal"
+        }, 
+        {
+          "column_name": "publisher_billable_eRPM", 
+          "display_by_default": "true", 
+          "display_name": "eCPM", 
+          "isBreakOut": "false", 
+          "summary": "0.000000", 
+          "type": "java.math.BigDecimal"
+        }, 
+        {
+          "column_name": "fill_rate", 
+          "display_by_default": "true", 
+          "display_name": "Fill Rate (%)", 
+          "isBreakOut": "false", 
+          "summary": "0.000000", 
+          "type": "java.math.BigDecimal"
+        }, 
+        {
+          "column_name": "uplift", 
+          "display_by_default": "false", 
+          "display_name": "Uplift(%)", 
+          "isBreakOut": "false", 
+          "summary": "", 
+          "type": "java.math.BigDecimal"
+        }, 
+        {
+          "column_name": "clicks", 
+          "display_by_default": "false", 
+          "display_name": "Clicks Generated", 
+          "isBreakOut": "false", 
+          "summary": "0", 
+          "type": "java.lang.Long"
+        }, 
+        {
+          "column_name": "CTR", 
+          "display_by_default": "false", 
+          "display_name": "CTR", 
+          "isBreakOut": "false", 
+          "summary": "0.000000", 
+          "type": "java.math.BigDecimal"
+        }, 
+        {
+          "column_name": "total_conversions", 
+          "display_by_default": "false", 
+          "display_name": "Conversions", 
+          "isBreakOut": "false", 
+          "summary": "0", 
+          "type": "java.lang.Long"
+        }
+      ], 
+      "ReportData": []
+    }, 
+    "reportHeader": {
+      "DataLastUpdated": "2015-05-21 22:00:00", 
+      "Inputs": [
+        {
+          "Start Date:": "2015-05-21"
+        }, 
+        {
+          "End Date:": "2015-05-21"
+        }, 
+        {
+          "Sites Selected:": "None Selected (default to all applicable values)."
+        }, 
+        {
+          "Ad Units Selected:": "None Selected (default to all applicable values)."
+        }, 
+        {
+          "Delivery Mediums Selected:": "None Selected (default to all applicable values)."
+        }, 
+        {
+          "Ad Unit Sizes Selected:": "None Selected (default to all applicable values)."
+        }, 
+        {
+          "Dimensional Breakouts Selected:": "Ad Unit, Ad Unit Size, Site Name"
+        }, 
+        {
+          "Time Breakout Selected:": "None Selected (default to all applicable values)."
+        }
+      ], 
+      "containsRealTimeData": true, 
+      "reportFootNote": "Report ID: 5d5de782-622e-490b-bb7a-e0b39377f2bc generated on 2015-05-21 23:05:15 UTC,    Last True-Up Hour: 2015-05-21 20:00:00 UTC,    DataLastUpdated: 2015-05-21 22:00:00", 
+      "reportTitle": "Inventory Detailed Performance"
+    }
+  }, 
+  "content": [
+    {
+      "multi": "0", 
+      "name": "start_date", 
+      "required": "1", 
+      "status": "OK", 
+      "value": "1432191600"
+    }, 
+    {
+      "multi": "0", 
+      "name": "end_date", 
+      "required": "1", 
+      "status": "OK", 
+      "value": "1432277999"
+    }, 
+    {
+      "multi": "0", 
+      "name": "timezone", 
+      "required": "0", 
+      "status": "OK", 
+      "value": "America/Los_Angeles"
+    }, 
+    {
+      "multi": "1", 
+      "name": "pub_id", 
+      "required": "1", 
+      "status": "OK", 
+      "value": "ALL,1611179844"
+    }, 
+    {
+      "multi": "1", 
+      "name": "site_id", 
+      "required": "0", 
+      "status": "OK", 
+      "value": ""
+    }, 
+    {
+      "multi": "1", 
+      "name": "ad_unit_id", 
+      "required": "0", 
+      "status": "OK", 
+      "value": ""
+    }, 
+    {
+      "multi": "1", 
+      "name": "dmid", 
+      "required": "0", 
+      "status": "OK", 
+      "value": ""
+    }, 
+    {
+      "multi": "1", 
+      "name": "ad_unit_size", 
+      "required": "0", 
+      "status": "OK", 
+      "value": ""
+    }, 
+    {
+      "multi": "1", 
+      "name": "do_break", 
+      "required": "0", 
+      "status": "OK", 
+      "value": "AdUnit,AdUnitSize,SiteName"
+    }, 
+    {
+      "multi": "0", 
+      "name": "rollup", 
+      "required": "0", 
+      "status": "OK", 
+      "value": ""
+    }, 
+    {
+      "multi": "0", 
+      "name": "platform", 
+      "required": "1", 
+      "status": "OK", 
+      "value": "7fa12c36-57f2-42b8-b968-fc4924c83baa"
+    }, 
+    {
+      "multi": "0", 
+      "name": "report_format", 
+      "required": "0", 
+      "status": "OK", 
+      "value": "json"
+    }, 
+    {
+      "multi": "0",
+      "name": "user_id",
+      "required": "0",
+      "status": "OK",
+      "value": "1610754087"
+    }, 
+    {
+      "multi": "0", 
+      "name": "user_email",
+      "required": "0",
+      "status": "OK",
+      "value": "ad_operations@example.com"
+    }, 
+    {
+      "multi": "0", 
+      "name": "email_notify", 
+      "required": "0", 
+      "status": "OK", 
+      "value": ""
+    }, 
+    {
+      "multi": "0", 
+      "name": "lang", 
+      "required": "1", 
+      "status": "OK", 
+      "value": "en_US"
+    }, 
+    {
+      "multi": "1", 
+      "name": "exclude_columns", 
+      "required": "0", 
+      "status": "OK", 
+      "value": ""
+    }, 
+    {
+      "multi": "1", 
+      "name": "roles", 
+      "required": "0", 
+      "status": "OK", 
+      "value": ""
+    }
+  ], 
+  "lang": "en-US", 
+  "report": "inv_perf_pub", 
+  "report_id": "5d5de782-622e-490b-bb7a-e0b39377f2bc", 
+  "status": "OK"
+}
+```
+4. Parse the JSON response for use with your reporting integration.
+
+## Authentication Via Client Libraries
 Before you can access reports via the OpenX API, you must first be authenticated. You can use an existing OpenX client library or your own library. If you use one of these client libraries, the back-end authentication logic is automatically implemented for you via the client library and you need not perform any OAuth implementation steps. If, however, you choose to write your own client library, you will then need to implement the OAuth authentication logic yourself.
+
 For more detailed information on how to implement authentication logic, refer to the Authentication section.
-Running a Report Using the OpenX API
+
+## Running a Report Using the OpenX API
+
 When generating reports, you likely will want to use a program to make these calls on an predetermined automated basis (hourly, daily, weekly, etc.). If, however, you wish to make these API calls manually, or through a browser, then the examples below provide the necessary information for you to make these individual calls through a terminal window or browser.
+
 When making a request using the API, there are a number of parameters you may pass in your request which will present specific information you want displayed in the report. Although there are only a few required input parameters you need to pass in the request, there are a number of other parameters you can include in your request.
+
 Note: : There are two different report formats you can use in your request: CSV & JSON. you can specify the report format by entering format (csv or JSON) in the report_format parameter.
-Bid Performance Report Example
+
+### Bid Performance Report Example
 One type of report you may wish to run is the Bid Performance Report, which provides insight into bid activity based on inventory, demand, and Private Marketplace deal information. This can help you evaluate both Ad Exchange and Private Marketplace performance.
 When you make the Bid Performance Report request, the report is generated with different columns based on the input parameters and the breakout columns you have specified.
+
 Report Columns
-Column	Description
-Date	The date the report was generated.
-PublisherName	The name of the publisher.
-PublisherID	The ID associated with the publisher.
-SiteName	The name of the site.
-AdUnit	The name of the ad unit.
-AdUnitID	The ID associated with the ad unit.
-AdUnitSize	The size of the ad unit.
-DeliveryMedium	The attribute reports off the "Default Delivery Medium" set at the site level.
-DemandPartner	The demand side platform the buyer is using for the deal.
-DemandPartnerID	The ID associated with the demand side platform the buyer is using for the deal.
-Buyer	The Buyer that is represented by the Exchange entity or DSP (Demand Partner).
-AdvertiserName	The Advertiser represented by the Buyer and owner of the brand being advertised.
-Domain	The domain where the inventory is running (e.g. CNN.com).
-DealName	The name of the deal.
-ExternalDealID	The ID associated for the external deal.
-DealType	The type of deal. Options are: Preferred, Private Auction, WIthin Open Auction.
-DealPriority	A slider that specifies the relative priority for the deal (1-10; 1=highest, 10=lowest)
-DealFloor	The price set for the deal.
-DealAccountExecutive	The sales person for the deal.
-DealAccountManager	The individual responsible for managing the deal.
-PackageName	The name of the package.
-PackageID	The ID associated with the package.
-Country	The country associated with the report.
-PublisherCurrency	The type of currency for the publisher (e.g. USD, Euro)
+Column | Description |
+-------- | ---------- |
+Date | The date the report was generated. |
+PublisherName | The name of the publisher. |
+PublisherID | The ID associated with the publisher. |
+SiteName | The name of the site. |
+AdUnit | The name of the ad unit. |
+AdUnitID | The ID associated with the ad unit.|
+AdUnitSize | The size of the ad unit.|
+DeliveryMedium | The attribute reports off the "Default Delivery Medium" set at the site level.|
+DemandPartner | The demand side platform the buyer is using for the deal. |
+DemandPartnerID	| The ID associated with the demand side platform the buyer is using for the deal.|
+Buyer | The Buyer that is represented by the Exchange entity or DSP (Demand Partner).|
+AdvertiserName | The Advertiser represented by the Buyer and owner of the brand being advertised. |
+Domain	| The domain where the inventory is running (e.g. CNN.com).|
+DealName | The name of the deal.|
+ExternalDealID | The ID associated for the external deal.|
+DealType | The type of deal. Options are: Preferred, Private Auction, WIthin Open Auction.|
+DealPriority | A slider that specifies the relative priority for the deal (1-10; 1=highest, 10=lowest)|
+DealFloor | The price set for the deal.|
+DealAccountExecutive | The sales person for the deal.|
+DealAccountManager | The individual responsible for managing the deal.|
+PackageName | The name of the package.|
+PackageID | The ID associated with the package.|
+Country	| The country associated with the report.|
+PublisherCurrency | The type of currency for the publisher (e.g. USD, Euro)|
+
 Note: : It is assumed you have already been authenticated to use the OpenX Platform API. If you are not already authenticated, use your login credentials to log into your OpenX server instance. Also, because these are daily reports, data will be displayed for a day.
+
 The table below lists the different metrics that can be returned in a report.
+
 Report Metrics
-Metric	Description
-Impressions	The total number of impressions delivered, excluding PSA, house, and companion ads for the selected date range..
-Revenue	The total revenue received for this date range.
-CPM	Revenue per thousand impressions.
-Bid Requests	The number of bid requests sent to the demand partner
-Opportunities	The number of eligible bid opportunities sent to the demand partner. An opportunity is counted each time the buyer has a chance to win an impression. For example, if the bid was eligible for two deals of different priority, and had the opportunity to bid in both deals because the first deal did not fell the impression, these would be counted as two opportunities. On the other hand, if the buyer wins the impression from the first deal by meeting the deal criteria, then the second deal does not count as an opportunity
-Eligibility Rate	= Opportunities/Bid Requests
-Bids	The number of positive bids.
-Bid Rate	= (Bids/Bid Requests)
-Win Rate	= (Impressions/Bid Requests)
-Bid Fill Rate	= (Impressions/Bid Requests)
-Bid CPM	(Sum of bid amounts for all bids/bids) x 1000. Average bid for this date range. Includes both winning and losing bids.
-Win CPM	= (Sum of bid amounts for all winning bids/impressions) x 1000. The average winning bid for this date range.
+
+Metric | Description |
+------- | ----------- |
+Impressions | The total number of impressions delivered, excluding PSA, house, and companion ads for the selected date range.|
+Revenue	| The total revenue received for this date range.|
+CPM | Revenue per thousand impressions.|
+Bid Requests | The number of bid requests sent to the demand partner.|
+Opportunities | The number of eligible bid opportunities sent to the demand partner. An opportunity is counted each time the buyer has a chance to win an impression. For example, if the bid was eligible for two deals of different priority, and had the opportunity to bid in both deals because the first deal did not fell the impression, these would be counted as two opportunities. On the other hand, if the buyer wins the impression from the first deal by meeting the deal criteria, then the second deal does not count as an opportunity. |
+Eligibility Rate | = Opportunities/Bid Requests |
+Bids | The number of positive bids.|
+Bid Rate | = (Bids/Bid Requests) |
+Win Rate | = (Impressions/Bid Requests) |
+Bid Fill Rate | = (Impressions/Bid Requests) |
+Bid CPM	| (Sum of bid amounts for all bids/bids) x 1000. Average bid for this date range. Includes both winning and losing bids.|
+Win CPM	| = (Sum of bid amounts for all winning bids/impressions) x 1000. The average winning bid for this date range.|
+
 The examples below illustrate several different types of Bid Performance Reports, each request passing different parameters. This enables you to see how passing these parameters causes the report to display different sets of information.
+
 Note: : Please remember these are daily reports so data will be displayed for a day.
+
 If you would like to generate a Bid Performance Report with no additional optional (breakout) columns displayed, run the following command from your terminal window:
+```
 curl '<api_url>'/ox/4.0/report/run?start_date=2016-01-19 10:00:00&end_date=2016-01-19 15:00:00&report_format=csv&report=bid_perf
+```
 The table below lists the parameters being passed in this request.
+
 Bid Performance Report w/o Optional Columns Request Values
-Parameter	Description	
-Example Value
-api_url	The URL for the OpenX Reporting API.	
-http://qa-v2-i24-ssp-only.api-v4-qa-ca.openx.net
-api_client	The API client you are using	
-ox
-api_version	The version of the API.	
-4.0
-service	The type of service.	
-report
-start_date	The start date displayed in the report.	
-2016-01-19 10:00:00
-end_date	The end date displayed in the report.	
-2016-01-19 15:00:00
-report_format	The output format for the report. Options are: CSV, JSON	
-csv
-report	The type of report being generated. Options are: Exchange (exch_perf), SSP Revenue (ssp_rev), Bid Performance (bid_perf).	
-The type of report being generated. Options are: Exchange (exch), SSP Revenue (ssp_rev), Bid Performance (bid_perf).
+
+Parameter | Description	| Example Value |
+--------- | ------------ | -------------- |
+api_url	| The URL for the OpenX Reporting API.| http://qa-v2-i24-ssp-only.api-v4-qa-ca.openx.net|
+api_client | The API client you are using | ox |
+api_version | The version of the API. | 4.0 |
+service	| The type of service. | report |
+start_date | The start date displayed in the report. | 2016-01-19 10:00:00|
+end_date | The end date displayed in the report. | 2016-01-19 15:00:00 |
+report_format | The output format for the report. | Options are: CSV, JSON | csv|
+report | The type of report being generated. Options are: Exchange (exch_perf), SSP Revenue (ssp_rev), Bid Performance (bid_perf). | The type of report being generated. Options are: Exchange (exch), SSP Revenue (ssp_rev), Bid Performance (bid_perf).|
+
 If, however, you want to generate a Bid Performance Report, but with all optional parameters, run the following command from your terminal window.
+```
 curl '<api_url>'/ox/4.0/report/run?start_date=2016-01-19 10:00:00&end_date=2016-01-19 15:00:00&do_break=SiteName,AdUnit,AdUnitSize,DeliveryMedium,DemandPartner,Buyer,AdvertiserName,domain,DealName,DealFloor,PackageName,Country&report_format=csv&report=bid_perf
+```
 In this example, note that you are passing the values listed in the table below.
+
 Bid Performance Report w/ Optional Columns Request Values
-Parameter	Description	
-Example Value
-api_url	The URL for the OpenX Reporting API.	
-http://qa-v2-i24-ssp-only.api-v4-qa-ca.openx.net
-api_client	The API client you are using	
-ox
-api_version	The version of the API.	
-4.0
-service	The type of service.	
-report
-start_date	The start date displayed in the report.	
-2016-01-19 10:00:00
-end_date	The end date displayed in the report.	
-2016-01-19 15:00:00
-do_break	The breakout parameters being used in the request.	
-SiteName, AdUnit, AdUnitSize, DeliveryMedium, DemandPartner, Buyer, AdvertiserName, domain, DealName, DealFloor, PackageName, Country
-report_format	The output format for the report. Options are CSV and JSON.	
-csv
-report
-The type of report.
-bid_perf
+
+Parameter | Description | Example Value |
+--------- | ------------ | ------------- |
+api_url	| The URL for the OpenX Reporting API. | http://qa-v2-i24-ssp-only.api-v4-qa-ca.openx.net|
+api_client | The API client you are using| ox |
+api_version | The version of the API. | 4.0 |
+service | The type of service. | report |
+start_date | The start date displayed in the report. | 2016-01-19 10:00:00 |
+end_date | The end date displayed in the report.| 2016-01-19 15:00:00 |
+do_break | The breakout parameters being used in the request. | SiteName, AdUnit, AdUnitSize, DeliveryMedium, DemandPartner, Buyer, AdvertiserName, domain, DealName, DealFloor, PackageName, Country | 
+report_format | The output format for the report. Options are CSV and JSON. | csv |
+report | The type of report. | bid_perf |
+
 To generate a Bid Performance Report report, and filter on some publishers for which you have  access, run the following command from your terminal window:
+```
 curl '<api_url>'/ox/4.0/report/run?start_date=2016-01-19 10:00:00&end_date=2016-01-19 15:00:00&do_break=SiteName,AdUnit,AdUnitSize,DeliveryMedium,DemandPartner,Buyer,AdvertiserName,domain,DealName,DealFloor,PackageName,Country&report_format=csv&pub_id=1610635512,1610636382&report=bid_perf
+```
 Note that you are passing the values listed in the table below as part of the request.
+
 Bid Performance Report Publisher Filters Request Values
-Parameter	Description	
-Example Value
-api_url	The URL for the OpenX Reporting API.	
-http://qa-v2-i24-ssp-only.api-v4-qa-ca.openx.net
-api_client	The API client.	
-ox
-api_version	The API version.	
-4.0
-service	The service used in the request.	
-report
-start_date	The start date displayed in the report.	
-2016-01-19 10:00:00
-end_date	The end date displayed in the report.	
-2016-01-19 15:00:00
-do_break	The breakout parameters being used in the request.	
-SiteName, AdUnit, AdUnitSize, DeliveryMedium, DemandPartner, Buyer, AdvertiserName, domain, DealName, DealFloor, PackageName, Country
-report_format	The output format for the report. Options are CSV and JSON.	
-csv
-pub_id
-ID of the publishers used in the report.
-1610635512, 1610636382
-report
-The type of report.
-bid_perf
+
+Parameter | Description | Example Value |
+api_url | The URL for the OpenX Reporting API. | http://qa-v2-i24-ssp-only.api-v4-qa-ca.openx.net |
+api_client | The API client.| ox |
+api_version | The API version. | 4.0 |
+service	| The service used in the request.| report|
+start_date | The start date displayed in the report.| 2016-01-19 10:00:00|
+end_date | The end date displayed in the report. | 2016-01-19 15:00:00 |
+do_break | The breakout parameters being used in the request.|SiteName, AdUnit, AdUnitSize, DeliveryMedium, DemandPartner, Buyer, AdvertiserName, domain, DealName, DealFloor, PackageName, Country|
+report_format | The output format for the report. Options are CSV and JSON. | csv |
+pub_id | ID of the publishers used in the report.| 1610635512, 1610636382|
+report | The type of report. | bid_perf |
+
 Note: When entering dates in the request, the date format must be "YYYY-MM-DD  HH:MM:SS." Please note that the time displayed is the local time for the server instance.
-Making a cURL Request
+
+#### Making a cURL Request
 You may also generate a Bid Performance Report by making a single cURL call. Like the URL example above, this example assumes you are already logged in and authenticated; however, unlike the example above, make sure you take note of the cookie information, as you will need to include this information in your cURL call.
+
 To generate a Bid Performance Report using a single cURL call, enter the following command:
+```
 curl '<api_url>'/ox/4.0/report/run?start_date=2016-01-19 10:00:00&end_date=2016-01-19 15:00:00&do_break=SiteName,AdUnit,AdUnitSize,DeliveryMedium,DemandPartner,Buyer,AdvertiserName,domain,DealName,DealFloor,PackageName,Country&report_format=csv&report=bid_perf' -H 'Cookie: openx3_access_token=cf708d438a38193a81c953fc5c7346ca438b056a5e2b9; reports=%7B%22name%22%3A%22600000e0-acc0-fff1-8123-9c5e2e%22%2C%22success%22%3Atrue%2C%22server%22%3A%22qa-mstr-er-ca-01.ca.dc.openx.org%22%2C%22project%22%3A%22New%20External%20Reporting%22%2C%22session_timeout%22%3A21600000%2C%22sessionState%22%3A%220.0000000111489889517bca0cd3b892ee89d916aa612a4c2256dd27f476f117c7a5f5526a22aa41b7.1033.0.1.UTC.wps*_1.0.1.1.New%20External%20Reporting.03CE130C11E4499E44870080EFB525B7.0-1033.1.1_-0.1.0_-1033.1.1_10.1.0.*0%22%2C%22last_reports_session_check%22%3A1453712065071%2C%22dates_selected%22%3A%7B%22prior_start%22%3A%2220160111%22%2C%22prior_end%22%3A%2220160117%22%2C%22start%22%3A%2220160118%22%2C%22end%22%3A%2220160124%22%2C%22start_offset%22%3A7%2C%22end_offset%22%3A1%2C%22prior_start_offset%22%3A14%2C%22prior_end_offset%22%3A8%2C%22id_selected%22%3A%22last_seven_days%22%7D%7D' --compressed
-Note: : The following parameters are used in this request.
+```
+Note: The following parameters are used in this request.
+
 Bid Performance Report cURL Request Values
-Parameter	Description	
-Example Value
-api_url	The URL for the OpenX Reporting API.	
-http://qa-v2-i24-ssp-only.api-v4-qa-ca.openx.net
-api_client	The API client.	
-ox
-api_version	The API version.	
-4.0
-service	The service used in the request.	
-report
-start_date	The start date displayed in the report.	
-2016-01-19 10:00:00
-end_date	The end date displayed in the report.	
-2016-01-19 15:00:00
-do_break	The breakout parameters being used in the request.	
-SiteName, AdUnit, AdUnitSize, DeliveryMedium, DemandPartner, Buyer, AdvertiserName, domain, DealName, DealFloor, PackageName, Country
-report_format	The output format for the report. Options are CSV and JSON.	
-csv
-report
-The type of report.
-bid_perf
-cookie
-The session access token and cookie.
-openx3_access_token=cf708d438a38193a81c953fc5c7346ca438b056a5e2b9reports=%7B%22name%22%3A%22600000e0-acc0-fff1-8123 9c5e2e%22%2C%22success%22%3Atrue%2C%22server%22%3A%22
+
+Parameter | Description | Example Value
+--------- | ----------- | ------------- |
+api_url	| The URL for the OpenX Reporting API. | http://qa-v2-i24-ssp-only.api-v4-qa-ca.openx.net|
+api_client | The API client. | ox|
+api_version | The API version. | 4.0 |
+service | The service used in the request. | report |
+start_date | The start date displayed in the report.| 2016-01-19 10:00:00 |
+end_date | The end date displayed in the report.| 2016-01-19 15:00:00 |
+do_break | The breakout parameters being used in the request.| SiteName, AdUnit, AdUnitSize, DeliveryMedium, DemandPartner, Buyer, AdvertiserName, domain, DealName, DealFloor, PackageName, Country|
+report_format | The output format for the report. Options are CSV and JSON. | csv |
+report | The type of report.| bid_perf|
+cookie | The session access token and cookie.| openx3_access_token=cf708d438a38193a81c953fc5c7346ca438b056a5e2b9reports=%7B%22name%22%3A%22600000e0-acc0-fff1-8123 9c5e2e%22%2C%22success%22%3Atrue%2C%22server%22%3A%22|
+
 Working with a Completed Report
+
 Once you have structured your request and selected your output format (CSV or JSON), the API will process the request and return raw data based on the selected input parameters. You can then use this data in your preferred visualization tool (e.g. Excel, Word, etc.) to sort and analyze the data.
 
 ## Platform API reference
 
-Objects
+### Objects
+
 The OpenX Platform API includes the following objects, which support CRUD operations:
-account
-ad
-adunit
-adunitgroup
-audiencesegment
-comment
-competitiveexclusion
-conversiontag
-creative
-deal
-floorrule
-lineitem
-monetization
-optimization
-order
-package
-paymenthistory
-report
-site
-sitesection
-user
+
+* account
+* ad
+* adunit
+* adunitgroup
+* audiencesegment
+* comment
+* competitiveexclusion
+* conversiontag
+* creative
+* deal
+* floorrule
+* lineitem
+* monetization
+* optimization
+* order
+* package
+* paymenthistory
+* report
+* site
+* sitesection
+* user
+
 Tip: Objects are identified by both their object_name_id ("ID") and object_name_uid ("UID") fields. For more details, see About IDs and UIDs.
-Services
-The Platform API includes the following services, which support read (GET) operations:
-adquality. (UI only) An ad quality service that handles the review and blocking of creatives
-audit_trail
-dashboard
-eventfeed
-forecast_augur. (UI only) A forecasting service that calculates impression estimates for inventory and predicts availability for line items
-geo
-i18n. (UI only) Language tools used for localization
-market
-options
-oxsearch. (UI only) A service for searching OpenX data used in the UI
-reports. (UI only) Supports OpenX reporting services via the UI
-session
-subtypes
+
+### Services
+
+The Platform API includes the following services, which support read (```GET```) operations:
+
+* adquality. (UI only) An ad quality service that handles the review and blocking of creatives
+* audit_trail
+* dashboard
+* eventfeed
+* forecast_augur. (UI only) A forecasting service that calculates impression estimates for inventory and predicts availability for line items
+* geo
+* i18n. (UI only) Language tools used for localization
+* market
+* options
+* oxsearch. (UI only) A service for searching OpenX data used in the UI
+* reports. (UI only) Supports OpenX reporting services via the UI
+* session
+* subtypes
 
 ### Account object
 
 A business unit or business relationship as it is represented in OpenX, such as an ad network, advertiser, publisher, or agency
+
 The account object has the following calls:
-GET /account. List all accounts.
-GET /account/account_UID. Read the specified account.
-GET /account/account_UID/default_market. Retrieve market information from the parent account.
-GET /account/account_UID/generate_cookie_mapping_url_template. Retrieve data for the cookie-mapping URL form (used by the OpenX UI).
-GET /account/account_UID/generate_rtb_data_url_template. Retrieve data for the Real-Time Bid Settings form (used by the OpenX UI).
-GET /account/account_UID/lifetime_budget_remaining. Retrieve payments-to-date minus lifetime-spending-to-date for the specified account.
-GET /account/account_UID/list_accounts. List sub-accounts for the specified account.
-GET /account/account_UID/list_audience_segments. List audience segments for the specified account.
-GET /account/account_UID/list_competitive_exclusions. List competitive exclusions for the specified account.
-GET /account/account_UID/list_conversion_tags. List conversion tags for the specified account.
-GET /account/account_UID/list_creatives. List creatives for the specified account.
-GET /account/account_UID/list_orders. List orders for the specified account.
-GET /account/account_UID/list_packages. List packages for the specified account.
-GET /account/account_UID/list_payment_history. List payment history for the specified account.
-GET /account/account_UID/list_sites. List sites for the specified account.
-GET /account/account_UID/list_users. List users for the specified account.
-GET /account/account_UID/monthly_budget_remaining
-For Ad Exchange accounts without payments, return the monthly budget minus monthly spending.
-For Ad Exchange accounts with payments, return a number calculated based on lifetime payment, lifetime spending, monthly spending to date, and monthly budget.
-Otherwise, return 0.
-GET /account/account_UID/payments_to_date. Return the sum of all payments up to the current date for the specified account.
-GET /account/all_unlinked_lift_accounts. List all accounts that are not data-linked advertisers.
-GET /account/available_fieldstype_full=account.type. List the available fields to create or update an account of the specified type.
-ClosedSample response for GET /account/available_fieldstype_full=account.network
-GET /account/check_ssrtb_endpoint. Validate server-side real-time bidding (SSRTB) endpoints.
-GET /account/performance/account_UID. Get the performance metrics for the specified account within the (optional) date range.
+
+* ```GET /account```. List all accounts.
+* ```GET /account/account_UID```. Read the specified account.
+* ```GET /account/account_UID/default_market```. Retrieve market information from the parent account.
+* ```GET /account/account_UID/generate_cookie_mapping_url_template```. Retrieve data for the cookie-mapping URL form (used by the OpenX UI).
+* ```GET /account/account_UID/generate_rtb_data_url_template```. Retrieve data for the Real-Time Bid Settings form (used by the OpenX UI).
+* ```GET /account/account_UID/lifetime_budget_remaining```. Retrieve payments-to-date minus lifetime-spending-to-date for the specified account.
+* ```GET /account/account_UID/list_accounts```. List sub-accounts for the specified account.
+* ```GET /account/account_UID/list_audience_segments```. List audience segments for the specified account.
+* ```GET /account/account_UID/list_competitive_exclusions```. List competitive exclusions for the specified account.
+* ```GET /account/account_UID/list_conversion_tags```. List conversion tags for the specified account.
+* ```GET /account/account_UID/list_creatives```. List creatives for the specified account.
+* ```GET /account/account_UID/list_orders```. List orders for the specified account.
+* ```GET /account/account_UID/list_packages```. List packages for the specified account.
+* ```GET /account/account_UID/list_payment_history```. List payment history for the specified account.
+* ```GET /account/account_UID/list_sites```. List sites for the specified account.
+* ```GET /account/account_UID/list_users```. List users for the specified account.
+* ```GET /account/account_UID/monthly_budget_remaining```
+** For Ad Exchange accounts without payments, return the monthly budget minus monthly spending.
+** For Ad Exchange accounts with payments, return a number calculated based on lifetime payment, lifetime spending, monthly spending to date, and monthly budget.
+** Otherwise, return 0.
+* GET /account/account_UID/payments_to_date. Return the sum of all payments up to the current date for the specified account.
+* GET /account/all_unlinked_lift_accounts. List all accounts that are not data-linked advertisers.
+* GET /account/available_fieldstype_full=account.type. List the available fields to create or update an account of the specified type.
+
+Sample response for GET /account/available_fieldstype_full=account.network
+```
+{
+  "account_id": {
+    "auto": true, 
+    "has_dependencies": false, 
+    "readonly": true, 
+    "required": false, 
+    "type": "int"
+  }, 
+  "account_uid": {
+    "has_dependencies": false, 
+    "readonly": false, 
+    "required": true, 
+    "type": "account_uid", 
+    "url": "/options/account_options"
+  }, 
+  "acl": {
+    "acl": "acl", 
+    "has_dependencies": false, 
+    "readonly": false, 
+    "required": false, 
+    "type": "flags"
+  }, 
+  "acl_override": {
+    "acl": "network.acl_override", 
+    "available_fields": {}, 
+    "default": {}, 
+    "has_dependencies": false, 
+    "readonly": false, 
+    "required": false, 
+    "type": "object"
+  }, 
+  "country_of_business": {
+    "default": "us", 
+    "has_dependencies": false, 
+    "maxlen": 255, 
+    "readonly": false, 
+    "required": true, 
+    "type": "varchar", 
+    "url": "/options/country_options"
+  }, 
+  "created_date": {
+    "auto": true, 
+    "has_dependencies": false, 
+    "readonly": true, 
+    "required": false, 
+    "type": "datetime"
+  }, 
+  "currency": {
+    "has_dependencies": false, 
+    "maxlen": 255, 
+    "readonly": false, 
+    "required": true, 
+    "type": "varchar", 
+    "url": "/options/currency_options"
+  }, 
+  "currency_id": {
+    "auto": true, 
+    "has_dependencies": false, 
+    "readonly": true, 
+    "required": false, 
+    "type": "int"
+  }, 
+  "deleted": {
+    "auto": true, 
+    "default": "0", 
+    "has_dependencies": false, 
+    "readonly": true, 
+    "required": false, 
+    "type": "int"
+  }, 
+  "dmp_sources": {
+    "acl": "dmp", 
+    "has_dependencies": false, 
+    "maxlen": 255, 
+    "readonly": false, 
+    "required": false, 
+    "type": "varchar"
+  }, 
+  "experience": {
+    "has_dependencies": false, 
+    "maxlen": 64, 
+    "readonly": false, 
+    "required": true, 
+    "type": "varchar", 
+    "url": "/options/network_experience_options"
+  }, 
+  "external_id": {
+    "has_dependencies": false, 
+    "maxlen": 255, 
+    "readonly": false, 
+    "required": false, 
+    "type": "varchar"
+  }, 
+  "hidden": {
+    "acl": "hidden", 
+    "default": "0", 
+    "has_dependencies": false, 
+    "readonly": false, 
+    "required": false, 
+    "type": "int"
+  }, 
+  "id": {
+    "auto": true, 
+    "has_dependencies": false, 
+    "readonly": true, 
+    "required": false, 
+    "type": "int"
+  }, 
+  "instance_uid": {
+    "auto": true, 
+    "has_dependencies": false, 
+    "maxlen": 255, 
+    "readonly": true, 
+    "required": false, 
+    "type": "varchar"
+  }, 
+  "market": {
+    "available_fields": {
+      "allow_unbranded_buyers": {
+        "default": "1", 
+        "has_dependencies": false, 
+        "readonly": false, 
+        "required": false, 
+        "type": "int"
+      }, 
+      "blocked_adcategories": {
+        "default": {
+          "1": true, 
+          "10": true, 
+          "12": true, 
+          "26": true, 
+          "99": true
+        }, 
+        "has_dependencies": false, 
+        "items": {
+          "has_dependencies": false, 
+          "maxlen": 255, 
+          "readonly": false, 
+          "required": true, 
+          "type": "varchar", 
+          "url": "/options/ad_category_options"
+        }, 
+        "readonly": false, 
+        "required": false, 
+        "type": "array"
+      }, 
+      "blocked_contentattributes": {
+        "default": {
+          "1": true, 
+          "15": true, 
+          "8": true
+        }, 
+        "has_dependencies": false, 
+        "items": {
+          "has_dependencies": false, 
+          "maxlen": 255, 
+          "readonly": false, 
+          "required": true, 
+          "type": "varchar", 
+          "url": "/options/content_attribute_options"
+        }, 
+        "readonly": false, 
+        "required": false, 
+        "type": "array"
+      }, 
+      "blocked_creativetypes": {
+        "default": {
+          "11": true
+        }, 
+        "has_dependencies": false, 
+        "items": {
+          "has_dependencies": false, 
+          "maxlen": 255, 
+          "readonly": false, 
+          "required": true, 
+          "type": "varchar", 
+          "url": "/options/creative_type_options"
+        }, 
+        "readonly": false, 
+        "required": false, 
+        "type": "array"
+      }, 
+      "blocked_languages": {
+        "has_dependencies": false, 
+        "items": {
+          "has_dependencies": false, 
+          "maxlen": 255, 
+          "readonly": false, 
+          "required": true, 
+          "type": "varchar", 
+          "url": "/options/language_options"
+        }, 
+        "readonly": false, 
+        "required": false, 
+        "type": "array"
+      }, 
+      "brand_labels": {
+        "available_fields": {
+          "label_ids": {
+            "has_dependencies": false, 
+            "items": {
+              "has_dependencies": false, 
+              "maxlen": 255, 
+              "readonly": false, 
+              "required": false, 
+              "type": "varchar", 
+              "url": "/options/market_brand_group_options"
+            }, 
+            "readonly": false, 
+            "required": false, 
+            "type": "array"
+          }, 
+          "op": {
+            "default": "allow_all", 
+            "has_dependencies": false, 
+            "maxlen": 255, 
+            "readonly": false, 
+            "required": true, 
+            "type": "varchar", 
+            "url": "/options/market_filter_region_options"
+          }
+        }, 
+        "has_dependencies": false, 
+        "readonly": false, 
+        "required": false, 
+        "type": "object"
+      }, 
+      "brands": {
+        "available_fields": {
+          "ids": {
+            "has_dependencies": false, 
+            "items": {
+              "has_dependencies": false, 
+              "readonly": false, 
+              "required": false, 
+              "type": "int"
+            }, 
+            "readonly": false, 
+            "required": false, 
+            "type": "array"
+          }, 
+          "op": {
+            "default": "allow_all", 
+            "has_dependencies": false, 
+            "maxlen": 255, 
+            "readonly": false, 
+            "required": true, 
+            "type": "varchar", 
+            "url": "/options/market_filter_region_options"
+          }
+        }, 
+        "has_dependencies": false, 
+        "readonly": false, 
+        "required": false, 
+        "type": "object"
+      }, 
+      "currency": {
+        "default": "USD", 
+        "has_dependencies": false, 
+        "maxlen": 255, 
+        "readonly": false, 
+        "required": true, 
+        "type": "varchar", 
+        "url": "/options/currency_options"
+      }, 
+      "domains": {
+        "has_dependencies": false, 
+        "items": {
+          "has_dependencies": false, 
+          "maxlen": 255, 
+          "readonly": false, 
+          "required": true, 
+          "type": "varchar"
+        }, 
+        "readonly": false, 
+        "required": false, 
+        "type": "array"
+      }, 
+      "filters": {
+        "has_dependencies": false, 
+        "items": {
+          "available_fields": {
+            "ids": {
+              "has_dependencies": false, 
+              "items": {
+                "has_dependencies": false, 
+                "readonly": false, 
+                "required": true, 
+                "type": "int"
+              }, 
+              "readonly": false, 
+              "required": false, 
+              "type": "array"
+            }, 
+            "op": {
+              "default": "allow_all", 
+              "has_dependencies": false, 
+              "maxlen": 255, 
+              "readonly": false, 
+              "required": true, 
+              "type": "varchar", 
+              "url": "/options/market_filter_region_options"
+            }, 
+            "region": {
+              "has_dependencies": false, 
+              "maxlen": 255, 
+              "readonly": false, 
+              "required": true, 
+              "type": "varchar", 
+              "url": "/options/market_operators"
+            }
+          }, 
+          "has_dependencies": false, 
+          "readonly": false, 
+          "required": false, 
+          "type": "object"
+        }, 
+        "readonly": false, 
+        "required": false, 
+        "type": "array"
+      }
+    }, 
+    "has_dependencies": false, 
+    "readonly": false, 
+    "required": true, 
+    "type": "object"
+  }, 
+  "market_active": {
+    "auto": true, 
+    "default": "0", 
+    "has_dependencies": false, 
+    "readonly": true, 
+    "required": false, 
+    "type": "int"
+  }, 
+  "market_currency_id": {
+    "auto": true, 
+    "has_dependencies": false, 
+    "readonly": true, 
+    "required": false, 
+    "type": "int"
+  }, 
+  "modified_date": {
+    "auto": true, 
+    "has_dependencies": false, 
+    "readonly": true, 
+    "required": false, 
+    "type": "datetime"
+  }, 
+  "name": {
+    "has_dependencies": false, 
+    "maxlen": 255, 
+    "readonly": false, 
+    "required": true, 
+    "type": "varchar"
+  }, 
+  "notes": {
+    "has_dependencies": false, 
+    "maxlen": 25000, 
+    "readonly": false, 
+    "required": false, 
+    "type": "varchar"
+  }, 
+  "status": {
+    "acl": "network.status", 
+    "default": "Active", 
+    "has_dependencies": false, 
+    "maxlen": 12, 
+    "readonly": false, 
+    "required": true, 
+    "type": "varchar", 
+    "url": "/options/account_status_options"
+  }, 
+  "third_party_network_uid": {
+    "acl": [      "instance.buyer_experience"    ], 
+    "has_dependencies": false, 
+    "maxlen": 255, 
+    "readonly": false, 
+    "required": false, 
+    "type": "varchar", 
+    "url": "/options/third_party_network_options"
+  }, 
+  "timezone": {
+    "default": "UTC", 
+    "has_dependencies": false, 
+    "maxlen": 255, 
+    "readonly": false, 
+    "required": true, 
+    "type": "varchar", 
+    "url": "/options/timezone_options"
+  }, 
+  "timezone_id": {
+    "auto": true, 
+    "has_dependencies": false, 
+    "readonly": true, 
+    "required": false, 
+    "type": "int"
+  }, 
+  "type": {
+    "auto": true, 
+    "default": "account", 
+    "has_dependencies": false, 
+    "maxlen": 255, 
+    "readonly": true, 
+    "required": false, 
+    "type": "varchar", 
+    "value": "account"
+  }, 
+  "type_full": {
+    "has_dependencies": false, 
+    "maxlen": 64, 
+    "readonly": false, 
+    "required": true, 
+    "type": "varchar", 
+    "value": "account.network"
+  }, 
+  "uid": {
+    "auto": true, 
+    "has_dependencies": false, 
+    "readonly": true, 
+    "required": false, 
+    "type": "uid"
+  }, 
+  "v": {
+    "auto": true, 
+    "default": "3", 
+    "has_dependencies": false, 
+    "options": [], 
+    "readonly": true, 
+    "required": false, 
+    "type": "int"
+  }
+}
+```
+* ```GET /account/check_ssrtb_endpoint```. Validate server-side real-time bidding (SSRTB) endpoints.
+* ```GET /account/performance/account_UID```. Get the performance metrics for the specified account within the (optional) date range.
 Parameters
-start_date
+* ```start_date```
 A specific date in yyyy-mm-dd HH:MM:SS format
 OR
 An integer for the days backward from today. For example, 7 means "seven days ago" and 0 means "starting today" (inclusive).
-end_date
+* ```end_date```
 A specific date in yyyy-mm-dd HH:MM:SS format
 OR
 A negative integer for the days from now. For example, -7 means "until seven days from now" and 0 means "before today" (exclusive).
-GET /account/unlinked_lift_accounts. List advertiser accounts (without third-party network) and Ad Exchange advertiser accounts (with or without third-party network).
-POST /account. Create one or more accounts.
+* ```GET /account/unlinked_lift_accounts```. List advertiser accounts (without third-party network) and Ad Exchange advertiser accounts (with or without third-party network).
+* ```POST /account```. Create one or more accounts.
+
 Example
+
 Sample batch create
+```
  openx_server_name/ox/4.0/account \
 --cookie "openx3_access_token=
                                     token_string
@@ -3983,9 +4817,10 @@ Sample batch create
                     "experience": "advertiser"
                 }
  ]'
-POST /account/account_UID/clone. Create a copy of the specified account.
-PUT /account. Update the specified accounts.
-PUT /account/account_UID. Update the specified account.
+ ```
+* ```POST /account/account_UID/clone```. Create a copy of the specified account.
+* ```PUT /account```. Update the specified accounts.
+* ```PUT /account/account_UID```. Update the specified account.
 
 ### Ad object
 
