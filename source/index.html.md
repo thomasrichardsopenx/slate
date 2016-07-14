@@ -5755,74 +5755,94 @@ Sample available_fields response
 * ```GET /adunitgroup/performance/ad_unit_group_UID```. Get the performance metrics for the specified ad unit group within the (optional) date range.
 
 Parameters
-
+```
 start_date
+```
 A specific date in yyyy-mm-dd HH:MM:SS format
 
 OR
-An integer for the days backward from today. For example, 7 means "seven days ago" and 0 means "starting today" (inclusive).
 
+An integer for the days backward from today. For example, 7 means "seven days ago" and 0 means "starting today" (inclusive).
+```
 end_date
+```
 A specific date in yyyy-mm-dd HH:MM:SS format
 
 OR
 
 A negative integer for the days from now. For example, -7 means "until seven days from now" and 0 means "before today" (exclusive).
 
-* POST /adunitgroup. Create one or more ad unit groups.
-* POST /adunitgroup/ad_unit_group_UID/clone. Clone the specified ad unit group.
-* PUT /adunitgroup. Update the specified ad unit groups.
-* PUT /adunitgroup/ad_unit_group_UID. Update the specified ad unit group.
+* ```POST /adunitgroup```. Create one or more ad unit groups.
+* ```POST /adunitgroup/ad_unit_group_UID/clone```. Clone the specified ad unit group.
+* ```PUT /adunitgroup```. Update the specified ad unit groups.
+* ```PUT /adunitgroup/ad_unit_group_UID```. Update the specified ad unit group.
 
 ### audiencesegment object
 
-An inventory object that represents a group of users with similar traits or characteristics
-The audiencesegment object has the following calls:
-DELETE /audiencesegment. Delete the specified audience segments.
-DELETE /audiencesegment/audience_segment_UID. Delete the specified audience segment.
-GET /audiencesegment. List all audience segments.
-GET /audiencesegment/audience_segment_UID. Read the specified audience segment.
-GET /audiencesegment/audience_segment_UID/generate_tag. Generate the HTML tag for the audience segment.
-GET /audiencesegment/available_fields. List the available fields to create or update an audience segment.
-GET /audiencesegment/performance/audience_segment_UID. Get the performance metrics for the specified audience segment within the (optional) date range.
+An inventory object that represents a group of users with similar traits or characteristics. The ```audiencesegment``` object has the following calls:
+
+* ```DELETE /audiencesegment```. Delete the specified audience segments.
+* ```DELETE /audiencesegment/audience_segment_UID```. Delete the specified audience segment.
+* ```GET /audiencesegment```. List all audience segments.
+* ```GET /audiencesegment/audience_segment_UID```. Read the specified audience segment.
+* ```GET /audiencesegment/audience_segment_UID/generate_tag```. Generate the HTML tag for the audience segment.
+* ```GET /audiencesegment/available_fields```. List the available fields to create or update an audience segment.
+* ```GET /audiencesegment/performance/audience_segment_UID```. Get the performance metrics for the specified audience segment within the (optional) date range.
+
 Parameters
+```
 start_date
+```
 A specific date in yyyy-mm-dd HH:MM:SS format
+
 OR
+
 An integer for the days backward from today. For example, 7 means "seven days ago" and 0 means "starting today" (inclusive).
+```
 end_date
+```
 A specific date in yyyy-mm-dd HH:MM:SS format
+
 OR
+
 A negative integer for the days from now. For example, -7 means "until seven days from now" and 0 means "before today" (exclusive).
-GET /audiencesegment/reach_performance/audience_segment_UID. List the reach performance data for the specified audience segment.
-GET /audiencesegment/revenue_performance/audience_segment_UID. List the revenue performance data for the specified audience segment.
-POST /audiencesegment. Create one or more audience segments.
-POST /audiencesegment/audience_segment_UID/clone. Clone the specified audience segment.
-PUT /audiencesegment. Update the specified audience segments.
-PUT /audiencesegment/audience_segment_UID. Update the specified audience segment.
+
+* ```GET /audiencesegment/reach_performance/audience_segment_UID```. List the reach performance data for the specified audience segment.
+* ```GET /audiencesegment/revenue_performance/audience_segment_UID```. List the revenue performance data for the specified audience segment.
+* ```POST /audiencesegment```. Create one or more audience segments.
+* ```POST /audiencesegment/audience_segment_UID/clone```. Clone the specified audience segment.
+* ```PUT /audiencesegment```. Update the specified audience segments.
+* ```PUT /audiencesegment/audience_segment_UID```. Update the specified audience segment.
 
 ### audit_trail service
 
 A service that logs changes to data (creation, modification, or deletion) and allows a system administrator to review historical changes to the following objects:
-account
-ad
-adunit
-adunitgroup
-creative
-conversiontag
-lineitem
-order
-site
+
+* account
+* ad
+* adunit
+* adunitgroup
+* creative
+* conversiontag
+* lineitem
+* order
+* site
+
 The audit_trail service has the following call:
+```
 GET /audit_trail/object_UID. List the audit trail for the specified object (this call only returns the audit trail for a single UID).
-The limit and offset URI parameters allow pagination of the results.
+```
+The ```limit``` and ```offset``` URI parameters allow pagination of the results.
 
 ### comment object
 
 The comment object supports the logging of comments for any API object, such as via its Description field in the OpenX UI. The comment object has the following calls:
-GET /comment. List all comments.
-GET /comment/available_fields. List the available fields used to create or update a comment.
-OpenSample available_fields response for the comment object
+
+* ```GET /comment```. List all comments.
+* ```GET /comment/available_fields```. List the available fields used to create or update a comment.
+
+Sample available_fields response for the comment object
+```
 {
   "account_id": {
     "auto": true, 
@@ -5952,11 +5972,17 @@ OpenSample available_fields response for the comment object
     "type": "int"
   }
 }
-GET /comment?obj_type=object_name&obj_uid=object_UID. Read the comments for the specified object.
-For example, GET /comment?obj_type=lineitem&obj_uid=60062525-c002-fff1-8123-0c9a66
-POST /comment. Create one or more comments.
-Sample POST to create a comment for a specified line item
+```
+
+* ```GET /comment?obj_type=object_name&obj_uid=object_UID```. Read the comments for the specified object.
+
+For example, ```GET /comment?obj_type=lineitem&obj_uid=60062525-c002-fff1-8123-0c9a66```
+```POST /comment```. Create one or more comments.
+
+Sample ```POST``` to create a comment for a specified line item
+
 Request
+```
 curl -X POST --header "Content-Type: application/json" http://openx_server_name/ox/4.0/comment \
 	--cookie "openx3_access_token=token_string" \
 	--data='{
@@ -5964,7 +5990,9 @@ curl -X POST --header "Content-Type: application/json" http://openx_server_name/
 	"obj_uid": "60062525-c002-fff1-8123-0c9a66",
 	"text": "A comment on a lineitem"
 }'
+```
 Response
+```
 [
 	{
 	"account_id": "537237799",
@@ -5987,183 +6015,217 @@ Response
 	"v": "3"
 	}
 ]
+```
+```
 PUT /comment/comment_UID. Update the comment specified by its ID or UID.
+```
 
 ### competitiveexclusion object
 
-Advertiser account rules used to block competing advertisers from displaying their ads on the same webpage
-The competitiveexclusion object has the following calls:
-DELETE /competitiveexclusion. Delete the specified competitive exclusions.
-DELETE /competitiveexclusion/competitive_exclusion_UID. Delete the specified competitive exclusion.
-GET /competitiveexclusion. List all competitive exclusions.
-GET /competitiveexclusion/available_fields. List the available fields used to create or update a competitive exclusion.
-GET /competitiveexclusion/competitive_exclusion_UID. Read the specified competitive exclusion.
-POST /competitiveexclusion. Create one or more competitive exclusions.
-POST /competitiveexclusion/competitive_exclusion_UID/clone. Clone the specified competitive exclusion.
-PUT /competitiveexclusion. Update the specified competitive exclusion.
-PUT /competitiveexclusion/competitive_exclusion_UID. Update the specified competitive exclusion.
+Advertiser account rules used to block competing advertisers from displaying their ads on the same webpage. The ```competitiveexclusion``` object has the following calls:
+
+* ```DELETE /competitiveexclusion```. Delete the specified competitive exclusions.
+* ```DELETE /competitiveexclusion/competitive_exclusion_UID```. Delete the specified competitive exclusion.
+* ```GET /competitiveexclusion```. List all competitive exclusions.
+* ```GET /competitiveexclusion/available_fields```. List the available fields used to create or update a competitive exclusion.
+* ```GET /competitiveexclusion/competitive_exclusion_UID```. Read the specified competitive exclusion.
+* ```POST /competitiveexclusion```. Create one or more competitive exclusions.
+* ```POST /competitiveexclusion/competitive_exclusion_UID/clone```. Clone the specified competitive exclusion.
+* ```PUT /competitiveexclusion```. Update the specified competitive exclusion.
+* ```PUT /competitiveexclusion/competitive_exclusion_UID```. Update the specified competitive exclusion.
 
 ### conversiontag object
 
-A conversion tag is a piece of code that tracks how users respond to ads served for orders.
-The conversiontag object has the following calls:
-DELETE /conversiontag. Delete the specified conversion tags.
-DELETE /conversiontag/conversion_tag_UID. Delete the specified conversion tag.
-GET /conversiontag. List all conversion tags.
-GET /conversiontag/available_fields. List the available fields to create or update a conversion tag.
-GET /conversiontag/conversion_tag_UID. Read the specified conversion tag.
-GET /conversiontag/conversion_tag_UID/generate_tag. Generate the HTML tag for the specified conversion tag.
-GET /conversiontag/conversion_tag_UID/list_orders. List orders for the specified conversion tag UID.
-POST /conversiontag. Create one or more conversion tags.
-POST /conversiontag/conversion_tag_UID/clone. Clone the specified conversion tag.
-PUT /conversiontag. Update the specified conversion tags.
-PUT /conversiontag/conversion_tag_UID. Update the specified conversion tag.
+A conversion tag is a piece of code that tracks how users respond to ads served for orders. The conversiontag object has the following calls:
+
+* ```DELETE /conversiontag```. Delete the specified conversion tags.
+* ```DELETE /conversiontag/conversion_tag_UID```. Delete the specified conversion tag.
+* ```GET /conversiontag```. List all conversion tags.
+* ```GET /conversiontag/available_fields```. List the available fields to create or update a conversion tag.
+* ```GET /conversiontag/conversion_tag_UID```. Read the specified conversion tag.
+* ```GET /conversiontag/conversion_tag_UID/generate_tag```. Generate the HTML tag for the specified conversion tag.
+* ```GET /conversiontag/conversion_tag_UID/list_orders```. List orders for the specified conversion tag UID.
+* ```POST /conversiontag```. Create one or more conversion tags.
+* ```POST /conversiontag/conversion_tag_UID/clone```. Clone the specified conversion tag.
+* ```PUT /conversiontag```. Update the specified conversion tags.
+* ```PUT /conversiontag/conversion_tag_UID```. Update the specified conversion tag.
 
 ### creative object
 
-The media asset to use in your ad (such as an image or video file) that you can upload to the OpenX CDN. The creative references a local or remote file.
-The creative object has the following calls:
-DELETE /creative. Delete the specified creatives.
-DELETE /creative/creative_UID. Delete the specified creative.
-GET /creative. List all creatives.
-GET /creative/available_fields. List the available fields to create or update a creative.
-GET /creative/creative_UID. Read the specified creative.
-POST /creative. Create one or more creatives.
-POST /creative/creative_UID/clone. Clone the specified creative.
-POST /creative/upload_creative. Upload a creative.
-PUT /creative. Update the specified creatives.
-PUT /creative/creative_UID. Update the specified creative.
+The media asset to use in your ad (such as an image or video file) that you can upload to the OpenX CDN. The creative references a local or remote file. The creative object has the following calls:
+
+* ```DELETE /creative```. Delete the specified creatives.
+* ```DELETE /creative/creative_UID```. Delete the specified creative.
+* ```GET /creative```. List all creatives.
+* ```GET /creative/available_fields```. List the available fields to create or update a creative.
+* ```GET /creative/creative_UID```. Read the specified creative.
+* ```POST /creative```. Create one or more creatives.
+* ```POST /creative/creative_UID/clone```. Clone the specified creative.
+* ```POST /creative/upload_creative```. Upload a creative.
+* ```PUT /creative```. Update the specified creatives.
+* ```PUT /creative/creative_UID```. Update the specified creative.
 
 ### dashboard service
 
-A set of high-level reports and links provided by the Simple Reporting Service (SRS)
-The dashboard service has the following calls that return a JSON or XML representation of the corresponding report data:
-GET /dashboard/totals_by_advt. Return Totals by Advertiser report data.
-GET /dashboard/totals_by_day. Return Totals by Day report data.
-GET /dashboard/totals_by_time. Return Totals by Time report data.
+A set of high-level reports and links provided by the Simple Reporting Service (SRS). The dashboard service has the following calls that return a JSON or XML representation of the corresponding report data:
+
+* ```GET /dashboard/totals_by_advt```. Return Totals by Advertiser report data.
+* ```GET /dashboard/totals_by_day```. Return Totals by Day report data.
+* ```GET /dashboard/totals_by_time```. Return Totals by Time report data.
 
 ### deal object
 
-A prearranged agreement to sell specific inventory, such as a direct deal between a publisher and a demand partner
-The deal object has the following calls:
-DELETE /deal. Delete the specified deals.
-DELETE /deal/deal_UID. Delete the specified deal.
-GET /deal. List all deals.
-GET /deal/available_fields. List the available fields to create or update a deal.
-GET /deal/deal_UID. Read the specified deal.
-GET /deal/export. Export data in CSV format for all deals.
+A prearranged agreement to sell specific inventory, such as a direct deal between a publisher and a demand partner. The deal object has the following calls:
+
+* ```DELETE /deal```. Delete the specified deals.
+* ```DELETE /deal/deal_UID```. Delete the specified deal.
+* ```GET /deal```. List all deals.
+* ```GET /deal/available_fields```. List the available fields to create or update a deal.
+* ```GET /deal/deal_UID```. Read the specified deal.
+* ```GET /deal/export```. Export data in CSV format for all deals.
+
 Tip: If a deal is associated with a custom package, its package_name and package_description values in the downloaded CSV file say "Private Selection." The corresponding Package Name entry in the UI says "Custom."
-POST /deal. Create a deal.
-POST /deal/deal_UID/clone. Clone the specified deal.
-PUT /deal. Update the specified deals.
-PUT /deal/deal_UID. Update the specified deal.
+
+* ```POST /deal```. Create a deal.
+* ```POST /deal/deal_UID/clone```. Clone the specified deal.
+* ```PUT /deal```. Update the specified deals.
+* ```PUT /deal/deal_UID```. Update the specified deal.
 
 ### eventfeed service
 
 The eventfeed service retrieves transaction-level delivery data for various ad serving events. For details, see working with event-level feeds.
+
 Note: Accessing event-level feeds requires a specific OpenX configuration. For details, contact your OpenX Account Manager.
 The eventfeed service has the following calls:
-GET /eventfeed/available_fields?type=event_feed_type&range=number&format=format_type. List the available data sets for the specified eventfeed calls, such as click or impression. For more details, see Listing available files for an event feed and available fields.
-GET /eventfeed/fetch. Download files for the specified event feed. For details, see downloading the event feed file.
-GET /eventfeed/schema. Retrieve a schema file for the specified event. For details, see event feed file format.
+
+* ```GET /eventfeed/available_fields?type=event_feed_type&range=number&format=format_type```. List the available data sets for the specified eventfeed calls, such as click or impression. For more details, see Listing available files for an event feed and available fields.
+* ```GET /eventfeed/fetch```. Download files for the specified event feed. For details, see downloading the event feed file.
+* ```GET /eventfeed/schema```. Retrieve a schema file for the specified event. For details, see event feed file format.
 
 ### floorrule object
 
 The floorrule object allows you to manage selling rules regarding the minimum price you are willing to accept for ad space and related details. It has the following calls:
-DELETE /floorrule. Delete the specified floor rules.
-DELETE /floorrule/floor_rule_UID. Delete the specified floor rule.
-GET /floorrule. List all floor rules.
-GET /floorrule/available_fields. List the available fields to create or update a floor rule.
-GET /floorrule/export. Export data in CSV format for all floor rules.
+
+* ```DELETE /floorrule```. Delete the specified floor rules.
+* ```DELETE /floorrule/floor_rule_UID```. Delete the specified floor rule.
+* ```GET /floorrule```. List all floor rules.
+* ```GET /floorrule/available_fields```. List the available fields to create or update a floor rule.
+* ```GET /floorrule/export```. Export data in CSV format for all floor rules.
+
 Tip: If a floor rule is associated with a custom targeting selection and not a saved package, its package_name and package_description values in the downloaded CSV file say "Private Selection." The corresponding Package Name entry in the UI says "Custom."
-GET /floorrule/floor_rule_UID. Read the specified floor rule.
-POST /floorrule. Create a floor rule.
-POST /floorrule/floor_rule_UID/clone. Clone the specified floor rule.
-PUT /floorrule. Update the specified floor rules.
-PUT /floorrule/floor_rule_UID. Update the specified floor rule.
+
+* ```GET /floorrule/floor_rule_UID```. Read the specified floor rule.
+* ```POST /floorrule```. Create a floor rule.
+* ```POST /floorrule/floor_rule_UID/clone```. Clone the specified floor rule.
+* ```PUT /floorrule```. Update the specified floor rules.
+* ```PUT /floorrule/floor_rule_UID```. Update the specified floor rule.
 
 ### geo service
 
-The geo service provides geolocation values you can use for targeting. It has the following calls:
-GET /geo/searchq=query_string&sort=field_name&order=sort_order&size=number. List geolocation search results for the specified query string.
+The ```geo``` service provides geolocation values you can use for targeting. It has the following calls:
+
+* ```GET /geo/searchq=query_string&sort=field_name&order=sort_order&size=number```. List geolocation search results for the specified query string.
+
 Parameters
-order (Optional). The sort order, such as order=asc for ascending and order=desc for descending
-q (Required). The query string, such as q=us
-size (Recommended). The maximum number of matching results to return, such as size=100.
-sort (Optional). The field to sort by, such as sort=city
+
+* order (Optional). The sort order, such as order=asc for ascending and order=desc for descending
+* q (Required). The query string, such as q=us
+* size (Recommended). The maximum number of matching results to return, such as size=100.
+* sort (Optional). The field to sort by, such as sort=city
+```
 POST /geo/searchq=query_string&sort=field_name&order=sort_order&size=number. List geolocation search results for the specified query string.
+```
 Parameters
-order (Optional). The field to sort by, such as sort=city
-q (Required). The query string, such as q=us
-size (Recommended). The maximum number of matching results to return. We recommend you limit the results of your queries, such as size=100.
-sort (Optional). The field to sort by, such as sort=city
+
+* order (Optional). The field to sort by, such as sort=city
+* q (Required). The query string, such as q=us
+* size (Recommended). The maximum number of matching results to return. We recommend you limit the results of your queries, such as size=100.
+* sort (Optional). The field to sort by, such as sort=city
 
 ### lineitem object
 
-The lineitem object provides line item details associated with orders, such as pricing, goals, and targeting. It has the following calls:
-DELETE /lineitem. Delete the specified line items.
-DELETE /lineitem/line_item_UID. Delete the specified line item.
-GET /lineitem. List all line items.
-GET /lineitem/available_fieldstype_full=lineitem.type. List the available fields to create or update a line item of the specified type (such as lineitem.exchange).
-GET /lineitem/get_passback_tag. Return pass back tags for defaulting line items.
-GET /lineitem/line_item_UID. Read the specified line item.
-GET /lineitem/line_item_UID/list_ads. List ads for the specified line item.
-GET /lineitem/lineitems_dashboard_widget. List data for the UI line item report on the dashboard.
-GET /lineitem/performance/line_item_UID. Get the performance metrics for the specified line item within the (optional) date range.
+The ```lineitem``` object provides line item details associated with orders, such as pricing, goals, and targeting. It has the following calls:
+
+* ```DELETE /lineitem```. Delete the specified line items.
+* ```DELETE /lineitem/line_item_UID```. Delete the specified line item.
+* ```GET /lineitem```. List all line items.
+* ```GET /lineitem/available_fieldstype_full=lineitem.type```. List the available fields to create or update a line item of the specified type (such as ```lineitem.exchange```).
+* ```GET /lineitem/get_passback_tag```. Return pass back tags for defaulting line items.
+* ```GET /lineitem/line_item_UID```. Read the specified line item.
+* ```GET /lineitem/line_item_UID/list_ads```. List ads for the specified line item.
+* ```GET /lineitem/lineitems_dashboard_widget```. List data for the UI line item report on the dashboard.
+* ```GET /lineitem/performance/line_item_UID```. Get the performance metrics for the specified line item within the (optional) date range.
+
 Parameters
+
 start_date
 A specific date in yyyy-mm-dd HH:MM:SS format
+
 OR
 An integer for the days backward from today. For example, 7 means "seven days ago" and 0 means "starting today" (inclusive).
+
 end_date
 A specific date in yyyy-mm-dd HH:MM:SS format
+
 OR
+
 A negative integer for the days from now. For example, -7 means "until seven days from now" and 0 means "before today" (exclusive).
-GET /lineitem/traffic_information. List traffic data for the specified line items. Use POST to avoid any URL length issues.
-POST /lineitem. Create a line item.
-POST /lineitem/line_item_UID/clone. Clone the specified line item.
-POST /lineitem/line_item_UID/recycle. Restart the specified line item.
-POST /lineitem/line_item_UID/stop. Stop the specified line item and its ads.
-POST /lineitem/traffic_information. List traffic data for the specified line items.
-PUT /lineitem. Update the specified line items.
-PUT /lineitem/line_item_UID. Update the specified line item.
+
+* ```GET /lineitem/traffic_information```. List traffic data for the specified line items. Use POST to avoid any URL length issues.
+* ```POST /lineitem```. Create a line item.
+* ```POST /lineitem/line_item_UID/clone```. Clone the specified line item.
+* ```POST /lineitem/line_item_UID/recycle```. Restart the specified line item.
+* ```POST /lineitem/line_item_UID/stop```. Stop the specified line item and its ads.
+* ```POST /lineitem/traffic_information```. List traffic data for the specified line items.
+* ```PUT /lineitem```. Update the specified line items.
+* ```PUT /lineitem/line_item_UID```. Update the specified line item.
 
 ### market service
 
-The market service retrieves information about advertisers, brands, and market operators. It has the following calls:
-GET /market/advertisers. List market advertisers.
-GET /market/brands. Query for brands.
-GET /market/operators. List market operators.
-POST /market/brands. Query for brands.
+The ```market``` service retrieves information about advertisers, brands, and market operators. It has the following calls:
+
+* ```GET /market/advertisers```. List market advertisers.
+* ```GET /market/brands```. Query for brands.
+* ```GET /market/operators```. List market operators.
+* ```POST /market/brands```. Query for brands.
 
 ### monetization service
 
 The monetization service retrieves information about demand sources from the market operator. It has the following calls:
-GET /monetization/demand_sources. List all demand sources.
-GET /monetization/demand_sources/demand_source_ID. List the specified demand source.
+
+* ```GET /monetization/demand_sources```. List all demand sources.
+* ```GET /monetization/demand_sources/demand_source_ID```. List the specified demand source.
 
 ### optimization object
 
-The optimization object represents real-time selling rules with fields for targeting criteria, minimum prices, advertiser and content filters, and so on. It has the following calls:
-DELETE /optimization. Delete the specified optimizations.
-DELETE /optimization/optimization_UID. Delete the specified optimization.
-GET /optimization. List all optimizations.
-GET /optimization/available_fields. List the available fields to create or update an optimization.
-GET /optimization/optimization_UID. Read the specified optimization.
-POST /optimization. Create an optimization.
-POST /optimization/optimization_UID/clone. Clone the specified optimization.
-PUT /optimization. Update the specified optimizations.
-PUT /optimization/optimization_UID. Update the specified optimization.
+The ```optimization``` object represents real-time selling rules with fields for targeting criteria, minimum prices, advertiser and content filters, and so on. It has the following calls:
+
+* ```DELETE /optimization```. Delete the specified optimizations.
+* ```DELETE /optimization/optimization_UID```. Delete the specified optimization.
+* ```GET /optimization```. List all optimizations.
+* ```GET /optimization/available_fields```. List the available fields to create or update an optimization.
+* ```GET /optimization/optimization_UID```. Read the specified optimization.
+* ```POST /optimization```. Create an optimization.
+* ```POST /optimization/optimization_UID/clone```. Clone the specified optimization.
+* ```PUT /optimization```. Update the specified optimizations.
+* ```PUT /optimization/optimization_UID```. Update the specified optimization.
 
 ### options service
 
-The options service retrieves data for the specified options key. It has the following call:
+The ```options``` service retrieves data for the specified options key. It has the following call:
+```
 GET /options/options_key
-Option keys are sometimes included in responses from available_fields calls to indicate that more information is available. For example, the account_uid field in the response for a GET /account/available_fields request shows "url": "/options/account_options". When you make that call to the options service, the response includes all the account_uid values available for your account.
-Sample GET /options/account_options request and response:
+```
+Option keys are sometimes included in responses from ```available_fields``` calls to indicate that more information is available. For example, the ```account_uid``` field in the response for a ```GET /account/available_fields``` request shows "url": "```/options/account_options```". When you make that call to the options service, the response includes all the ```account_uid``` values available for your account.
+
+Sample ```GET /options/account_options``` request and response:
+
 Request
+```
 curl -X GET http://openx_server_name/ox/4.0/options/account_options --cookie "openx3_access_token=token_string"
+```
 Response
+```
 [
 {
 	"id": "6003be14-accf-fff1-8123-0c9a66", 
@@ -6182,164 +6244,168 @@ Response
 	"object": "account"
 }
 ]
-Similarly, if you make a GET /options/country_options request, the response includes a list of all the available country_of_business values. In this way, you can query the Ad Server to reference any field values you may need.
-OpenDepending on your account and permissions, available option keys may include:
-account_options
-account_status_options
-account_type_options
-acquisition_type_options
-action_type_options
-ad_category_options
-ad_delivery_options
-ad_status_options
-ad_type_options
-adquality_report_type_options
-adunit_location_options
-adunit_options
-adunit_size_options
-adunit_type_options
-advertiser_experience_options
-advertiser_user_role_options
-agency_experience_options
-agency_user_role_options
-all_ad_category_options
-all_audiencesegment_options
-all_creative_type_options
-all_location_options
-attribution_tracker_mobile_platform_options
-attribution_tracking_options
-audience_segment_account_options
-audiencesegment_options
-available_deals
-bid_type_options
-browser_options
-budget_pacing_options
-budget_spend_rate_options
-budget_type_options
-buyer_options
-buying_model_options
-click_target_window_options
-comment_text_type_options﻿﻿
-companion_fill_method_options
-connection_speed_options
-connection_type_options
-content_attribute_options
-content_topic_options
-content_type_options
-continent_options
-conversiontag_options
-country_options
-creative_options
-creative_type_options
-currency_options
-datacenter_options
-days_of_week_options
-deal_source_options
-deal_status_options
-deal_type_options
-delivery_medium_options
-delivery_type_options
-demand_channel_options
-device_options
-email_location_options
-email_size_options
-email_tag_type_options
-exchange_audiencesegment_options
-exchange_bid_type_options
-exchange_size_options
-exchange_third_party_server_options
-exclusivity_options
-flash_background_options
-flight_timezone_options
-floorrule_reason_options
-hours_of_day_options
-inventory_audience_segment_account_options
-isp_carrier_options
-language_options
-lift_mapping_type_options
-linear_video_allowable_options
-linearvideo_duration_options
-linearvideo_location_options
-linearvideo_size_options
-lineitem_ad_delivery_options
-lineitem_delivery_medium_options
-lineitem_status_options
-list_publishers_with_segments
-locale_languages
-market_advertiser_options
-market_brand_group_options
-market_delivery_medium_options
-market_filter_region_options
-market_operators
-master_content_topic_options
-mediation_method_options
-mediation_options
-mime_type_options
-mobile_adunit_tag_type_options
-mobile_carrier_options
-mobileapp_options
-mobile_converstion_type_options (sic)
-mobile_location_options
-mobile_platform_options
-mobile_size_options
-mobileweb_adunit_tag_type_options
-model_types
-native_adunit_tag_type_options
-native_sdk_mediation_network_options﻿ ﻿
-native_size_options
-network_experience_options
-network_lineitem_all_delivery_medium_options
-network_lineitem_deal_type_options
-network_lineitem_delivery_medium_options
-network_user_role_options
-non_linear_ad_type_options
-nonexchange_audiencesegment_options
-nonlinearvideo_duration_options
-nonlinearvideo_location_options
-nonlinearvideo_size_options
-open_auction_access_options
-optimization_brand_labels_market_operator_options
-optimization_brands_market_operator_options
-optimization_filter_market_operator_options
-order_options
-order_status_options
-os_options
-pacing_model_options
-package_status_options﻿
-pmp_deal_type_options
-pricing_method_options
-pricing_model_options
-pricing_type_options
-publisher_experience_options
-publisher_user_role_options
-report_range_options
-sales_channel_options
-screen_resolution_options
-server_mediation_network_options
-site_delivery_medium_options
-site_options
-sitesection_options
-size_options
-source_type_options
-ssrtb_protocol_options
-status_options_common
-subtype_names
-subtypes
-tag_type_options
-targetable_deal_lineitem_options
-targetable_demand_partner_options
-targetable_package_options
-targeting_language_options
-third_party_network_options
-third_party_platform_all_options
-third_party_server_options
-timezone_options
-video_event_type_options
-videocompanion_location_options
-videocompanion_size_options
-web_adunit_tag_type_options
-web_location_options
-web_size_options
+```
+
+Similarly, if you make a ```GET /options/country_options``` request, the response includes a list of all the available country_of_business values. In this way, you can query the Ad Server to reference any field values you may need.
+
+Depending on your account and permissions, available option keys may include:
+
+* ```account_options```
+* ```account_status_options```
+* ```account_type_options```
+* ```acquisition_type_options```
+* ```action_type_options```
+* ```ad_category_options```
+* ```ad_delivery_options```
+* ```ad_status_options```
+* ```ad_type_options```
+* ```adquality_report_type_options```
+* ```adunit_location_options```
+* ```adunit_options```
+* ```adunit_size_options```
+* ```adunit_type_options```
+* ```advertiser_experience_options```
+* ```advertiser_user_role_options```
+* ```agency_experience_options```
+* ```agency_user_role_options```
+* ```all_ad_category_options```
+* ```all_audiencesegment_options```
+* ```all_creative_type_options```
+* ```all_location_options```
+* ```attribution_tracker_mobile_platform_options```
+* ```attribution_tracking_options```
+* ```audience_segment_account_options```
+* ```audiencesegment_options```
+* ```available_deals```
+*``` bid_type_options```
+* ```browser_options```
+* ```budget_pacing_options```
+* ```budget_spend_rate_options```
+* ```budget_type_options```
+* ```buyer_options```
+* ```buying_model_options```
+* ```click_target_window_options```
+* ```comment_text_type_options```
+* ```companion_fill_method_options```
+* ```connection_speed_options```
+* ```connection_type_options```
+* ```content_attribute_options```
+* ```content_topic_options```
+* ```content_type_options```
+* ```continent_options```
+* ```conversiontag_options```
+* ```country_options```
+* ```creative_options```
+* ```creative_type_options```
+* ```currency_options```
+* ```datacenter_options```
+* ```days_of_week_options```
+* ```deal_source_options```
+* ```deal_status_options```
+* ```deal_type_options```
+* ```delivery_medium_options```
+* ```delivery_type_options```
+* ```demand_channel_options```
+* ```device_options```
+* ```email_location_options```
+* ```email_size_options```
+* ```email_tag_type_options```
+* ```exchange_audiencesegment_options```
+* ```exchange_bid_type_options```
+* ```exchange_size_options```
+* ```exchange_third_party_server_options```
+* ```exclusivity_options```
+* ```flash_background_options```
+* ```flight_timezone_options```
+* ```floorrule_reason_options```
+* ```hours_of_day_options```
+* ```inventory_audience_segment_account_options```
+* ```isp_carrier_options```
+* ```language_options```
+* ```lift_mapping_type_options```
+* ```linear_video_allowable_options```
+* ```linearvideo_duration_options```
+* ```linearvideo_location_options```
+* ```linearvideo_size_options```
+* ```lineitem_ad_delivery_options```
+* ```lineitem_delivery_medium_options```
+* ```lineitem_status_options```
+* ```list_publishers_with_segments```
+* ```locale_languages```
+* ```market_advertiser_options```
+* ```market_brand_group_options```
+* ```market_delivery_medium_options```
+* ```market_filter_region_options```
+* ```market_operators```
+* ```master_content_topic_options```
+* ```mediation_method_options```
+* ```mediation_options```
+* ```mime_type_options```
+* ```mobile_adunit_tag_type_options```
+* ```mobile_carrier_options```
+* ```mobileapp_options```
+* ```mobile_converstion_type_options (sic)```
+* ```mobile_location_options```
+* ```mobile_platform_options```
+* ```mobile_size_options```
+* ```mobileweb_adunit_tag_type_options```
+* ```model_types```
+* ```native_adunit_tag_type_options```
+* ```native_sdk_mediation_network_options```
+* ```native_size_options```
+* ```network_experience_options```
+* ```network_lineitem_all_delivery_medium_options```
+* ```network_lineitem_deal_type_options```
+* ```network_lineitem_delivery_medium_options```
+* ```network_user_role_options```
+* ```non_linear_ad_type_options```
+* ```nonexchange_audiencesegment_options```
+* ```nonlinearvideo_duration_options```
+* ```nonlinearvideo_location_options```
+* ```nonlinearvideo_size_options```
+* ```open_auction_access_options```
+* ```optimization_brand_labels_market_operator_options```
+* ```optimization_brands_market_operator_options```
+* ```optimization_filter_market_operator_options```
+* ```order_options```
+* ```order_status_options```
+* ```os_options```
+* ```pacing_model_options```
+* ```package_status_options```
+* ```pmp_deal_type_options```
+* ```pricing_method_options```
+* ```pricing_model_options```
+* ```pricing_type_options```
+* ```publisher_experience_options```
+* ```publisher_user_role_options```
+* ```report_range_options```
+* ```sales_channel_options```
+* ```screen_resolution_options```
+* ```server_mediation_network_options```
+* ```site_delivery_medium_options```
+* ```site_options```
+* ```sitesection_options```
+* ```size_options```
+* ```source_type_options```
+* ```ssrtb_protocol_options```
+* ```status_options_common```
+* ```subtype_names```
+* ```subtypes```
+* ```tag_type_options```
+* ```targetable_deal_lineitem_options```
+* ```targetable_demand_partner_options```
+* ```targetable_package_options```
+* ```targeting_language_options```
+* ```third_party_network_options```
+* ```third_party_platform_all_options```
+* ```third_party_server_options```
+* ```timezone_options```
+* ```video_event_type_options```
+* ```videocompanion_location_options```
+* ```videocompanion_size_options```
+* ```web_adunit_tag_type_options```
+* ```web_location_options```
+* ```web_size_options```
 
 ### order object
 
@@ -10739,4 +10805,4 @@ The response contains the following elements:
 * VideoClicks. The click-tracking URL for the selected ad
 * rc. Refresh count, indicates the current number of refreshes for ads served through the ad tag
 * MediaFiles. A container element that includes details about the video ad, such as the CDN location of the video files
-You should test your video ad requests to make sure that your video player configuration is able to handle the response.
+You should test your video ad requests to make sure that your video player configuration is able to handle the response.Update
