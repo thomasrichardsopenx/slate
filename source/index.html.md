@@ -29,11 +29,11 @@ To see what's new in the platform API, see the API Release Notes.
 # Getting started
 
 Use the links in this quick overview to get started using the OpenX API.
-  - Authenticating users - Describes your options for authenticating a user to the Openx Platform API, with links to more information.
-  - API client libraries - Describes the available OpenX client libaries that can help you integrate your application with the OpenX API.
-  - Third-party libraries - Provides a list of links to recommended third-party libraries to consider for your OpenX API application integration.
-  - Requests and responses - Explains the basic structure of an HTTP request and a JSON response.
-  - Response codes and error handling - Describes the types of errors that are returned and what they mean.
+  * Authenticating users - Describes your options for authenticating a user to the Openx Platform API, with links to more information.
+  * API client libraries - Describes the available OpenX client libaries that can help you integrate your application with the OpenX API.
+  * Third-party libraries - Provides a list of links to recommended third-party libraries to consider for your OpenX API application integration.
+  * Requests and responses - Explains the basic structure of an HTTP request and a JSON response.
+  * Response codes and error handling - Describes the types of errors that are returned and what they mean.
 
 # Authenticating users
 
@@ -42,9 +42,9 @@ If you are programmatically accessing the OpenX API, you must provide a method t
 Your Authentication Options
 
 You can programmatically authenticate an OpenX user in one of three ways:
-  - (Recommended) Use the client libraries provided by OpenX.
-  - (Recommended) Use a third-party library that already implements an OAuth 1.0 scheme. Note that OpenX does not support or manage the content of these libraries.
-  - Write your own authentication code. OpenX provides a brief OAuth reference for those who want to take this approach.
+  * (Recommended) Use the client libraries provided by OpenX.
+  * (Recommended) Use a third-party library that already implements an OAuth 1.0 scheme. Note that OpenX does not support or manage the content of these libraries.
+  * Write your own authentication code. OpenX provides a brief OAuth reference for those who want to take this approach.
 
 Credentials Supplied by OpenX
 When you become an API customer, OpenX provides you with the following credentials which you will use in initial authentication calls.
@@ -61,9 +61,9 @@ OAuth Realm | The realm value is a string, generally assigned by the origin serv
 # API Client Libraries
 
 The OpenX Platform API provides a number of different API client libraries you can use to start integrating your application with the API. Currently, there are three available client libraries in the OpenX public GitHub repository you can use for application integration with the Platform API:
-  - Java
-  - PHP
-  - Python
+  * Java
+  * PHP
+  * Python
 
 ##Java Client Library
 
@@ -109,12 +109,12 @@ Important: The Platform API client libraries support single sign-on (SSO) when 4
 #Conventions
 
 The OpenX Platform API provides the following types of resources:
-  - Objects. Support CRUD operations using the following HTTP verbs:
-  - POST. Create the specified item
-  - GET. Read a representation of the resource
-  - PUT. Update the specified item
-  - DELETE. Delete the specified item
-  - Services. Support only read operations (i.e., GET)
+  * Objects. Support CRUD operations using the following HTTP verbs:
+  * ```POST```. Create the specified item
+  * ```GET```. Read a representation of the resource
+  * ```PUT```. Update the specified item
+  * ```DELETE```. Delete the specified item
+  * ```Services```. Support only read operations (i.e., ```GET```)
 
 For a list of resources, see the API reference.
 
@@ -123,12 +123,12 @@ To access a resource, construct a request according to the following URI format:
 base_URIresource/identifier/parameterparametermethod&
 ```
 Where:
-* method is an HTTP method, such as GET.
-* base-URI is your base URI provided by your account manager.
-* resource is the name of an API object or service.
-* identifier may provide a UID or a request for specific values if needed.
-* parameter indicates the first URI parameter string.
-* &parameter is an additional URI parameter string.
+* ```method``` is an HTTP method, such as ```GET```.
+* ```base-URI``` is your base URI provided by your account manager.
+* ```resource``` is the name of an API object or service.
+*``` identifier``` may provide a UID or a request for specific values if needed.
+* ```parameter``` indicates the first URI parameter string.
+* ```&parameter``` is an additional URI parameter string.
 
 For example, in the call ```GET http://openx_server_name/ox/4.0/user/available_fieldsaction=create```
 * ```GET``` is the method.
@@ -155,11 +155,11 @@ The request samples in this guide use cURL (client URL request library) to send 
 
 ### Create
 
-To create a new object, send a POST request including the JSON-encoded contents of the object:
+To create a new object, send a ```POST``` request including the JSON-encoded contents of the object:
 
 #### Sample create request
 ```
-# curl -X POST --header "Content-Type: application/json" http://openx_server_name/ox/4.0/account \
+curl -X POST --header "Content-Type: application/json" http://openx_server_name/ox/4.0/account \
 	--cookie "openx3_access_token=token_string" \
 	--data='{
 	"account_uid": "account_uid",
@@ -175,7 +175,7 @@ To create a new object, send a POST request including the JSON-encoded contents 
 	"type_full":"account.advertiser"
 }'
 ```
-Where: ```token_string``` is a string of characters returned by the GET session request at login.
+Where: ```token_string``` is a string of characters returned by the ```GET``` session request at login.
 
 When you create a single object, the response should contain a list with a single object.
 
@@ -183,7 +183,7 @@ When you create a single object, the response should contain a list with a singl
 
 When successful, 200 Created is returned along with the response body:
 ```
-# [
+[
 	{            
 	"account_id": "account_id",
 	"name": "API+Demo+Advertiser",
@@ -204,7 +204,7 @@ For more details, see About IDs and UIDs.
 
 ### Update
 
-To change the data on an object that already exists, send a PUT request to the object URI with the values you want to change:
+To change the data on an object that already exists, send a ```PUT``` request to the object URI with the values you want to change:
 
 #### Sample update request
 ```
@@ -220,7 +220,7 @@ Where: ```account_uid``` is the UID of the account to be updated. Alternatively,
 
 The response body includes all of the object's fields:
 ```
-# [
+[
 	{
 	"uid" : "account_uid",
 	"name": "API+Demo+Advertiser",
@@ -246,11 +246,11 @@ The response body includes all of the object's fields:
 ```
 ###Delete
 
-To delete an object, send a DELETE request to its URI:
+To delete an object, send a ```DELETE``` request to its URI:
 
 #### Sample delete request
 ```
-# curl -X DELETE --header "Content-Type: application/json" http://openx_server_name/ox/4.0/account \
+curl -X DELETE --header "Content-Type: application/json" http://openx_server_name/ox/4.0/account \
 			--cookie "openx3_access_token=token_string" \
 		--data='["account_uid_1", "account_uid_2"]'
 ```
@@ -260,7 +260,7 @@ Where:
 
 #### Sample delete response
 ```
-# [
+[
 	{
 	"account_uid_1": true,
 	"account_uid_2": true
@@ -308,7 +308,7 @@ Where: ```account_uid_n``` is the UID of the account to be read.
 To list all the objects of the specified type:
 
 ```
-# curl -X GET http://openx_server_name/ox/4.0/account --cookie "openx3_access_token=token_string"
+curl -X GET http://openx_server_name/ox/4.0/account --cookie "openx3_access_token=token_string"
 ```
 
 #### Batch Operations
@@ -317,7 +317,7 @@ Batch operations allow you to create, update, or delete multiple objects in one 
 
 ##### Sample batch create
 ```
-# curl -X POST --header "Content-Type: application/json" openx_server_name/ox/4.0/account \
+curl -X POST --header "Content-Type: application/json" openx_server_name/ox/4.0/account \
 --cookie "openx3_access_token=token_string\
 --data='[
                {    "account_uid": "[Code]parent_account_uid
@@ -342,7 +342,7 @@ Batch operations allow you to create, update, or delete multiple objects in one 
 
 When the creation is successful, the HTTP response includes 200 Created and a response body such as the following example:
 ```
-# [
+[
 {
     "account_uid": "
   parent_account_uid
@@ -409,9 +409,8 @@ When the creation is successful, the HTTP response includes 200 Created and a re
 ```
 
 ##### Sample batch delete
-
 ```
-# curl -X DELETE --header "Content-Type: application/json" http://openx_server_name/ox/4.0/account \
+curl -X DELETE --header "Content-Type: application/json" http://openx_server_name/ox/4.0/account \
 --cookie "openx3_access_token=token_string \
   --data='["account_uid_1", account_uid_2", "account_uid_3", "account_uid_n]'
 ``` 
@@ -1191,7 +1190,7 @@ Example 3. Sample type_full account request
 
 ```openx_server_name/ox/4.0/account/available_fieldstype_full=account.network --cookie "openx3_access_token=curl http://token_string"```
 
-OpenExample 4. Sample type_full account response
+Example 4. Sample type_full account response
 ```
 {
   "account_id": {
@@ -1398,7 +1397,7 @@ openx_server_name/ox/4.0/account --cookie "openx3_access_token=curl http://token
 ```
 The API returns multiple errors and a field errors dictionary with experience and status keys indicating the values passed in are invalid.
 
-OpenExample 8. Sample error response
+Example 8. Sample error response
 ```
 [  {    "field_errors": {      "experience": {        "attribute": "experience",         "choices": [          "network.mobile",           "network.display"        ], 
         "field": {
@@ -1582,10 +1581,10 @@ This returns the list of fields that you can set, and those that are required, f
   },...
 ```
 3. Create the site object, passing in, at a minimum, the required parameters, which include:
-* The UID of the publisher account (account_uid)
-* The name for the new site (name)
-* The status for the site (status), which is described by /options/status_options_common
-* The URL for the site (url)
+- The UID of the publisher account (account_uid)
+- The name for the new site (name)
+- The status for the site (status), which is described by /options/status_options_common
+- The URL for the site (url)
 
 For example, create a site for the web delivery medium.
 
@@ -1800,19 +1799,19 @@ Response listing available files for an event feed
 To retrieve the list of available data sets for a particular event type:
 
 1. Build the URL and call the API, using the following format:
-
+```
 http://openx_server_name/ox/4.0/eventfeed?type=click&range=number&format=json&pretty
-
+```
 Where:
-* http is the protocol.
-* openx_server_name is the hostname of the Platform API server.
-* /ox/4.0 is the base path for the API.
-* /eventfeed is the method, or action to perform, in this case, a request for the list of event feed files.
-* ? indicates the start of URI parameters.
-* type=click represents the ad serving event feed that you want to track; in this case, click event feed. This can be either request, impression, click, or conversion, depending on your OpenX configuration.
-* format=json represents the format that you want to view the response in. This must be json.
-* pretty indicates that you want the response that OpenX returns to be formatted in an easily-readable form. This parameter is useful if you are performing a manual inspection of the event feed response (that is, if you paste the URL in your browser and click ENTER).
-* range=number indicates the serial number for the last feed that you looked at (located in the serial: key). The range parameter is like a bookmark that indicates where you want to continue viewing feeds. For example, use the value for the serial: key in the last feed that you viewed. Alternatively, specify the start and end parameters, but do not specify them in addition to range.
+* ```http``` is the protocol.
+* ```openx_server_name``` is the hostname of the Platform API server.
+* ```/ox/4.0``` is the base path for the API.
+* ```/eventfeed``` is the method, or action to perform, in this case, a request for the list of event feed files.
+* ```?``` indicates the start of URI parameters.
+* ```type=click``` represents the ad serving event feed that you want to track; in this case, click event feed. This can be either request, impression, click, or conversion, depending on your OpenX configuration.
+* ```format=json``` represents the format that you want to view the response in. This must be json.
+* ```pretty``` indicates that you want the response that OpenX returns to be formatted in an easily-readable form. This parameter is useful if you are performing a manual inspection of the event feed response (that is, if you paste the URL in your browser and click ENTER).
+* ```range=number``` indicates the serial number for the last feed that you looked at (located in the serial: key). The range parameter is like a bookmark that indicates where you want to continue viewing feeds. For example, use the value for the serial: key in the last feed that you viewed. Alternatively, specify the start and end parameters, but do not specify them in addition to range.
 
 Tip: Do not use a range value of 0 because this can negatively impact the event feed.
 
@@ -2102,9 +2101,9 @@ To create an order:
 
 1. Retrieve the list of accounts to determine the account UID for which you want to create the order.
 2. Retrieve the list of available fields for creating an order.
-
+```
 curl http://openx_server_name/ox/4.0/order/available_fields --cookie "openx3_access_token=token_string"
-
+```
 This returns the list of fields that you can set, and those that are required, for creating an order.
 ```
 {
@@ -2524,12 +2523,14 @@ v | The API version. | 3 |
 ### Edit an existing comment
 
 In addition to adding a comment to an object, you may also edit comments for an existing object. To edit a comment:
+
 1. Open a terminal window on your system.
-2. Make the following PUT API request to the OpenX server to edit/update a comment to the selected object (in this case, a line item).
+2. Make the following ```PUT``` API request to the OpenX server to edit/update a comment to the selected object (in this case, a line item).
 ```
 $ curl -v -X PUT 'http://qa-v2-i16-lmi.api-v4-qa-ca.openx.net/ox/4.0/comment/1610638236'  -H "Content-Type:application/json" --cookie $COOKIE -d '{"text": "blah"}' | python -mjson.tool
 ```
-3. The OpenX server processes the PUT request and updates the comment for the specified object. The response returned from the server is similar to the example below.
+The OpenX server processes the ```PUT``` request and updates the comment for the specified object. The response returned from the server is similar to the example below.
+```
 [
     {
         "account_id": "1611253648",
@@ -2552,9 +2553,11 @@ $ curl -v -X PUT 'http://qa-v2-i16-lmi.api-v4-qa-ca.openx.net/ox/4.0/comment/161
         "v": "3"
     }
 ]
+```
 The values listed in the table below make up the POST request to the OpenX server.
 
 Value |	Description | Example |
+------- | ---------- | ---------- |
 resource URL | The URL used to make the API request to the OpenX server. | curl -s -X PUT 'http://127.0.0.1:8001/comment |
 header | The authentication header and cookie used to access the OpenX server. | Content-Type:application/json" -d |
 cookie | The session cookie used in the header.	openx3_access_token=09af |
@@ -2575,14 +2578,14 @@ instance_uid | The platform_hash of session. | a505e730-0b7a-11e3-8ffd-0800200c9
 modified_date | The timestamp when the last change was made to the comment. | 2015-10-15 21:09:36 |
 obj_id | The ID associated with the object. | 1611086009 |
 obj_type | The type of object referred to by the comment. | lineitem |
-obj_uid | The unique ID of the object referred to in the comment. | 600738b9-c002-fff1-8123-0c9a66
+obj_uid | The unique ID of the object referred to in the comment. | 600738b9-c002-fff1-8123-0c9a66 |
 revision | The revision number for the comment.	| 2|
 text | The text of the comment.	| blah |
 text_type | The type of text used in the comment (e.g. html). | text |
 type | The type of comment added to the object.	| comment |
 uid | The unique ID associated with the comment. | 6000639c-bbbb-fff1-8123-0c9a66|
 user_id	| The ID associated with the user who created the comment. | 1610845423 |
-user_uid | The unique ID associated with the user who created the comment. | 60038cef-acc0-fff1-8123-0c9a66
+user_uid | The unique ID associated with the user who created the comment. | 60038cef-acc0-fff1-8123-0c9a66 |
 v | The version of the API. |3 |
 
 ### Get a list of comments
@@ -2648,7 +2651,7 @@ type | The type of comment added to the object.	| comment |
 uid | The unique ID for the comment. | 6000639c-bbbb-fff1-8123-0c9a66|
 user_id	| The ID associated with the user who created the comment. | 1610845423 |
 user_uid | The unique ID associated with the user who created the comment. | 60038cef-acc0-fff1-8123-0c9a66 |
-v } The version of the API. | 3 |
+v | The version of the API. | 3 |
 
 
 ### Working with forecasts
@@ -2677,40 +2680,41 @@ The example steps below describe how to run a forecast with revenue information.
 Note: : These steps assume you have already been authenticated. If you have not been authenticated, refer to the Authentication section for the steps on how to authenticate your application.
 
 1. From your terminal window, make the following cURL request.
-
+```
 curl '<your server instance>/ox/4.0/forecast_augur/my_availability_forecasts' -H 'Content-Type: application/json' -H 'Accept: application/json, text/javascript' -H 'Cache-Control: no-cache' -H 'Cookie: i=d7e17e57-71d3-4c33-22e3-d51789f40aba|1444755321; openx3_access_token=3fbacd1bad501a6f503b3300ace57a1e48cd4c9b0e541f0a9f39dd20668ba38750ee6ff445fcac2c20a429f11c8191825e828cc1ba845c674bc1a1c4eb9a12560561d38d1'--data-binary '{"start_date":"2015-10-13 00:00:00","end_date":"2015-10-31 00:00:00","buying_model":"exclusive","timezone":"America/Los_Angeles","pricing_rate":".50","full_oxtl_rule_id":"e02d9dc977cddb2860eafb70a7d920db","targeting_rule":"58a334fe-c92e-4e48-add8-cefe0c89b0fc","currency":"USD","make_good":true,"adunit_uid":"all"}'
-
+```
 Note that you are passing the following arguments in the call:
+
 API Request Values
-Argument	Value
-Server address	Your server instance address
-Client	ox
-API Version	4.0
-Forecast request	forecast_augur/my_availability_forecasts
-Application headers	-H 'Content-Type: application/json' -H 'Accept: application/json, text/javascript' -H 'Cache-Control: no-cache' -H
-Cookie	i=d7e17e57-71d3-4c33-22e3-d51789f40aba|1444755321;
-Access Token	3fbacd1bad501a6f503b3300ace57a1e48cd4c9b0e541f0a9f39dd20668ba38750ee6ff445fcac2c20a429f11c8191825e828cc1ba845c674bc1a1c4eb9a12560561d38d1
-Start Date	2015-10-13 00:00:00
-End Date	2015-10-31 00:00:00
-Buying Model	Exclusive
-Timezone	America/Los_Angeles
-Pricing Rate	50
-OpenX Targeting Language RuleID	e02d9dc977cddb2860eafb70a7d920db
-Targeting Rule	58a334fe-c92e-4e48-add8-cefe0c89b0fc
-Currency	USD
-Make Good	true
-AdUnit UID	all
+Argument | Value
+--------- | --------- |
+Server address | Your server instance address |
+Client	| ox |
+API Version | 4.0 |
+Forecast request | forecast_augur/my_availability_forecasts |
+Application headers | -H 'Content-Type: application/json' -H 'Accept: application/json, text/javascript' -H 'Cache-Control: no-cache' -H |
+Cookie | i=d7e17e57-71d3-4c33-22e3-d51789f40aba|1444755321;|
+Access Token | 3fbacd1bad501a6f503b3300ace57a1e48cd4c9b0e541f0a9f39dd20668ba38750ee6ff445fcac2c20a429f11c8191825e828cc1ba845c674bc1a1c4eb9a12560561d38d1 |
+Start Date | 2015-10-13 00:00:00 |
+End Date | 2015-10-31 00:00:00 |
+Buying Model | Exclusive |
+Timezone | America/Los_Angeles |
+Pricing Rate | 50 |
+OpenX Targeting Language RuleID	| e02d9dc977cddb2860eafb70a7d920db |
+Targeting Rule | 58a334fe-c92e-4e48-add8-cefe0c89b0fc|
+Currency | USD |
+Make Good | true |
+AdUnit UID | all |
 
-2. You can then perform one of the following API requests to return a list of available full_oxtl_rule_id and targeting_rule values. These values are defined as follows:
+2. You can then perform one of the following API requests to return a list of available ```full_oxtl_rule_id``` and ```targeting_rule``` values. These values are defined as follows:
 
-* full_oxtl_rule_id - The ID of the targeting rule that you are creating, and contains all the information that you have entered - name, inventory, and the rest of the targeting critieria.
-* targeting_rule - The ID of the forecasting object that was created *from* the full oxtl rule. This is the object that is created that forecasting really cares about - which only contains a subset of the targeting critieria that you entered initially.
+* ```full_oxtl_rule_id``` - The ID of the targeting rule that you are creating, and contains all the information that you have entered - name, inventory, and the rest of the targeting critieria.
+* ```targeting_rule``` - The ID of the forecasting object that was created *from* the full oxtl rule. This is the object that is created that forecasting really cares about - which only contains a subset of the targeting critieria that you entered initially.
 
 You will want to make these API calls so you can view the different targeting rules available before running a forecast.
-
+```
 curl '<your server instance>/ox/4.0/forecast_augur/forecastrules?avail2=true' -H 'Accept: application/json, text/javascript, /; q=0.01' -H 'X-Requested-With: XMLHttpRequest' -H 'Accept-Language: en-us' -H 'X-Openx-Client: 4.43.0.2335' -H 'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.86 Safari/537.36' -H 'Content-Type: application/json' --compressed
-
-curl '<your server instance>/ox/4.0/forecast_augur/forecastrules?avail2=false' -H 'Accept: application/json, text/javascript, /; q=0.01' -H 'X-Requested-With: XMLHttpRequest' -H 'Accept-Language: en-us' -H 'X-Openx-Client: 4.43.0.2335' -H 'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.86 Safari/537.36' -H 'Content-Type: application/json' --compressed
+```
 
 In each of these API calls, there are a number of arguments that can be passed with the call, which are listed in the table below.
 
@@ -2738,7 +2742,9 @@ pricingRate | The given pricing rate the user entered. 0.0 is returned if no pri
 msg | Message that acknowledges whether the forecast was run successfully. |
 allocated | The total number of allocated impressions for this line item. |
 forecasted | The total number of forecasted impressions for this line item. This value is what the line item was forecasted to deliver on, but because of competing line items, did not meet the full forecasted impressions. You can get the unsold impressions by calculating forecasted - allocated = unsold impressions. |
-Sample
+
+Example
+
 ```
 {   
    "status":0,
@@ -2820,7 +2826,7 @@ Sample
 ```
 ## Working with history
 
-You can get history information associated with an object by making a GET request to the OpenX Server. For more information about the history feature, see History.
+You can get history information associated with an object by making a ```GET``` request to the OpenX Server. For more information about the history feature, see History.
 
 Note: All examples assume that you have been authenticated.
 
@@ -2899,7 +2905,7 @@ revision | The revision number of the object. | 1 |
 limit | The maximum number of records to return. | 30 |
 offset | The distance (displacement) from the beginning of the object until a given element. | 0 |
 
-Samples
+Examples
 
 Note: The following samples show both ways to create a history call:
 
@@ -3149,7 +3155,7 @@ Additional Samples
 
 Note: The following samples show only the second way to create a history call (by querying the history (audittrail) endpoint and passing in the object type, object id, and additional parameters).
 
-Note: The following samples show the full curl call.
+Note: The following samples show the full ```curl``` call.
 
 Return all history for an object
 
@@ -3171,7 +3177,7 @@ Return history modified by a specified user
 
 The following sample returns all history records for the specified object id that were modified by the specified user (indicated by the email address).
 
-GET Request
+```GET``` Request
 ```
 curl -v -X GET 'http://server_name.openx.net/ox/4.0/audittrail?&obj_id=object_id&user=email_address'  -H "Content-Type:application/json"--cookie $COOKIE | python -mjson.tool
 ```
@@ -3200,7 +3206,9 @@ The following sample returns all history records for the specified object id, wi
 curl -v -X GET 'http://server_name.openx.net/ox/4.0/audittrail?&obj_id=object_id&limit=30&offset=10&sort=-timestamp'  -H "Content-Type:application/json"--cookie $COOKIE | python -mjson.tool
 ```
 ### Accessing Reports via OpenX Reporting API
+
 Even though you can access reports using the OpenX user interface, you may also run these same reports using the OpenX API. You can perform many of the same steps in accessing reports using the API as you would when using the OpenX user interface, with the main difference being that you will only need to make a single API request to configure the date range and attributes you want to see in the report.
+
 If you decide to access reports via the OpenX API, it is assumed you are already intimately familiar with reporting and understand how these reports are configured and generated. If you are unfamiliar with OpenX reporting, please refer to the OpenX Reporting documentation for more detailed information about how reports are managed in the user interface.
 
 To run simple reporting service (SRS) reports, make the following report object calls:
@@ -3212,7 +3220,7 @@ Sample request:
 curl http://openx_server_name/ox/4.0/report/get_reportlist --cookie "openx3_access_token=token_string"
 ```
 Where:
-token_string is a string of characters returned by the GET request at login. To obtain an openx3_access_token, see the authentication topic.
+token_string is a string of characters returned by the ```GET``` request at login. To obtain an ```openx3_access_token```, see the authentication topic.
 ```
 Sample response
 {
@@ -3500,7 +3508,7 @@ Sample request for report inputs:
 ```
 curl http://openx_server_name/ox/4.0/report/get_report_inputs?report=inv_perf_pub --cookie "openx3_access_token=token_string"
 ```
-Sample response for the Inventory Detailed Performance report (inv_perf_pub) inputs
+Sample response for the Inventory Detailed Performance report (```inv_perf_pub```) inputs
 ```
 {
   "acl_resource_type": "inventory", 
@@ -3753,7 +3761,8 @@ Sample response for the Inventory Detailed Performance report (inv_perf_pub) inp
   "status": "OK"
 }
 ```
-Where: "required": "1" indicates a parameter that is required when running a report. You can include other values as needed.
+Where: 
+"required": "1" indicates a parameter that is required when running a report. You can include other values as needed.
 
 3. ```GET /report/run```. Run the specified report with required and desired URI parameters.
 
@@ -3788,7 +3797,8 @@ Where:
 * start_date=0 and end_date=0 indicates today
 * do_break=SiteName,AdUnit,AdUnitSize indicates you want to break the report out according to site, ad units, and ad unit sizes
 * report_format=json indicates you want to generate a JSON response
-* ClosedSample Inventory Detailed Performance report in JSON format
+
+Sample Inventory Detailed Performance report in JSON format
 ```
 {
   "ReportOutput": {
@@ -4221,6 +4231,7 @@ Note that you are passing the values listed in the table below as part of the re
 Bid Performance Report Publisher Filters Request Values
 
 Parameter | Description | Example Value |
+--------- | ------------ | ---------------- |
 api_url | The URL for the OpenX Reporting API. | http://qa-v2-i24-ssp-only.api-v4-qa-ca.openx.net |
 api_client | The API client.| ox |
 api_version | The API version. | 4.0 |
@@ -4246,7 +4257,7 @@ Note: The following parameters are used in this request.
 Bid Performance Report cURL Request Values
 
 Parameter | Description | Example Value
---------- | ----------- | ------------- |
+--------- | ----------- | --------- |
 api_url	| The URL for the OpenX Reporting API. | http://qa-v2-i24-ssp-only.api-v4-qa-ca.openx.net|
 api_client | The API client. | ox|
 api_version | The API version. | 4.0 |
@@ -4258,7 +4269,7 @@ report_format | The output format for the report. Options are CSV and JSON. | cs
 report | The type of report.| bid_perf|
 cookie | The session access token and cookie.| openx3_access_token=cf708d438a38193a81c953fc5c7346ca438b056a5e2b9reports=%7B%22name%22%3A%22600000e0-acc0-fff1-8123 9c5e2e%22%2C%22success%22%3Atrue%2C%22server%22%3A%22|
 
-Working with a Completed Report
+### Working with a Completed Report
 
 Once you have structured your request and selected your output format (CSV or JSON), the API will process the request and return raw data based on the selected input parameters. You can then use this data in your preferred visualization tool (e.g. Excel, Word, etc.) to sort and analyze the data.
 
@@ -4333,14 +4344,18 @@ The account object has the following calls:
 * ```GET /account/account_UID/list_sites```. List sites for the specified account.
 * ```GET /account/account_UID/list_users```. List users for the specified account.
 * ```GET /account/account_UID/monthly_budget_remaining```
-** For Ad Exchange accounts without payments, return the monthly budget minus monthly spending.
-** For Ad Exchange accounts with payments, return a number calculated based on lifetime payment, lifetime spending, monthly spending to date, and monthly budget.
-** Otherwise, return 0.
-* GET /account/account_UID/payments_to_date. Return the sum of all payments up to the current date for the specified account.
-* GET /account/all_unlinked_lift_accounts. List all accounts that are not data-linked advertisers.
-* GET /account/available_fieldstype_full=account.type. List the available fields to create or update an account of the specified type.
 
-Sample response for GET /account/available_fieldstype_full=account.network
+For Ad Exchange accounts without payments, return the monthly budget minus monthly spending.
+
+For Ad Exchange accounts with payments, return a number calculated based on lifetime payment, lifetime spending, monthly spending to date, and monthly budget.
+
+Otherwise, return 0.
+
+* ```GET /account/account_UID/payments_to_date```. Return the sum of all payments up to the current date for the specified account.
+* ```GET /account/all_unlinked_lift_accounts```. List all accounts that are not data-linked advertisers.
+* ```GET /account/available_fieldstype_full=account.type```. List the available fields to create or update an account of the specified type.
+
+Sample response for ```GET /account/available_fieldstype_full=account.network```
 ```
 {
   "account_id": {
@@ -4827,12 +4842,15 @@ Sample batch create
 ad object
 The functional unit that displays in the ad space and which represents the message that an advertiser wants an end-user to view
 The ad object has the following calls:
-DELETE /ad. Delete the specified ads.
-DELETE /ad/ad_UID. Delete the specified ad.
-GET /ad. List all ads.
-GET /ad/ad_UID. Read the specified ad.
-GET /ad/available_fieldstype_full=ad.type. List the available fields to create or update an ad object of the specified type.
-OpenSample response for GET /ad/available_fieldstype_full=ad.type_full=ad.image
+
+* ```DELETE /ad```. Delete the specified ads.
+* ```DELETE /ad/ad_UID```. Delete the specified ad.
+* ```GET /ad```. List all ads.
+* ```GET /ad/ad_UID```. Read the specified ad.
+* ```GET /ad/available_fieldstype_full=ad.type```. List the available fields to create or update an ad object of the specified type.
+
+Sample response for ```GET /ad/available_fieldstype_full=ad.type_full=ad.image```
+```
 {
   "account_id": {
     "auto": true, 
@@ -5115,7 +5133,8 @@ OpenSample response for GET /ad/available_fieldstype_full=ad.type_full=ad.image
     "type": "int"
   }
 }
-GET /ad/performance/ad_UID. Get performance metrics for the specified ad within the (optional) date range.
+```
+* ```GET /ad/performance/ad_UID```. Get performance metrics for the specified ad within the (optional) date range.
 Parameters
 start_date
 A specific date in yyyy-mm-dd HH:MM:SS format
