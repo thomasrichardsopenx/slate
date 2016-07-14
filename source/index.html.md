@@ -5136,33 +5136,34 @@ Sample response for ```GET /ad/available_fieldstype_full=ad.type_full=ad.image``
 ```
 * ```GET /ad/performance/ad_UID```. Get performance metrics for the specified ad within the (optional) date range.
 Parameters
-start_date
+```start_date```
 A specific date in yyyy-mm-dd HH:MM:SS format
 OR
 An integer for the days backward from today. For example, 7 means "seven days ago" and 0 means "starting today" (inclusive).
-end_date
+```end_date```
 A specific date in yyyy-mm-dd HH:MM:SS format
 OR
 A negative integer for the days from now. For example, -7 means "until seven days from now" and 0 means "before today" (exclusive).
-POST /ad. Create one or more ads.
-POST /ad/ad_UID/clone. Create a copy of the specified ad.
-POST /ad/ad_UID/recycle. Restart the specified ad.
-POST /ad/ad_UID/stop. Pause the specified ad.
-PUT /ad. Update the specified ads.
-PUT /ad/ad_UID. Update the specified ad.
+* ```POST /ad```. Create one or more ads.
+* ```POST /ad/ad_UID/clone```. Create a copy of the specified ad.
+* ```POST /ad/ad_UID/recycle```. Restart the specified ad.
+* ```POST /ad/ad_UID/stop```. Pause the specified ad.
+* ```PUT /ad```. Update the specified ads.
+* ```PUT /ad/ad_UID```. Update the specified ad.
 
 ### Ad unit object
 
-Specific areas on your site where you want to display ads
-The adunit object has the following calls:
-DELETE /adunit. Delete the specified ad units.
-DELETE /adunit/ad_unit_UID. Delete the specified ad unit.
-GET /adunit. List all ad units.
-GET /adunit/ad_unit_UID. Read the specified ad unit.
-GET /adunit/ad_unit_UID/generate_tag. Generate the HTML tag for the specified ad unit.
-GET /adunit/ad_unit_UID/list_adunitgroups. List ad unit groups for the specified ad unit UID.
-GET /adunit/available_fieldstype_full=adunit.type. List the available fields to create or update an ad unit object of the specified type (such as adunit.web).
-OpenSample response for GET /adunit/available_fieldstype_full=adunit.web
+Specific areas on your site where you want to display ads. The adunit object has the following calls:
+* ```DELETE /adunit```. Delete the specified ad units.
+* ```DELETE /adunit/ad_unit_UID```. Delete the specified ad unit.
+* ```GET /adunit```. List all ad units.
+* ```GET /adunit/ad_unit_UID```. Read the specified ad unit.
+* ```GET /adunit/ad_unit_UID/generate_tag```. Generate the HTML tag for the specified ad unit.
+* ```GET /adunit/ad_unit_UID/list_adunitgroups```. List ad unit groups for the specified ad unit UID.
+* ```GET /adunit/available_fieldstype_full=adunit.type```. List the available fields to create or update an ad unit object of the specified type (such as adunit.web).
+
+Sample response for GET /adunit/available_fieldstype_full=adunit.web
+```
 {
   "account_id": {
     "auto": true, 
@@ -5510,41 +5511,62 @@ OpenSample response for GET /adunit/available_fieldstype_full=adunit.web
     "type": "varchar"
   }
 }
-GET /adunit/list_ad_tags. List ad tags and basic information for the specified adunit UIDs.
+```
+* ```GET /adunit/list_ad_tags```. List ad tags and basic information for the specified adunit UIDs.
+
 Parameters
-adunit_uids (Required). A comma-separated string of ad unit UIDs, such as adunit_uids=278-e0ad-ff1-8123-0c9a,288-e0ad-ff1-8123-0c9a
-format (Optional). Use format=txt to download ad tags in a text file.
-GET /adunit/performance/ad_unit_UID. Get the performance metrics for the specified ad unit within the (optional) date range.
+
+```adunit_uids (Required)```. A comma-separated string of ad unit UIDs, such as adunit_uids=278-e0ad-ff1-8123-0c9a,288-e0ad-ff1-8123-0c9a
+```format (Optional)```. Use format=txt to download ad tags in a text file.
+
+```GET /adunit/performance/ad_unit_UID```. Get the performance metrics for the specified ad unit within the (optional) date range.
+
 Parameters
+
 start_date
-A specific date in yyyy-mm-dd HH:MM:SS format
+* A specific date in yyyy-mm-dd HH:MM:SS format
+
 OR
+
 An integer for the days backward from today. For example, 7 means "seven days ago" and 0 means "starting today" (inclusive).
+
 end_date
+
 A specific date in yyyy-mm-dd HH:MM:SS format
+
 OR
+
 A negative integer for the days from now. For example, -7 means "until seven days from now" and 0 means "before today" (exclusive).
-POST /adunit. Create one or more ad units.
-POST /adunit/ad_unit_UID/clone. Clone the specified ad unit.
-POST /adunit/list_ad_tags. List ad tags and basic information for the specified adunit UIDs.
+
+* ```POST /adunit```. Create one or more ad units.
+* ```POST /adunit/ad_unit_UID/clone```. Clone the specified ad unit.
+* ```POST /adunit/list_ad_tags```. List ad tags and basic information for the specified adunit UIDs.
+
 Parameters
-adunit_uids (Required). A comma-separated string of ad unit UIDs, such as adunit_uids=278-e0ad-ff1-8123-0c9a,288-e0ad-ff1-8123-0c9a
-format (Optional). Use format=txt to download ad tags in a text file.
-PUT /adunit. Update the specified ad units.
-PUT /adunit/ad_unit_UID. Update the specified ad unit.
+
+```adunit_uids (Required). A comma-separated string of ad unit UIDs, such as adunit_uids=278-e0ad-ff1-8123-0c9a,288-e0ad-ff1-8123-0c9a
+
+```format (Optional)```. Use format=txt to download ad tags in a text file.
+
+* ```PUT /adunit```. Update the specified ad units.
+* ```PUT /adunit/ad_unit_UID```. Update the specified ad unit.
 
 ### adunitgroup object
 
 Collections of ad units used for inventory to be filled with companion ads or to map items in a CMS to inventory items
+
 The adunitgroup object has the following calls:
-DELETE /adunitgroup. Delete the specified ad unit groups.
-DELETE /adunitgroup/ad_unit_group_UID. Delete the specified ad unit group.
-GET /adunitgroup. List all ad unit groups.
-GET /adunitgroup/ad_unit_group_UID. Read the specified ad unit group.
-GET /adunitgroup/ad_unit_group_UID/generate_tag. Generate the HTML tag for the specified ad unit group.
-GET /adunitgroup/ad_unit_group_UID/list_ad_units. List ad units for the specified account UID.
-GET /adunitgroup/available_fields. List the available fields to create or update an ad unit group.
-OpenSample available_fields response
+
+* ```DELETE /adunitgroup```. Delete the specified ad unit groups.
+* ```DELETE /adunitgroup/ad_unit_group_UID```. Delete the specified ad unit group.
+* ```GET /adunitgroup```. List all ad unit groups.
+* ```GET /adunitgroup/ad_unit_group_UID```. Read the specified ad unit group.
+* ```GET /adunitgroup/ad_unit_group_UID/generate_tag```. Generate the HTML tag for the specified ad unit group.
+* ```GET /adunitgroup/ad_unit_group_UID/list_ad_units```. List ad units for the specified account UID.
+* ```GET /adunitgroup/available_fields```. List the available fields to create or update an ad unit group.
+
+Sample available_fields response
+```
 {
   "account_id": {
     "auto": true, 
@@ -5728,20 +5750,29 @@ OpenSample available_fields response
     "type": "varchar"
   }
 }
-GET /adunitgroup/performance/ad_unit_group_UID. Get the performance metrics for the specified ad unit group within the (optional) date range.
+```
+
+* ```GET /adunitgroup/performance/ad_unit_group_UID```. Get the performance metrics for the specified ad unit group within the (optional) date range.
+
 Parameters
+
 start_date
 A specific date in yyyy-mm-dd HH:MM:SS format
+
 OR
 An integer for the days backward from today. For example, 7 means "seven days ago" and 0 means "starting today" (inclusive).
+
 end_date
 A specific date in yyyy-mm-dd HH:MM:SS format
+
 OR
+
 A negative integer for the days from now. For example, -7 means "until seven days from now" and 0 means "before today" (exclusive).
-POST /adunitgroup. Create one or more ad unit groups.
-POST /adunitgroup/ad_unit_group_UID/clone. Clone the specified ad unit group.
-PUT /adunitgroup. Update the specified ad unit groups.
-PUT /adunitgroup/ad_unit_group_UID. Update the specified ad unit group.
+
+* POST /adunitgroup. Create one or more ad unit groups.
+* POST /adunitgroup/ad_unit_group_UID/clone. Clone the specified ad unit group.
+* PUT /adunitgroup. Update the specified ad unit groups.
+* PUT /adunitgroup/ad_unit_group_UID. Update the specified ad unit group.
 
 ### audiencesegment object
 
