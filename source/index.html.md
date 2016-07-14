@@ -7543,7 +7543,7 @@ A negative integer for the days from now. For example, -7 means "until seven day
 
 ### session service
 
-The session service allows communication between OpenX and a user when they log in, interact with, and log out of the system. It has the following calls:
+The ```session``` service allows communication between OpenX and a user when they log in, interact with, and log out of the system. It has the following calls:
 
 * ```DELETE /session```. Log out to terminate the API session.
 * ```GET /session```. Log in to OpenX.
@@ -7816,67 +7816,82 @@ The ```user``` object represents an individual who will be logging in to OpenX a
 
 ## Authentication reference
 
-What is authentication?
+### What is authentication?
+
 If you are developing your own client application to access OpenX, you will have to authenticate your users. OpenX authentication follows the OAuth 1.0 protocol. From the OAuth specification:
+
 The OAuth protocol enables websites or applications (Consumers) to access Protected Resources from a web service (Service Provider) via an API, without requiring Users to disclose their Service Provider credentials to the Consumers. More generally, OAuth creates a freely-implementable and generic methodology for API authentication.
+
 The following sections provide a brief overview that describes how to code your own OAuth scheme to access the OpenX API.
 
 ### Before you begin
 
 What You Will Need
+
 If you decide to implement your own authentication code, here is what you will need:
-Basic knowledge of OAuth. For more information you can consult the following recommended sites: OAuth specification, The OAuth Bible, and Twitter Developers Documentation: OAuth.
-Knowledge of the HTTP protocol
-For programmatic authentication, you need to have knowledge of a client language such as PHP, Python, or Java. Note that OpenX already provides client libraries for each of these languages.
+
+* Basic knowledge of OAuth. For more information you can consult the following recommended sites: OAuth specification, The OAuth Bible, and Twitter Developers Documentation: OAuth.
+* Knowledge of the HTTP protocol
+* For programmatic authentication, you need to have knowledge of a client language such as PHP, Python, or Java. Note that OpenX already provides client libraries for each of these languages.
+
 Credentials Supplied by OpenX
+
 When you become an API customer, OpenX provides you with the following credentials which you will use in initial authentication calls.
+
 Credentials Supplied by OpenX
-Parameter	Description
-Username	Your account username provided by your account manager
-Password	Your account password provided by your account manager
-Consumer Key	The ID portion of your Consumer credentials, provided by your account manager
-Consumer Secret	The Consumer secret can be thought of as the password for the Consumer credentials. This is also provided by your account manager
-OAuth Realm	The realm value is a string, generally assigned by the origin server. The realm parameter allows the protected resources on a server to be partitioned. For example, OAuth realm="http://server.example.com/"
+
+Parameter | Description |
+Username | Your account username provided by your account manager. |
+Password | Your account password provided by your account manager. |
+Consumer Key | The ID portion of your Consumer credentials, provided by your account manager. |
+Consumer Secret | The Consumer secret can be thought of as the password for the Consumer credentials. This is also provided by your account manager. |
+OAuth Realm | The realm value is a string, generally assigned by the origin server. The realm parameter allows the protected resources on a server to be partitioned. For example, OAuth realm="http://server.example.com/" |
 
 ### About OAuth
 
 The following section briefly describes the concepts and workflow of the OAuth authentication process.
+
 Tip: For more details about OAuth, refer to RFC 5849.
+
 Roles
+
 The OAuth process involves the following three entities:
 
-The diagram above shows the following:
-The double-headed arrow between the User and Consumer shows that a request and response is made between the two.
-The double-headed arrow between the Consumer and the Service Provider shows that a request and response takes place between the two.
-The arrow at the bottom shows that, after the OAuth process, the User is able to access resources from the Service Provider.
+* The double-headed arrow between the User and Consumer shows that a request and response is made between the two.
+* The double-headed arrow between the Consumer and the Service Provider shows that a request and response takes place between the two.
+* The arrow at the bottom shows that, after the OAuth process, the User is able to access resources from the Service Provider.
+
 OAuth Roles
-OAuth Role	Description	OpenX Implementation
-Service Provider	A web application that allows access via OAuth.	OpenX
-Consumer	A website or application that uses OAuth to access the Service Provider on behalf of the User.	Your client application
-User	An individual who has an account with the Service Provider.	Users of your client application
+OAuth Role | Description | OpenX Implementation |
+Service Provider | A web application that allows access via OAuth. | OpenX |
+Consumer | A website or application that uses OAuth to access the Service Provider on behalf of the User. | Your client application. |
+User | An individual who has an account with the Service Provider. | Users of your client application. |
+
 URLs
 OAuth defines three request URLs:
-URLs
-URL Type	Description	OpenX Implementation
-Request Token URL	Used to obtain an unauthorized Request Token	https://sso.openx.com/api/index/initiate
-User Authorization URL	Used to obtain User authorization for Consumer access	Browser-based: https://sso.openx.com/login/login Programmatic: https://sso.openx.com/login/process
-Access Token URL	Used to exchange the User-authorized Request Token for an Access Token	https://sso.openx.com/api/index/token
+
+URL Type | Description | OpenX Implementation |
+Request Token URL | Used to obtain an unauthorized Request Token | https://sso.openx.com/api/index/initiate | 
+User Authorization URL | Used to obtain User authorization for Consumer access | Browser-based: https://sso.openx.com/login/login Programmatic: https://sso.openx.com/login/process | 
+Access Token URL | Used to exchange the User-authorized Request Token for an Access Token | https://sso.openx.com/api/index/token
+
 Parameters
+
 For a complete list of parameters, see the OAuth specification. There are a few parameters worth mentioning:
-Parameters
-Parameter	Description
-Oauth_nonce	This parameter contains a nonce or "only once string"; it is a unique string that changes on each OAuth request. There is no specification on how the nonce should be constructed, but it is important to make sure it changes on each call; it is how the server knows there are no duplicate requests.
-oauth_token	This value changes based on the stage of the OAuth handshake. Before authorization and when getting a request token, this parameter is excluded entirely. When retrieving an access token, this parameter is set to the request token. Once an access token has been obtained, this parameter, for all future requests, is set to the access token.
-UNIX timestamp	The oauth_timestamp field requires a UNIX timestamp. Some programming libraries may provide a function for this.
+
+Parameter | Description
+Oauth_nonce | This parameter contains a nonce or "only once string"; it is a unique string that changes on each OAuth request. There is no specification on how the nonce should be constructed, but it is important to make sure it changes on each call; it is how the server knows there are no duplicate requests. |
+oauth_token | This value changes based on the stage of the OAuth handshake. Before authorization and when getting a request token, this parameter is excluded entirely. When retrieving an access token, this parameter is set to the request token. Once an access token has been obtained, this parameter, for all future requests, is set to the access token. |
+UNIX timestamp | The oauth_timestamp field requires a UNIX timestamp. Some programming libraries may provide a function for this.
+
 Process Overview
 The following graphic illustrates the flow of information in the OAuth process. It takes place is basically three steps:
-The Consumer obtains an unauthorized Request Token (Steps 1.1 and 1.2)
-The User authorized the Request Token (Steps 2.1, 2.2, and 2.3)
-The Consumer exchanges the Request Token for an Access Token (Steps 3.1 and 3.2)
-The numbered steps in the graphic correspond to the numbered steps in this section.
 
-Solid arrow - Person using web browser/Manual entry
-Dotted arrow - Consumer/Service Provider
+* The Consumer obtains an unauthorized Request Token (Steps 1.1 and 1.2)
+* The User authorized the Request Token (Steps 2.1, 2.2, and 2.3)
+* The Consumer exchanges the Request Token for an Access Token (Steps 3.1 and 3.2)
+
+The numbered steps in the graphic correspond to the numbered steps in this section.
 
 ### About signing requests
 
