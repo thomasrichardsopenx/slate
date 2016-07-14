@@ -407,7 +407,6 @@ When the creation is successful, the HTTP response includes 200 Created and a re
  }
 ]
 ```
-
 ##### Sample batch delete
 ```
 curl -X DELETE --header "Content-Type: application/json" http://openx_server_name/ox/4.0/account \
@@ -1086,10 +1085,10 @@ curl -X GET http://openx_server_name/ox/4.0/accountoffset=50&limit=25 --cookie "
 The URIs described in the API reference represent the supported request syntax, to which you can add certain supported request parameters. You can include request parameters in your API calls as query string arguments; you can append the first parameter after a question mark (?) and additional parameters separated by ampersands (&) in any order or combination.
 The OpenX API supports the various parameters, such as the following:
 
-* action. When calling the API for available and required fields for an object, set this parameter to action=create or action=update to specify the action for which you want to retrieve values. For example, the set of required fields for creating a user (/user/available_fields?action=create) is different than the set of required fields for updating a user (/user/available_fields?action=update), such as the user.email field, which is required for creating a user but not for updating a user.
-* pretty. (For debugging purposes only) Display the JSON response into a more human readable format, encapsulated by HTML <pre> tags.
+* ```action```. When calling the API for available and required fields for an object, set this parameter to action=create or action=update to specify the action for which you want to retrieve values. For example, the set of required fields for creating a user (/user/available_fields?action=create) is different than the set of required fields for updating a user (/user/available_fields?action=update), such as the user.email field, which is required for creating a user but not for updating a user.
+* ```pretty```. (For debugging purposes only) Display the JSON response into a more human readable format, encapsulated by HTML tags.
 * Pagination parameters.
-* type_full. Some available_fields calls require this parameter. If so, the error response will list the choices for type_full if you do not specify an attribute. For example, when calling /ad/available_fields, you can specify the type_full=ad.image attribute. This parameter is also used for list operations.
+* ```type_full```. Some available_fields calls require this parameter. If so, the error response will list the choices for type_full if you do not specify an attribute. For example, when calling /ad/available_fields, you can specify the type_full=ad.image attribute. This parameter is also used for list operations.
 
 Important: Routine use of the pretty parameter negatively impacts performance. Do not use it in your production calls.
 
@@ -1166,11 +1165,13 @@ To create an account:
 2. Get the available fields for an account:
 
 Example 1. Sample available_fields request
-```openx_server_name/ox/4.0/account/available_fields --cookie "openx3_access_token=curl http://token_string"```
+```
+openx_server_name/ox/4.0/account/available_fields --cookie "openx3_access_token=curl http://token_string"
+```
+Where: 
+```token_string``` is a string of characters returned by the ```GET``` session request at login.
 
-Where: ```token_string``` is a string of characters returned by the ```GET``` session request at login.
-
-Example 2. Sample available_fields response
+Example 2. Sample ```available_fields``` response
 ```
 {
     "attribute": "type_full", 
@@ -1186,11 +1187,11 @@ Accounts fields change based the different account types. The response indicates
 
 3. Modify the request by adding a ```type_full``` URI parameter:
 
-Example 3. Sample type_full account request
+Example 3. Sample ```type_full``` account request
 
 ```openx_server_name/ox/4.0/account/available_fieldstype_full=account.network --cookie "openx3_access_token=curl http://token_string"```
 
-Example 4. Sample type_full account response
+Example 4. Sample ```type_full``` account response
 ```
 {
   "account_id": {
@@ -1372,20 +1373,20 @@ Example 4. Sample type_full account response
 ```
 Within the response, several fields are marked "required": true, such as ```account_uid```. Of the required fields, most include a ```url``` field, such as ```account_uid's "url": "/options/account_options"```.
 
-4. To see a list of available options, make the options calls indicated by the URLs. The following call shows an options call for only one of the required fields:
+To see a list of available options, make the ```options``` calls indicated by the URLs. The following call shows an ```options``` call for only one of the required fields:
 
-Example 5. Sample experience options request
+Example 5. Sample ```experience options``` request
 ```
 openx_server_name/ox/4.0/options/network_experience_options --cookie "openx3_access_token=curl http://token_string"
 ```
-Example 6. Sample experience options response
+Example 6. Sample ```experience options``` response
 ```
 [  {    "id": "network.display",     "name": "Display Network"  },   {    "id": "network.mobile",     "name": "Mobile App Developer"  }]
 ```
 
 By default, the acceptable values are the ```id``` values, such as ```network.display``` and ```network.mobile``` in the above sample. Some fields reference other API objects, such as the ```account_uid``` field. For such fields, their options call will return a list very similar to list calls (such as ```GET /account```).
 
-5. Build a request to create an account using the following five fields along with ```type_full```:
+Build a request to create an account using the following five fields along with ```type_full```:
 
 Example 7. Sample create account request with experience and status typos
 ```
@@ -1395,7 +1396,7 @@ openx_server_name/ox/4.0/account --cookie "openx3_access_token=curl http://token
       "network.displayy", "name": "My Network", "status": "Activee", "type_full":
       "account.network", "timezone": "America/Los_Angeles"}'
 ```
-The API returns multiple errors and a field errors dictionary with experience and status keys indicating the values passed in are invalid.
+The API returns multiple errors and a ```field errors``` dictionary with experience and status keys indicating the values passed in are invalid.
 
 Example 8. Sample error response
 ```
@@ -1467,7 +1468,7 @@ Example 10. Sample create response
   }
 ]
 ```
-7. Make a read call using the ```UID``` field of the newly created account:
+Make a read call using the ```UID``` field of the newly created account:
 
 Sample read account request
 ```
@@ -1479,7 +1480,6 @@ Sample list accounts request
 ```
 curl http://openx_server_name/ox/4.0/account --cookie "openx3_access_token=token_string"
 ```
-
 ## Working with inventory
 
 This section describes how to use the Platform API to manage inventory objects. To retrieve the lists of inventory objects to which the current user has access:
@@ -1580,11 +1580,12 @@ This returns the list of fields that you can set, and those that are required, f
     "url": "/options/content_topic_options"
   },...
 ```
-3. Create the site object, passing in, at a minimum, the required parameters, which include:
-- The UID of the publisher account (account_uid)
-- The name for the new site (name)
-- The status for the site (status), which is described by /options/status_options_common
-- The URL for the site (url)
+Create the site object, passing in, at a minimum, the required parameters, which include:
+
+* The UID of the publisher account (account_uid)
+* The name for the new site (name)
+* The status for the site (status), which is described by /options/status_options_common
+* The URL for the site (url)
 
 For example, create a site for the web delivery medium.
 
@@ -1595,8 +1596,9 @@ The API creates the site and returns the ID for the new site object.
 ### Creating an ad unit
 
 To create an ad unit:
-1. Retrieve the list of sites to determine the one to create the ad unit for.
-2. Retrieve the list of available fields for creating an ad unit:
+
+Retrieve the list of sites to determine the one to create the ad unit for.
+Retrieve the list of available fields for creating an ad unit:
 
 ```curl http://openx_server_name/ox/4.0/adunit/available_fields --cookie "openx3_access_token=token_string"```
 
@@ -1618,13 +1620,14 @@ The following error response indicates that the type_full attribute is needed:
 	"value": null
 }
 ```
-3. Specify the desired ```type_full``` value, such as adunit.web in the following sample:
+Specify the desired ```type_full``` value, such as adunit.web in the following sample:
 ```
 curl http://openx_server_name/ox/4.0/adunit/available_fields?type_full=adunit.web --cookie "openx3_access_token=token_string"
 ```
-Note: : When using adunit.mobile for the type_full value, you must also pass in the site_uid. For example:
-```curl http://openx_server_name/ox/4.0/adunit/available_fields?type_full=adunit.mobile&site_uid=site_uid --cookie "openx3_access_token=token_string"```
-
+Note: When using adunit.mobile for the type_full value, you must also pass in the site_uid. For example:
+```
+curl http://openx_server_name/ox/4.0/adunit/available_fields?type_full=adunit.mobile&site_uid=site_uid --cookie "openx3_access_token=token_string"```
+```
 This returns the list of fields that you can set, and those that are required, for creating a web ad unit:
 ```
 {
@@ -1652,14 +1655,14 @@ This returns the list of fields that you can set, and those that are required, f
   },...
 }
 ```
-4. Create the ad unit object by passing in, at a minimum, the required parameters:
+Create the ad unit object by passing in, at a minimum, the required parameters:
 
-* The ID for the site that the ad unit belongs to (site_uid)
-* The name for the ad unit (name)
+* The ID for the site that the ad unit belongs to (```site_uid```)
+* The name for the ad unit (```name```)
 * The status for the ad unit (status), which is either Active or Inactive
-* The ID for the delivery medium that the new ad unit is intended to run on (delivery_medium_id)
-* The ID for the type of ad tag to use to request ads for this ad unit, such ad image or JavaScript (tag_type_id)
-* The type of ad unit (type_full) such as adunit.web
+* The ID for the delivery medium that the new ad unit is intended to run on (```delivery_medium_id```)
+* The ID for the type of ad tag to use to request ads for this ad unit, such ad image or JavaScript (```tag_type_id```)
+* The type of ad unit (```type_full```) such as adunit.web
 
 For example, create a web ad unit:
 ```
@@ -1824,7 +1827,7 @@ OpenX returns a JSON response similar to the one described in the sample respons
 
 For more details, see eventfeed in the API reference.
 ```
- OpenResponse listing available files for an event feed
+Response listing available files for an event feed
 "@id": "496", 
 	"@name": "d8568240-c334-11e2-8b8b-0800200c9a66_ox_click_log_minutely"
 	}, 
@@ -2099,8 +2102,9 @@ The API returns the attributes and value details for the specific order:
 
 To create an order:
 
-1. Retrieve the list of accounts to determine the account UID for which you want to create the order.
-2. Retrieve the list of available fields for creating an order.
+Retrieve the list of accounts to determine the account UID for which you want to create the order.
+
+Retrieve the list of available fields for creating an order.
 ```
 curl http://openx_server_name/ox/4.0/order/available_fields --cookie "openx3_access_token=token_string"
 ```
@@ -2145,12 +2149,12 @@ This returns the list of fields that you can set, and those that are required, f
 }
 ```
 
-3. Create the order object, passing in, at a minimum, the required parameters, which include:
+Create the order object, passing in, at a minimum, the required parameters, which include:
 
-* The name of the new order (name)
-* The status for the new order (status)
-* The beginning date for the new order (start_date)
-* The ID for the advertiser account that the new order belongs to (account_uid)
+* The name of the new order (```name```)
+* The status for the new order (```status```)
+* The beginning date for the new order (```start_date```)
+* The ID for the advertiser account that the new order belongs to (```account_uid```)
 
 For example, create an order for a specified account:
 ```
@@ -2249,7 +2253,7 @@ Response
 }
 ```
 
-4. You can retrieve details about fields that include a url value. For example, ```ad_delivery``` includes the following value: ```"url"```: 
+You can retrieve details about fields that include a url value. For example, ```ad_delivery``` includes the following value: ```"url"```: 
 ```
 "/options/ad_delivery_options"
 ```
@@ -2257,16 +2261,16 @@ Response
 curl -X GET http://openx_server_name/ox/4.0/options/ad_delivery_options --cookie
       "openx3_access_token=token_string"
 ```
-5. Create the line item object, passing in, at a minimum, the required parameters, which include:
+Create the line item object, passing in, at a minimum, the required parameters, which include:
 
-* The ad delivery method (ad_delivery)
-* The name of the line item (name)
-* The status of the line item (status)
-* The ID for the order that the line item belongs to (order_uid)
-* The beginning date for the line item (start_date)
-* The delivery medium (delivery_medium)
-* Targeting rules (targeting)
-* The type of line item (type_full)
+* The ad delivery method (```ad_delivery```)
+* The name of the line item (```name```)
+* The status of the line item (```status```)
+* The ID for the order that the line item belongs to (```order_uid```)
+* The beginning date for the line item (```start_date```)
+* The delivery medium (```delivery_medium```)
+* Targeting rules (```targeting```)
+* The type of line item (```type_full```)
 
 For example, create a house line item:
 ```
@@ -2289,14 +2293,15 @@ The API creates the line item and returns the UID for the new line item object.
 ### Creating an ad
 
 To create an ad:
-1. Create a line item and retrieve its UID, or retrieve the list of line items to determine the one to create the ad for.
-2. Upload a creative.
-3. Create a creative.
-4. Get the list of available fields for creating an ad:
+
+Create a line item and retrieve its UID, or retrieve the list of line items to determine the one to create the ad for.
+Upload a creative.
+Create a creative.
+Get the list of available fields for creating an ad:
 ```
 curl -X GET http://openx_server_name/ox/4.0/ad/available_fields?type_full=ad.image --cookie "openx3_access_token=token_string"
 ```
-The following error response indicates that a type_full value is required:
+The following error response indicates that a ```type_full``` value is required:
 
 Error response
 ```
@@ -2329,7 +2334,7 @@ Error response
 }
 ```
 
-5. Modify the request by adding a type_full URI parameter. For example, retrieve the list of available fields for an image ad:
+Modify the request by adding a type_full URI parameter. For example, retrieve the list of available fields for an image ad:
 ```
 curl -X GET http://openx_server_name/ox/4.0/ad/available_fields --cookie "openx3_access_token=token_string"
 ```
@@ -2384,17 +2389,17 @@ Sample
   }, ...
  }
  ```
-6. Create the image ad object, passing in, at a minimum, the required parameters, which include:
+Create the image ad object, passing in, at a minimum, the required parameters, which include:
 
-* The name for the new image ad (name)
-* The status of the new ad (status)
-* The ID for the type of ad you are creating, such as image (ad_type_id)
-* The UID for the line item that the new ad belongs to (line_item_uid)
-* The size of the ad (size)
-* The UID of the creative (primary_creative_uid)
-* The click URL for the image ad (click_url)
-* The click target window for the image ad (click_target_window)
-* The type of ad (type_full)
+* The name for the new image ad (```name```)
+* The status of the new ad (```status```)
+* The ID for the type of ad you are creating, such as image (```ad_type_id```)
+* The UID for the line item that the new ad belongs to (```line_item_uid```)
+* The size of the ad (```size```)
+* The UID of the creative (```primary_creative_uid```)
+* The click URL for the image ad (```click_url```)
+* The click target window for the image ad (```click_target_window```)
+* The type of ad (```type_full```)
 
 For example, create an image ad:
 ```
@@ -2446,7 +2451,7 @@ The API creates the creative and returns the ID for the new creative object.
 
 ## Working with comments
 
-If you do not wish to use the UI to add or edit comments, you may use the API to add (POST) and edit (PUT) comments for an object, as well as retrieve a list of all comments for a specific object (GET). The steps for adding and editing comments for objects are described below.
+If you do not wish to use the UI to add or edit comments, you may use the API to add (```POST```) and edit (```PUT```) comments for an object, as well as retrieve a list of all comments for a specific object (```GET```). The steps for adding and editing comments for objects are described below.
 You can:
 * Add a new comment
 * Edit an existing comment
@@ -2455,12 +2460,13 @@ You can:
 Add a new comment
 
 To add a comment to an existing object, follow the steps described below.
-1. Open a terminal window on your system.
-2. Make the following POST API request to the OpenXserver to add a comment to the selected object (in this case, a line item). Note that there is a 1000 character limit for a comment, and a comment can be alphanumeric.
+
+Open a terminal window on your system.
+Make the following ```POST``` API request to the OpenXserver to add a comment to the selected object (in this case, a line item). Note that there is a 1000 character limit for a comment, and a comment can be alphanumeric.
 ```
 curl -s -X POST 'http://qa-v2-i16-lmi.api-v4-qa-ca.openx.net/ox/4.0/comment' --cookie $COOKIE --header "Content-Type:application/json" -d '{"obj_type": "lineitem","obj_uid": "600738b9-c002-fff1-8123-0c9a66","text": "A comment on a lineitem"}' | python -mjson.tool
 ```
-The values listed in the table below make up the POST request to the OpenX server.
+The values listed in the table below make up the ```POST``` request to the OpenX server.
 
 Value | Description | Example |
 ------ | ---------- | -------- |
@@ -2471,9 +2477,9 @@ obj_type | The type of object that the comment is being added to. | lineitem |
 obj_uid | The unique identifier for the comment associated with the object. | 600738b9-c002-fff1-8123-0c9a66 |
 text | The actual text in the comment being added to the object. | A comment on a lineitem |
 
-3. The OpenX server processes this POST API request and returns a response output similar to the example response shown below.
+3. The OpenX server processes this ```POST``` API request and returns a response output similar to the example response shown below.
 
-The OpenX server processes this POST API request and returns a response output similar to the example response shown below.
+The OpenX server processes this ```POST``` API request and returns a response output similar to the example response shown below.
 ```
 [
     {
@@ -2554,7 +2560,7 @@ The OpenX server processes the ```PUT``` request and updates the comment for the
     }
 ]
 ```
-The values listed in the table below make up the POST request to the OpenX server.
+The values listed in the table below make up the ```POST``` request to the OpenX server.
 
 Value |	Description | Example |
 ------- | ---------- | ---------- |
@@ -2590,10 +2596,11 @@ v | The version of the API. |3 |
 
 ### Get a list of comments
 
-You can also get a list of comments associated with an object by making a GET request to the OpenX Server.
+You can also get a list of comments associated with an object by making a ```GET``` request to the OpenX Server.
 
-1. Open a terminal window on your system.
-2. Make the following GET request to the OpenX server (in this case, a line item):
+Open a terminal window on your system.
+
+Make the following ```GET``` request to the OpenX server (in this case, a line item):
 ```
 curl -v -X GET 'http://qa-v2-i16-lmi.api-v4-qa-ca.openx.net/ox/4.0/comment/1610638236'  -H "Content-Type:application/json"--cookie $COOKIE | python -mjson.tool
 ```
@@ -2677,15 +2684,14 @@ There are different operations you can perform using the Forecasting API. Typica
 
 The example steps below describe how to run a forecast with revenue information.
 
-Note: : These steps assume you have already been authenticated. If you have not been authenticated, refer to the Authentication section for the steps on how to authenticate your application.
+Note: These steps assume you have already been authenticated. If you have not been authenticated, refer to the Authentication section for the steps on how to authenticate your application.
 
-1. From your terminal window, make the following cURL request.
+From your terminal window, make the following cURL request.
 ```
 curl '<your server instance>/ox/4.0/forecast_augur/my_availability_forecasts' -H 'Content-Type: application/json' -H 'Accept: application/json, text/javascript' -H 'Cache-Control: no-cache' -H 'Cookie: i=d7e17e57-71d3-4c33-22e3-d51789f40aba|1444755321; openx3_access_token=3fbacd1bad501a6f503b3300ace57a1e48cd4c9b0e541f0a9f39dd20668ba38750ee6ff445fcac2c20a429f11c8191825e828cc1ba845c674bc1a1c4eb9a12560561d38d1'--data-binary '{"start_date":"2015-10-13 00:00:00","end_date":"2015-10-31 00:00:00","buying_model":"exclusive","timezone":"America/Los_Angeles","pricing_rate":".50","full_oxtl_rule_id":"e02d9dc977cddb2860eafb70a7d920db","targeting_rule":"58a334fe-c92e-4e48-add8-cefe0c89b0fc","currency":"USD","make_good":true,"adunit_uid":"all"}'
 ```
 Note that you are passing the following arguments in the call:
 
-API Request Values
 Argument | Value
 --------- | --------- |
 Server address | Your server instance address |
@@ -2693,7 +2699,7 @@ Client	| ox |
 API Version | 4.0 |
 Forecast request | forecast_augur/my_availability_forecasts |
 Application headers | -H 'Content-Type: application/json' -H 'Accept: application/json, text/javascript' -H 'Cache-Control: no-cache' -H |
-Cookie | i=d7e17e57-71d3-4c33-22e3-d51789f40aba|1444755321;|
+Cookie | i=d7e17e57-71d3-4c33-22e3-d51789f40aba|1444755321; |
 Access Token | 3fbacd1bad501a6f503b3300ace57a1e48cd4c9b0e541f0a9f39dd20668ba38750ee6ff445fcac2c20a429f11c8191825e828cc1ba845c674bc1a1c4eb9a12560561d38d1 |
 Start Date | 2015-10-13 00:00:00 |
 End Date | 2015-10-31 00:00:00 |
@@ -2701,12 +2707,12 @@ Buying Model | Exclusive |
 Timezone | America/Los_Angeles |
 Pricing Rate | 50 |
 OpenX Targeting Language RuleID	| e02d9dc977cddb2860eafb70a7d920db |
-Targeting Rule | 58a334fe-c92e-4e48-add8-cefe0c89b0fc|
+Targeting Rule | 58a334fe-c92e-4e48-add8-cefe0c89b0fc |
 Currency | USD |
 Make Good | true |
 AdUnit UID | all |
 
-2. You can then perform one of the following API requests to return a list of available ```full_oxtl_rule_id``` and ```targeting_rule``` values. These values are defined as follows:
+You can then perform one of the following API requests to return a list of available ```full_oxtl_rule_id``` and ```targeting_rule``` values. These values are defined as follows:
 
 * ```full_oxtl_rule_id``` - The ID of the targeting rule that you are creating, and contains all the information that you have entered - name, inventory, and the rest of the targeting critieria.
 * ```targeting_rule``` - The ID of the forecasting object that was created *from* the full oxtl rule. This is the object that is created that forecasting really cares about - which only contains a subset of the targeting critieria that you entered initially.
@@ -2723,7 +2729,7 @@ Request Value |	Value |
 Your server address. |	your server instance |
 The OpenX client. | ox |
 The API version. | 4.0 |
-The forecasting service. | forecast_augur |
+The forecasting service. | ```forecast_augur``` |
 The available targeting rules and rule IDs you can use in a forecast. | forecastrules |
 The application header used in the request. | -H 'Accept: application/json, text/JavaScript, /; q=0.01'|
 The HTTP request. | -H 'X-Requested-With: XMLHttpRequest'|
@@ -2880,7 +2886,8 @@ user | Specifies the user, indicated by an email address, who made a modificatio
 	"v": "3",
 	"external_id": "",
 	"secondary_trafficker_uid": "6003bcb1-acc0-fff1-8123-b0769b"
-}]
+}
+]
 ```
 The values listed in the table below are some of the values returned in the response output from the OpenX server. Some values depend on which object type was queried.
 
@@ -2909,10 +2916,10 @@ Examples
 
 Note: The following samples show both ways to create a history call:
 
-* specify an object type and specific object (obj_id) and then append history (audittrail) parameters
-* query the history (audittrail) endpoint and pass in the object type, object id, and additional parameters
+* specify an object type and specific object (obj_id) and then append history (```audittrail```) parameters
+* query the history (```audittrail``) endpoint and pass in the object type, object id, and additional parameters
 
-Note: Also, the following samples show the abbreviated form of the GET call as opposed to a full curl call.
+Note: Also, the following samples show the abbreviated form of the ```GET``` call as opposed to a full curl call.
 
 Return object history with limit and sort
 
@@ -2924,7 +2931,7 @@ Object id first; history parameters second
 ```
 http://server_name.openx.net/ox/4.0/order/1611010849/audittrail
 ```
-History (audittrail) object first; object id second
+History (```audittrail```) object first; object id second
 ```
 http://server_name.openx.net/ox/4.0/audittrail?obj_type=order&obj_id=1611010849
 ```
@@ -4143,20 +4150,20 @@ AdUnitSize | The size of the ad unit.|
 DeliveryMedium | The attribute reports off the "Default Delivery Medium" set at the site level.|
 DemandPartner | The demand side platform the buyer is using for the deal. |
 DemandPartnerID	| The ID associated with the demand side platform the buyer is using for the deal.|
-Buyer | The Buyer that is represented by the Exchange entity or DSP (Demand Partner).|
+Buyer | The Buyer that is represented by the Exchange entity or DSP (Demand Partner). |
 AdvertiserName | The Advertiser represented by the Buyer and owner of the brand being advertised. |
-Domain	| The domain where the inventory is running (e.g. CNN.com).|
-DealName | The name of the deal.|
-ExternalDealID | The ID associated for the external deal.|
-DealType | The type of deal. Options are: Preferred, Private Auction, WIthin Open Auction.|
-DealPriority | A slider that specifies the relative priority for the deal (1-10; 1=highest, 10=lowest)|
-DealFloor | The price set for the deal.|
-DealAccountExecutive | The sales person for the deal.|
-DealAccountManager | The individual responsible for managing the deal.|
-PackageName | The name of the package.|
-PackageID | The ID associated with the package.|
-Country	| The country associated with the report.|
-PublisherCurrency | The type of currency for the publisher (e.g. USD, Euro)|
+Domain	| The domain where the inventory is running (e.g. CNN.com). |
+DealName | The name of the deal. |
+ExternalDealID | The ID associated for the external deal. |
+DealType | The type of deal. Options are: Preferred, Private Auction, WIthin Open Auction. |
+DealPriority | A slider that specifies the relative priority for the deal (1-10; 1=highest, 10=lowest) |
+DealFloor | The price set for the deal. |
+DealAccountExecutive | The sales person for the deal. |
+DealAccountManager | The individual responsible for managing the deal. |
+PackageName | The name of the package. |
+PackageID | The ID associated with the package. |
+Country	| The country associated with the report. |
+PublisherCurrency | The type of currency for the publisher (e.g. USD, Euro) |
 
 Note: : It is assumed you have already been authenticated to use the OpenX Platform API. If you are not already authenticated, use your login credentials to log into your OpenX server instance. Also, because these are daily reports, data will be displayed for a day.
 
@@ -4805,8 +4812,6 @@ A negative integer for the days from now. For example, -7 means "until seven day
 * ```GET /account/unlinked_lift_accounts```. List advertiser accounts (without third-party network) and Ad Exchange advertiser accounts (with or without third-party network).
 * ```POST /account```. Create one or more accounts.
 
-Example
-
 Sample batch create
 ```
  openx_server_name/ox/4.0/account \
@@ -4839,7 +4844,6 @@ Sample batch create
 
 ### Ad object
 
-ad object
 The functional unit that displays in the ad space and which represents the message that an advertiser wants an end-user to view
 The ad object has the following calls:
 
@@ -5137,13 +5141,21 @@ Sample response for ```GET /ad/available_fieldstype_full=ad.type_full=ad.image``
 * ```GET /ad/performance/ad_UID```. Get performance metrics for the specified ad within the (optional) date range.
 Parameters
 ```start_date```
+
 A specific date in yyyy-mm-dd HH:MM:SS format
+
 OR
+
 An integer for the days backward from today. For example, 7 means "seven days ago" and 0 means "starting today" (inclusive).
-```end_date```
+
+end_date
+
 A specific date in yyyy-mm-dd HH:MM:SS format
+
 OR
+
 A negative integer for the days from now. For example, -7 means "until seven days from now" and 0 means "before today" (exclusive).
+
 * ```POST /ad```. Create one or more ads.
 * ```POST /ad/ad_UID/clone```. Create a copy of the specified ad.
 * ```POST /ad/ad_UID/recycle```. Restart the specified ad.
@@ -5162,7 +5174,8 @@ Specific areas on your site where you want to display ads. The adunit object has
 * ```GET /adunit/ad_unit_UID/list_adunitgroups```. List ad unit groups for the specified ad unit UID.
 * ```GET /adunit/available_fieldstype_full=adunit.type```. List the available fields to create or update an ad unit object of the specified type (such as adunit.web).
 
-Sample response for GET /adunit/available_fieldstype_full=adunit.web
+Sample response for ```GET /adunit/available_fieldstype_full=adunit.web```
+
 ```
 {
   "account_id": {
@@ -5517,6 +5530,7 @@ Sample response for GET /adunit/available_fieldstype_full=adunit.web
 Parameters
 
 ```adunit_uids (Required)```. A comma-separated string of ad unit UIDs, such as adunit_uids=278-e0ad-ff1-8123-0c9a,288-e0ad-ff1-8123-0c9a
+
 ```format (Optional)```. Use format=txt to download ad tags in a text file.
 
 ```GET /adunit/performance/ad_unit_UID```. Get the performance metrics for the specified ad unit within the (optional) date range.
@@ -5524,7 +5538,8 @@ Parameters
 Parameters
 
 start_date
-* A specific date in yyyy-mm-dd HH:MM:SS format
+
+A specific date in yyyy-mm-dd HH:MM:SS format
 
 OR
 
@@ -5544,7 +5559,7 @@ A negative integer for the days from now. For example, -7 means "until seven day
 
 Parameters
 
-```adunit_uids (Required). A comma-separated string of ad unit UIDs, such as adunit_uids=278-e0ad-ff1-8123-0c9a,288-e0ad-ff1-8123-0c9a
+```adunit_uids (Required)```. A comma-separated string of ad unit UIDs, such as adunit_uids=278-e0ad-ff1-8123-0c9a,288-e0ad-ff1-8123-0c9a
 
 ```format (Optional)```. Use format=txt to download ad tags in a text file.
 
@@ -5555,7 +5570,7 @@ Parameters
 
 Collections of ad units used for inventory to be filled with companion ads or to map items in a CMS to inventory items
 
-The adunitgroup object has the following calls:
+The ```adunitgroup``` object has the following calls:
 
 * ```DELETE /adunitgroup```. Delete the specified ad unit groups.
 * ```DELETE /adunitgroup/ad_unit_group_UID```. Delete the specified ad unit group.
@@ -5755,17 +5770,17 @@ Sample available_fields response
 * ```GET /adunitgroup/performance/ad_unit_group_UID```. Get the performance metrics for the specified ad unit group within the (optional) date range.
 
 Parameters
-```
+
 start_date
-```
+
 A specific date in yyyy-mm-dd HH:MM:SS format
 
 OR
 
 An integer for the days backward from today. For example, 7 means "seven days ago" and 0 means "starting today" (inclusive).
-```
+
 end_date
-```
+
 A specific date in yyyy-mm-dd HH:MM:SS format
 
 OR
@@ -5790,17 +5805,17 @@ An inventory object that represents a group of users with similar traits or char
 * ```GET /audiencesegment/performance/audience_segment_UID```. Get the performance metrics for the specified audience segment within the (optional) date range.
 
 Parameters
-```
+
 start_date
-```
+
 A specific date in yyyy-mm-dd HH:MM:SS format
 
 OR
 
 An integer for the days backward from today. For example, 7 means "seven days ago" and 0 means "starting today" (inclusive).
-```
+
 end_date
-```
+
 A specific date in yyyy-mm-dd HH:MM:SS format
 
 OR
@@ -5828,7 +5843,7 @@ A service that logs changes to data (creation, modification, or deletion) and al
 * order
 * site
 
-The audit_trail service has the following call:
+The ```audit_trail``` service has the following call:
 ```
 GET /audit_trail/object_UID. List the audit trail for the specified object (this call only returns the audit trail for a single UID).
 ```
@@ -5836,7 +5851,7 @@ The ```limit``` and ```offset``` URI parameters allow pagination of the results.
 
 ### comment object
 
-The comment object supports the logging of comments for any API object, such as via its Description field in the OpenX UI. The comment object has the following calls:
+The ```comment``` object supports the logging of comments for any API object, such as via its Description field in the OpenX UI. The ```comment``` object has the following calls:
 
 * ```GET /comment```. List all comments.
 * ```GET /comment/available_fields```. List the available fields used to create or update a comment.
@@ -6016,9 +6031,8 @@ Response
 	}
 ]
 ```
-```
-PUT /comment/comment_UID. Update the comment specified by its ID or UID.
-```
+
+```PUT /comment/comment_UID```. Update the comment specified by its ID or UID.
 
 ### competitiveexclusion object
 
@@ -6036,7 +6050,7 @@ Advertiser account rules used to block competing advertisers from displaying the
 
 ### conversiontag object
 
-A conversion tag is a piece of code that tracks how users respond to ads served for orders. The conversiontag object has the following calls:
+A conversion tag is a piece of code that tracks how users respond to ads served for orders. The ```conversiontag``` object has the following calls:
 
 * ```DELETE /conversiontag```. Delete the specified conversion tags.
 * ```DELETE /conversiontag/conversion_tag_UID```. Delete the specified conversion tag.
@@ -6052,7 +6066,7 @@ A conversion tag is a piece of code that tracks how users respond to ads served 
 
 ### creative object
 
-The media asset to use in your ad (such as an image or video file) that you can upload to the OpenX CDN. The creative references a local or remote file. The creative object has the following calls:
+The media asset to use in your ad (such as an image or video file) that you can upload to the OpenX CDN. The creative references a local or remote file. The ```creative``` object has the following calls:
 
 * ```DELETE /creative```. Delete the specified creatives.
 * ```DELETE /creative/creative_UID```. Delete the specified creative.
@@ -6067,7 +6081,7 @@ The media asset to use in your ad (such as an image or video file) that you can 
 
 ### dashboard service
 
-A set of high-level reports and links provided by the Simple Reporting Service (SRS). The dashboard service has the following calls that return a JSON or XML representation of the corresponding report data:
+A set of high-level reports and links provided by the Simple Reporting Service (SRS). The ```dashboard``` service has the following calls that return a JSON or XML representation of the corresponding report data:
 
 * ```GET /dashboard/totals_by_advt```. Return Totals by Advertiser report data.
 * ```GET /dashboard/totals_by_day```. Return Totals by Day report data.
@@ -6075,7 +6089,7 @@ A set of high-level reports and links provided by the Simple Reporting Service (
 
 ### deal object
 
-A prearranged agreement to sell specific inventory, such as a direct deal between a publisher and a demand partner. The deal object has the following calls:
+A prearranged agreement to sell specific inventory, such as a direct deal between a publisher and a demand partner. The ```deal``` object has the following calls:
 
 * ```DELETE /deal```. Delete the specified deals.
 * ```DELETE /deal/deal_UID```. Delete the specified deal.
@@ -6093,10 +6107,9 @@ Tip: If a deal is associated with a custom package, its package_name and package
 
 ### eventfeed service
 
-The eventfeed service retrieves transaction-level delivery data for various ad serving events. For details, see working with event-level feeds.
+The ```eventfeed``` service retrieves transaction-level delivery data for various ad serving events. For details, see working with event-level feeds.
 
-Note: Accessing event-level feeds requires a specific OpenX configuration. For details, contact your OpenX Account Manager.
-The eventfeed service has the following calls:
+Note: Accessing event-level feeds requires a specific OpenX configuration. For details, contact your OpenX Account Manager. The ```eventfeed``` service has the following calls:
 
 * ```GET /eventfeed/available_fields?type=event_feed_type&range=number&format=format_type```. List the available data sets for the specified eventfeed calls, such as click or impression. For more details, see Listing available files for an event feed and available fields.
 * ```GET /eventfeed/fetch```. Download files for the specified event feed. For details, see downloading the event feed file.
@@ -6104,7 +6117,7 @@ The eventfeed service has the following calls:
 
 ### floorrule object
 
-The floorrule object allows you to manage selling rules regarding the minimum price you are willing to accept for ad space and related details. It has the following calls:
+The ```floorrule``` object allows you to manage selling rules regarding the minimum price you are willing to accept for ad space and related details. It has the following calls:
 
 * ```DELETE /floorrule```. Delete the specified floor rules.
 * ```DELETE /floorrule/floor_rule_UID```. Delete the specified floor rule.
@@ -6112,7 +6125,7 @@ The floorrule object allows you to manage selling rules regarding the minimum pr
 * ```GET /floorrule/available_fields```. List the available fields to create or update a floor rule.
 * ```GET /floorrule/export```. Export data in CSV format for all floor rules.
 
-Tip: If a floor rule is associated with a custom targeting selection and not a saved package, its package_name and package_description values in the downloaded CSV file say "Private Selection." The corresponding Package Name entry in the UI says "Custom."
+Tip: If a floor rule is associated with a custom targeting selection and not a saved package, its ```package_name``` and ```package_description``` values in the downloaded CSV file say "Private Selection." The corresponding Package Name entry in the UI says "Custom."
 
 * ```GET /floorrule/floor_rule_UID```. Read the specified floor rule.
 * ```POST /floorrule```. Create a floor rule.
@@ -6159,12 +6172,14 @@ The ```lineitem``` object provides line item details associated with orders, suc
 Parameters
 
 start_date
+
 A specific date in yyyy-mm-dd HH:MM:SS format
 
 OR
 An integer for the days backward from today. For example, 7 means "seven days ago" and 0 means "starting today" (inclusive).
 
 end_date
+
 A specific date in yyyy-mm-dd HH:MM:SS format
 
 OR
@@ -6409,78 +6424,289 @@ Depending on your account and permissions, available option keys may include:
 
 ### order object
 
-The order object provides calls to manage direct demand for ad space. Depending on your OpenX configuration, use it to manage demand for third-party networks or exchanges. It has the following calls:
-DELETE /order. Delete the specified order.
-DELETE /order/order_UID. Delete the specified order.
-GET /order. List all orders.
-GET /order/available_fields. List the available fields to create or update an order.
-GET /order/order_UID. Read the specified order.
-GET /order/order_UID/list_conversion_tags. List conversion tags for the specified order.
-GET /order/order_UID/list_line_items. List line items for the specified order.
-GET /order/performance/order_UID. Get the performance metrics for the specified order within an (optional) date range.
+The ```order``` object provides calls to manage direct demand for ad space. Depending on your OpenX configuration, use it to manage demand for third-party networks or exchanges. It has the following calls:
+
+* ```DELETE /order```. Delete the specified order.
+* ```DELETE /order/order_UID```. Delete the specified order.
+* ```GET /order```. List all orders.
+* ```GET /order/available_fields```. List the available fields to create or update an order.
+* ```GET /order/order_UID```. Read the specified order.
+* ```GET /order/order_UID/list_conversion_tags```. List conversion tags for the specified order.
+* ```GET /order/order_UID/list_line_items```. List line items for the specified order.
+* ```GET /order/performance/order_UID```. Get the performance metrics for the specified order within an (optional) date range.
+
 Parameters
+
 start_date
+
 A specific date in yyyy-mm-dd HH:MM:SS format
+
 OR
+
 An integer for the days backward from today. For example, 7 means "seven days ago" and 0 means "starting today" (inclusive).
+
 end_date
+
 A specific date in yyyy-mm-dd HH:MM:SS format
+
 OR
+
 A negative integer for the days from now. For example, -7 means "until seven days from now" and 0 means "before today" (exclusive).
-GET /order/order_UID/traffic_information. List traffic information for the specified order.
-POST /order. Create one or more orders.
-POST /order/order_UID/clone. Clone the specified order.
-POST /order/order_UID/create_lineitem_from_package/package_UID. Create a line item from the specified package UID under the specified order UID.
-POST /order/order_UID/recycle. Restart the specified order.
-POST /order/order_UID/stop. Stop the specified order and its line items and ads.
-PUT /order. Update the specified orders.
-PUT /order/order_UID. Update the specified order.
+
+* ```GET /order/order_UID/traffic_information```. List traffic information for the specified order.
+* ```POST /order```. Create one or more orders.
+* ```POST /order/order_UID/clone```. Clone the specified order.
+* ```POST /order/order_UID/create_lineitem_from_package/package_UID```. Create a line item from the specified package UID under the specified order UID.
+* ```POST /order/order_UID/recycle```. Restart the specified order.
+* ```POST /order/order_UID/stop```. Stop the specified order and its line items and ads.
+* ```PUT /order```. Update the specified orders.
+* ```PUT /order/order_UID```. Update the specified order.
 
 ### package object
 
-The package object represents specific inventory associated with one or more deals, such as a site section, content categories, ad sizes, page positions, and so on. It has the following calls:
-DELETE /package. Delete the specified packages.
-DELETE /package/package_UID. Delete the specified package.
-GET /package. List packages.
-GET /package/available_fields. List the available fields to create or update a package.
-GET /package/package_UID. Read the specified package.
-GET /package/package_UID/list_deals. List deals for the specified package.
-GET /package/package_UID/list_floorrules. List floor rules for the specified package.
-POST /package. Create one or more packages.
-POST /package/package_UID/clone. Clone the specified package.
-PUT /package. Update the specified packages.
-PUT /package/package_UID. Update the specified package.
+The ```package``` object represents specific inventory associated with one or more deals, such as a site section, content categories, ad sizes, page positions, and so on. It has the following calls:
+
+* ```DELETE /package```. Delete the specified packages.
+* ```DELETE /package/package_UID```. Delete the specified package.
+* ```GET /package```. List packages.
+* ```GET /package/available_fields```. List the available fields to create or update a package.
+* ```GET /package/package_UID```. Read the specified package.
+* ```GET /package/package_UID/list_deals```. List deals for the specified package.
+* ```GET /package/package_UID/list_floorrules```. List floor rules for the specified package.
+* ```POST /package```. Create one or more packages.
+* ```POST /package/package_UID/clone```. Clone the specified package.
+* ```PUT /package```. Update the specified packages.
+* ```PUT /package/package_UID```. Update the specified package.
 
 ### paymenthistory object
 
-The paymenthistory object provides payment details for a specified account. It has the following calls:
-DELETE /paymenthistory. Delete the specified payment histories.
-DELETE /paymenthistory/payment_history_ID. Delete the specified payment history.
-GET /paymenthistory. List all payment histories.
-GET /paymenthistory/available_fields. List the available fields needed to create or update a payment history.
-GET /paymenthistory/payment_history_ID. Read the specified payment history.
-POST /paymenthistory. Create a payment history.
-POST /paymenthistory/payment_history_ID/clone. Clone the specified payment history.
-PUT /paymenthistory. Update the payment histories with the specified IDs.
-PUT /paymenthistory/payment_history_ID. Update the specified payment history.
+The ```paymenthistory``` object provides payment details for a specified account. It has the following calls:
+
+* ```DELETE /paymenthistory```. Delete the specified payment histories.
+* ```DELETE /paymenthistory/payment_history_ID```. Delete the specified payment history.
+* ```GET /paymenthistory```. List all payment histories.
+* ```GET /paymenthistory/available_fields```. List the available fields needed to create or update a payment history.
+* ```GET /paymenthistory/payment_history_ID```. Read the specified payment history.
+* ```POST /paymenthistory```. Create a payment history.
+* ```POST /paymenthistory/payment_history_ID/clone```. Clone the specified payment history.
+* ```PUT /paymenthistory```. Update the payment histories with the specified IDs.
+* ```PUT /paymenthistory/payment_history_ID```. Update the specified payment history.
 
 ### report object
 
 The report object provides the following calls to the simple reporting service (SRS):
-DELETE /report. Delete the specified reports.
-DELETE /report/report_ID. Delete the specified report.
-GET /report/get_reportlist. List all reports available for your account.
-GET /report/available_fields. List the available fields to create or update a report.
- ClosedSample available_fields response
+
+* ```DELETE /report```. Delete the specified reports.
+* ```DELETE /report/report_ID```. Delete the specified report.
+* ```GET /report/get_reportlist```. List all reports available for your account.
+* ```GET /report/available_fields```. List the available fields to create or update a report.
+
+Sample available_fields response
+```
+{
+"account_id": {
+"auto": true, 
+"has_dependencies": false, 
+"readonly": true, 
+"required": false, 
+"type": "int"
+}, 
+"account_uid": {
+"auto": true, 
+"has_dependencies": false, 
+"readonly": true, 
+"required": false, 
+"type": "account_uid"
+}, 
+"created_date": {
+"auto": true, 
+"has_dependencies": false, 
+"readonly": true, 
+"required": false, 
+"type": "datetime"
+}, 
+"deleted": {
+"auto": true, 
+"default": "0", 
+"has_dependencies": false, 
+"readonly": true, 
+"required": false, 
+"type": "int"
+}, 
+"id": {
+"auto": true, 
+"has_dependencies": false, 
+"readonly": true, 
+"required": false, 
+"type": "int"
+}, 
+"instance_uid": {
+"auto": true, 
+"has_dependencies": false, 
+"maxlen": 255, 
+"readonly": true, 
+"required": false, 
+"type": "varchar"
+}, 
+"modified_date": {
+"auto": true, 
+"has_dependencies": false, 
+"readonly": true, 
+"required": false, 
+"type": "datetime"
+}, 
+"name": {
+"has_dependencies": false, 
+"maxlen": 255, 
+"readonly": false, 
+"required": true, 
+"type": "varchar"
+}, 
+"parameter_string": {
+"has_dependencies": false, 
+"maxlen": 4000000, 
+"readonly": false, 
+"required": true, 
+"type": "varchar"
+}, 
+"relative_date": {
+"has_dependencies": false, 
+"readonly": false, 
+"required": true, 
+"type": "int"
+}, 
+"type": {
+"auto": true, 
+"has_dependencies": false, 
+"maxlen": 255, 
+"readonly": true, 
+"required": false, 
+"type": "varchar", 
+"url": "/options/model_types"
+}, 
+"uid": {
+"auto": true, 
+"has_dependencies": false, 
+"readonly": true, 
+"required": false, 
+"type": "uid"
+}, 
+"user_uid": {
+"auto": true, 
+"has_dependencies": false, 
+"maxlen": 255, 
+"readonly": true, 
+"required": false, 
+"type": "varchar"
+}, 
+"v": {
+"auto": true, 
+"default": "3", 
+"has_dependencies": false, 
+"options": [], 
+"readonly": true, 
+"required": false, 
+"type": "int"
+}
+}
+```
+
+```
 GET /report/download/report_ID. Download a report from the SRS. You can get a report's ID from the response to the GET /report/run call.
+```
 Sample request:
+```
 curl http://openx_server_name/ox/4.0/report/download/3bcbd450-750a-45e6-b828-5cb448a2e374 --cookie  
 "openx3_access_token=token_string"
-GET /report/get_report_columns?report=report_code. Return the SRS columns for the specified report code.
-ClosedSample response to GET /report/get_report_columns?report=adunit_size_sum
-GET /report/get_report_inputs?report=report_code. Return the SRS inputs for the specified report code, such as report=adunit_size_sum.
-You can retrieve the available report codes using the GET /report/get_reportlist call.
-OpenSample response to GET /report/get_report_inputs?report=adunit_size_sum
+```
+* ```GET /report/get_report_columns?report=report_code```. Return the SRS columns for the specified report code.
+
+Sample response to ```GET /report/get_report_columns?report=adunit_size_sum```
+```
+{
+					"columns": [
+					{
+"column_display_name": "Ad Unit Size", 
+"column_name": "AdUnitSize", 
+"column_type": "java.lang.String", 
+"display_by_default": "true", 
+"isBreakOutColumn": "no"
+}, 
+{
+"column_display_name": "Currency", 
+"column_name": "currency", 
+"column_type": "java.lang.String", 
+"display_by_default": "true", 
+"isBreakOutColumn": "no"
+}, 
+{
+"column_display_name": "Ad Requests", 
+"column_name": "requests", 
+"column_type": "java.lang.Long", 
+"display_by_default": "true", 
+"isBreakOutColumn": "no"
+}, 
+{
+"column_display_name": "Billable Impressions Delivered", 
+"column_name": "billable_impressions", 
+"column_type": "java.lang.Long", 
+"display_by_default": "true", 
+"isBreakOutColumn": "no"
+}, 
+{
+"column_display_name": "Revenue", 
+"column_name": "publisher_revenue", 
+"column_type": "java.math.BigDecimal", 
+"display_by_default": "true", 
+"isBreakOutColumn": "no"
+}, 
+{
+"column_display_name": "eCPM", 
+"column_name": "publisher_billable_eRPM", 
+"column_type": "java.math.BigDecimal", 
+"display_by_default": "false", 
+"isBreakOutColumn": "no"
+}, 
+{
+"column_display_name": "Uplift(%)", 
+"column_name": "uplift", 
+"column_type": "java.math.BigDecimal", 
+"display_by_default": "false", 
+"isBreakOutColumn": "no"
+}, 
+{
+"column_display_name": "Clicks", 
+"column_name": "clicks", 
+"column_type": "java.lang.Long", 
+"display_by_default": "true", 
+"isBreakOutColumn": "no"
+					}, 
+{
+"column_display_name": "CTR", 
+"column_name": "CTR", 
+"column_type": "java.math.BigDecimal", 
+"display_by_default": "true", 
+"isBreakOutColumn": "no"
+}, 
+{
+"column_display_name": "Conversions", 
+"column_name": "total_conversions", 
+"column_type": "java.lang.Long", 
+"display_by_default": "true", 
+"isBreakOutColumn": "no"
+}
+], 
+"report_name": "adunit_size_sum", 
+"status": "OK"
+}
+```
+
+* ```GET /report/get_report_inputs?report=report_code```. Return the SRS inputs for the specified report code, such as report=adunit_size_sum.
+
+You can retrieve the available report codes using the ```GET /report/get_reportlist``` call.
+
+Sample response to ```GET /report/get_report_inputs?report=adunit_size_sum.```
+```
 {
 "acl_resource_type": "inventory", 
 "content": [
@@ -6609,8 +6835,12 @@ OpenSample response to GET /report/get_report_inputs?report=adunit_size_sum
 "report": "adunit_size_sum", 
 "status": "OK"
 }
+```
+```
 GET /report/get_reportlist. List reports and associated metadata for the UI.
-OpenSample response
+```
+Sample response
+```
 {
 "content": [
 {
@@ -6947,41 +7177,71 @@ that fit the specified date range.",
 "lang": "en", 
 "status": "OK"
 }
-GET /report/list_accounts_with_segments. List accounts that have at least one audience segment.
-GET /report/report_ID. Read the specified report.
-GET /report/revenue_impact_by_floors. Return total revenue impact for the specified brand floors.
+```
+* ```GET /report/list_accounts_with_segments```. List accounts that have at least one audience segment.
+* ```GET /report/report_ID```. Read the specified report.
+* ```GET /report/revenue_impact_by_floors```. Return total revenue impact for the specified brand floors.
+
 Parameters
->floor_uids. A comma-separated list of brand floor UIDs
+
+floor_uids. A comma-separated list of brand floor UIDs
+
 start_date
+
 A specific date in yyyy-mm-dd HH:MM:SS format
+
 OR
+
 An integer for the days backward from today. For example, 7 means "seven days ago" and 0 means "starting today" (inclusive).
 end_date
+
 A specific date in yyyy-mm-dd HH:MM:SS format
+
 OR
+
 A negative integer for the days from now. For example, -7 means "until seven days from now" and 0 means "before today" (exclusive).
-GET /report/run. Run the report specified in the report parameter.
+
+* ```GET /report/run```. Run the report specified in the report parameter.
+
 Parameters
-report. The report code, such as report=adunit_size_sum. You can retrieve the available report codes using the GET /report/get_reportlist call.
+
+```report```. The report code, such as report=adunit_size_sum. You can retrieve the available report codes using the ```GET /report/get_reportlist call```.
+```
 start_date
+```
 A specific date in yyyy-mm-dd HH:MM:SS format
+
 OR
+
 An integer for the days backward from today. For example, 7 means "seven days ago" and 0 means "starting today" (inclusive).
+```
 end_date
+```
 A specific date in yyyy-mm-dd HH:MM:SS format
+
 OR
+
 A negative integer for the days from now. For example, -7 means "until seven days from now" and 0 means "before today" (exclusive).
-report_format. The format of the report data to download, such as report_format=csv. Size limitations include:
-csv. No limitations
-json. Maximum of 1000 rows
-pdf. No limitations
-xls. Maximum of 65,000 rows
-variable_parameter. (Optional) Depending on the report code, the response from GET /report/get_report_inputs provides additional parameters
+
+* ```report_format```. The format of the report data to download, such as report_format=csv. Size limitations include:
+
+* ```csv```. No limitations
+* ```json```. Maximum of 1000 rows
+* ```pdf```. No limitations
+* ```xls```. Maximum of 65,000 rows
+
+```variable_parameter```. (Optional) Depending on the report code, the response from ```GET /report/get_report_inputs``` provides additional parameters
+
 Sample run request for the Inventory Revenue report
+```
 curl http://openx_server_name/ox/4.0/report/run?report=inv_rev&start_date=7&end_date=0&report_format=csv --cookie "openx3_access_token=token_string"
+```
 Where:
+```
 report_format=csv indicates you want to generate a comma-separated values (CSV) file for download.
-OpenSample response
+```
+Sample response
+```
 {
 "ReportOutput": null, 
 "content": [
@@ -7154,43 +7414,83 @@ OpenSample response
 "status": "OK",
 "url": "/pickup/3bcbd450-750a-45e6-b828-5cb448a2e374/inv_rev.csv"	
 }
+```
+
 Where:
-"/pickup/3bcbd450-750a-45e6-b828-5cb448a2e374/inv_rev.csv" indicates the path where you can download the CSV file. For example:
+
+```"/pickup/3bcbd450-750a-45e6-b828-5cb448a2e374/inv_rev.csv"``` indicates the path where you can download the CSV file. For example:
+```
 http://openx_server_name/pickup/3bcbd450-750a-45e6-b828-5cb448a2e374/inv_rev.csv
-Alternatively, you can download the specified report from the SRS using the GET /report/download/report_ID call. For example:
+```
+Alternatively, you can download the specified report from the SRS using the ```GET /report/download/report_ID``` call. For example:
+```
 http://openx_server_name/ox/4.0/report/download/3bcbd450-750a-45e6-b828-5cb448a2e374
-GET /report/traffic_by_account_time. Return traffic-by-account-time data.
+```
+
+```GET /report/traffic_by_account_time```. Return traffic-by-account-time data.
+
 Parameters
+```
 start_date
+```
 A specific date in yyyy-mm-dd HH:MM:SS format
+
 OR
+
 An integer for the days backward from today. For example, 7 means "seven days ago" and 0 means "starting today" (inclusive).
+```
 end_date
+```
 A specific date in yyyy-mm-dd HH:MM:SS format
+
 OR
+
 A negative integer for the days from now. For example, -7 means "until seven days from now" and 0 means "before today" (exclusive).
+```
 GET /report/traffic_by_order. Return traffic-by-order data.
+```
 Parameters:
+```
 start_date
+```
 A specific date in yyyy-mm-dd HH:MM:SS format
+
 OR
+
 An integer for the days backward from today. For example, 7 means "seven days ago" and 0 means "starting today" (inclusive).
+```
 end_date
+```
 A specific date in yyyy-mm-dd HH:MM:SS format
+
 OR
+
 A negative integer for the days from now. For example, -7 means "until seven days from now" and 0 means "before today" (exclusive).
+```
 GET /report/traffic_lineitem_alerts. Return traffic line item alerts.
+```
 Parameters
+```
 start_date
+```
 A specific date in yyyy-mm-dd HH:MM:SS format
+
 OR
+
 An integer for the days backward from today. For example, 7 means "seven days ago" and 0 means "starting today" (inclusive).
+```
 end_date
+```
 A specific date in yyyy-mm-dd HH:MM:SS format
+
 OR
+
 A negative integer for the days from now. For example, -7 means "until seven days from now" and 0 means "before today" (exclusive).
+```
 GET /report/video_ad_type_options. Return a list of video ad type IDs used to filter the Video Events By Advertiser report (video_perf).
+```
 Response
+```
 [
 {
 "id": "3rd Party Linear Video", 
@@ -7209,92 +7509,137 @@ Response
 "name": "Non-Linear Video"
 }
 ]
+```
 This response is only available for accounts that have access to the Video Events By Advertiser report.
-POST /report. Create a report.
-POST /report/report_ID/clone. Clone the specified report.
-POST /report/revenue_impact_by_floors. Return total revenue impact for the specified brand floors.
+
+* ```POST /report```. Create a report.
+
+* ```POST /report/report_ID/clone```. Clone the specified report.
+
+* ```POST /report/revenue_impact_by_floors```. Return total revenue impact for the specified brand floors.
+
 Parameters
-floor_uids. A comma-separated list of brand floor UIDs
+
+* ``floor_uids```. A comma-separated list of brand floor UIDs
+```
 start_date
+```
 A specific date in yyyy-mm-dd HH:MM:SS format
+
 OR
+
 An integer for the days backward from today. For example, 7 means "seven days ago" and 0 means "starting today" (inclusive).
+```
 end_date
+```
 A specific date in yyyy-mm-dd HH:MM:SS format
+
 OR
+
 A negative integer for the days from now. For example, -7 means "until seven days from now" and 0 means "before today" (exclusive).
-PUT /report. Update the specified reports.
-PUT /report/report_ID. Update the specified report.
+
+* ```PUT /report```. Update the specified reports.
+* ```PUT /report/report_ID```. Update the specified report.
 
 ### session service
 
 The session service allows communication between OpenX and a user when they log in, interact with, and log out of the system. It has the following calls:
-DELETE /session. Log out to terminate the API session.
-GET /session. Log in to OpenX.
+
+* ```DELETE /session```. Log out to terminate the API session.
+* ```GET /session```. Log in to OpenX.
 
 ### site object
 
-The site object represents a collection of ad unit inventory. It has the following calls:
-DELETE /site. Delete the specified sites.
-DELETE /site/site_UID. Delete the specified site.
-GET /site. List all sites.
-GET /site/available_fields?account_uid=publisher_account_UID. List the available fields to create or update a site for the specified publisher account.
-GET /site/list_ad_tags. List ad tags and other information for the specified sites.
+The ```site``` object represents a collection of ad unit inventory. It has the following calls:
+
+* ```DELETE /site```. Delete the specified sites.
+* ```DELETE /site/site_UID```. Delete the specified site.
+* ```GET /site```. List all sites.
+* ```GET /site/available_fields?account_uid=publisher_account_UID```. List the available fields to create or update a site for the specified publisher account.
+* ```GET /site/list_ad_tags```. List ad tags and other information for the specified sites.
+
 Parameters:
-site_uids. (Required) A comma-separated string of site UIDs
+
+```site_uids```. (Required) A comma-separated string of site UIDs
 format. (Optional) Set format=txt to export ad tags in a text file
-GET /site/performance/site_UID. Get performance metrics for the specified site within the (optional) date range.
+```GET /site/performance/site_UID```. Get performance metrics for the specified site within the (optional) date range.
+
 Parameters:
+```
 start_date
+```
 A specific date in yyyy-mm-dd HH:MM:SS format
+
 OR
+
 An integer for the days backward from today. For example, 7 means "seven days ago" and 0 means "starting today" (inclusive).
+```
 end_date
+```
 A specific date in yyyy-mm-dd HH:MM:SS format
+
 OR
+
 A negative integer for the days from now. For example, -7 means "until seven days from now" and 0 means "before today" (exclusive).
-GET /site/site_UID. Read the specified site.
-GET /site/site_UID/list_ad_unit_groups. List ad unit groups for the specified site.
-GET /site/site_UID/list_ad_units. List ad units for the specified site.
-GET /site/site_UID/list_site_sections. List sections of the specified site.
-POST /site. Create a site.
-POST /site/list_ad_tags. List ad tags and other information for the specified sites.
+
+* ```GET /site/site_UID```. Read the specified site.
+* ```GET /site/site_UID/list_ad_unit_groups```. List ad unit groups for the specified site.
+* ```GET /site/site_UID/list_ad_units```. List ad units for the specified site.
+* ```GET /site/site_UID/list_site_sections```. List sections of the specified site.
+* ```POST /site```. Create a site.
+* ```POST /site/list_ad_tags```. List ad tags and other information for the specified sites.
+
 Parameters:
-site_uids. (Required) A comma-separated string of site UIDs
-format. (Optional) Set format=txt to export ad tags in a text file
-POST /site/site_UID/clone. Clone the specified site.
-POST /site/upload_icon. Upload an icon for the specified site.
-PUT /site. Update the specified sites.
-PUT /site/site_UID. Update the specified site.
+
+* ```site_uids```. (Required) A comma-separated string of site UIDs.
+* ```format```. (Optional) Set format=txt to export ad tags in a text file.
+* ```POST /site/site_UID/clone```. Clone the specified site.
+* ```POST /site/upload_icon```. Upload an icon for the specified site.
+* ```PUT /site```. Update the specified sites.
+* ```PUT /site/site_UID```. Update the specified site.
 
 ### sitesection object
 
-The sitesection object represents a grouping of ad space in a site. It has the following calls:
-DELETE /sitesection. Delete the specified site sections.
-DELETE /sitesection/site_section_UID. Delete the specified site section.
-GET /sitesection. List all site sections.
-GET /sitesection/available_fields. List the available fields to create or update a site section.
-GET /sitesection/performance/site_section_UID. Get performance metrics for the specified site section within the (optional) specified date range.
+The ```sitesection``` object represents a grouping of ad space in a site. It has the following calls:
+
+* ```DELETE /sitesection```. Delete the specified site sections.
+* ```DELETE /sitesection/site_section_UID```. Delete the specified site section.
+* ```GET /sitesection```. List all site sections.
+* ```GET /sitesection/available_fields```. List the available fields to create or update a site section.
+* ```GET /sitesection/performance/site_section_UID```. Get performance metrics for the specified site section within the (optional) specified date range.
+
 Parameters:
+```
 start_date
+```
 A specific date in yyyy-mm-dd HH:MM:SS format
+
 OR
+
 An integer for the days backward from today. For example, 7 means "seven days ago" and 0 means "starting today" (inclusive).
+```
 end_date
+```
 A specific date in yyyy-mm-dd HH:MM:SS format
+
 OR
+
 A negative integer for the days from now. For example, -7 means "until seven days from now" and 0 means "before today" (exclusive).
-GET /sitesection/site_section_UID. Read the specified site section.
-POST /sitesection. Create a site section.
-POST /sitesection/site_section_UID/clone. Clone the specified site section.
-PUT /sitesection. Update the specified site sections.
-PUT /sitesection/site_section_UID. Update a the specified site section.
+
+* ```GET /sitesection/site_section_UID```. Read the specified site section.
+* ```POST /sitesection```. Create a site section.
+* ```POST /sitesection/site_section_UID/clone```. Clone the specified site section.
+* ```PUT /sitesection```. Update the specified site sections.
+* ```PUT /sitesection/site_section_UID```. Update a the specified site section.
 
 ### subtypes service
 
-The subtypes service retrieves the subtypes that can be created for the various object, such as subtypes of the account, lineitem, order, and site objects. It has the following call:
+The ```subtypes`` service retrieves the subtypes that can be created for the various object, such as subtypes of the account, lineitem, order, and site objects. It has the following call:
+```
 GET /subtypes
-OpenSample GET /subtypes response
+```
+Sample GET /subtypes response
+```
 {
   "account": [
     {
@@ -7453,20 +7798,21 @@ OpenSample GET /subtypes response
     }
   ]
 }
-
+```
 ### user object
 
-The user object represents an individual who will be logging in to OpenX and performing tasks on behalf of the accounts to which they have access. It has the following calls:
-  - DELETE /user. Delete the specified users.
-  - DELETE /user/user_ID. Delete the specified user.
-  - GET /user. List all users.
-  - GET /user/available_fields. List the available fields to create or update a user.
-  - GET /user/user_ID. Read the specified user.
-  - POST /user. Create a user.
-  - POST /user/user_ID/clone. Clone the specified user.
-  - POST /user/accept_terms. Special handling needed for accepting terms.
-  - PUT /user. Update the specified user.
-  - PUT /user/user_ID. Update the specified user.
+The ```user``` object represents an individual who will be logging in to OpenX and performing tasks on behalf of the accounts to which they have access. It has the following calls:
+
+* ```DELETE /user```. Delete the specified users.
+* ```DELETE /user/user_ID```. Delete the specified user.
+* ```GET /user```. List all users.
+* ```GET /user/available_fields```. List the available fields to create or update a user.
+* ```GET /user/user_ID```. Read the specified user.
+* ```POST /user```. Create a user.
+* ```POST /user/user_ID/clone```. Clone the specified user.
+* ```POST /user/accept_terms```. Special handling needed for accepting terms.
+* ```PUT /user```. Update the specified user.
+* ```PUT /user/user_ID```. Update the specified user.
 
 ## Authentication reference
 
