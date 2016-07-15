@@ -1,5 +1,5 @@
 ---
-title: OpenX Platform API Reference
+title: OpenX API Reference
 
 language_tabs:
   - shell
