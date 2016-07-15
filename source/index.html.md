@@ -2,10 +2,10 @@
 title: OpenX API Reference
 
 language_tabs:
-  - shell
-  - python
-  - java
-  - php
+  - cURL
+  - Python
+  - Java
+  - PHP
 
 toc_footers:
   - <a href='#'>Sign Up for a Developer Key</a>
@@ -137,7 +137,7 @@ For example, in the call ```GET http://openx_server_name/ox/4.0/user/available_f
 * ```available_fields``` indicates a specific a request for information about the object's fields.
 * ```action=create``` is a URI parameter string indicating that the request is for fields available upon the object's creation.
 
-## Requests and responses
+# Requests and responses
 
 Requests to the OpenX API require a Content-Type header set to application/json. The response format for all requests is a JSON object and an HTTP response code.
 
@@ -153,11 +153,11 @@ OpenX API v4 calls use the following general patterns:
 
 The request samples in this guide use cURL (client URL request library) to send HTTP requests to access, create, and manipulate OpenX API resources.
 
-### Create
+## Create
 
 To create a new object, send a ```POST``` request including the JSON-encoded contents of the object:
 
-#### Sample create request
+### Sample create request
 ```
 curl -X POST --header "Content-Type: application/json" http://openx_server_name/ox/4.0/account \
 	--cookie "openx3_access_token=token_string" \
@@ -179,7 +179,7 @@ Where: ```token_string``` is a string of characters returned by the ```GET``` se
 
 When you create a single object, the response should contain a list with a single object.
 
-#### Sample create response
+### Sample create response
 
 When successful, 200 Created is returned along with the response body:
 ```
@@ -202,11 +202,11 @@ Where:
 
 For more details, see About IDs and UIDs.
 
-### Update
+## Update
 
 To change the data on an object that already exists, send a ```PUT``` request to the object URI with the values you want to change:
 
-#### Sample update request
+### Sample update request
 ```
 curl -X PUT --header "Content-Type: application/json" http://openx_server_name/ox/4.0/account/account_uid \
 --cookie "openx3_access_token=token_string" \
@@ -216,7 +216,7 @@ curl -X PUT --header "Content-Type: application/json" http://openx_server_name/o
 ```
 Where: ```account_uid``` is the UID of the account to be updated. Alternatively, you can send the ```account_id```.
 
-#### Sample update response
+### Sample update response
 
 The response body includes all of the object's fields:
 ```
@@ -244,11 +244,11 @@ The response body includes all of the object's fields:
 	}
 ]
 ```
-###Delete
+## Delete
 
 To delete an object, send a ```DELETE``` request to its URI:
 
-#### Sample delete request
+### Sample delete request
 ```
 curl -X DELETE --header "Content-Type: application/json" http://openx_server_name/ox/4.0/account \
 			--cookie "openx3_access_token=token_string" \
@@ -258,7 +258,7 @@ Where:
 
 ```account_uid_n``` is the UID of the account to be deleted. Alternatively, you can send account IDs.
 
-#### Sample delete response
+### Sample delete response
 ```
 [
 	{
@@ -267,17 +267,17 @@ Where:
 	}
 ]
 ```
-### Read
+## Read
 
 To get the field values for a specific object:
 
-#### Sample read request
+### Sample read request
 ```
 # curl -X GET http://openx_server_name/ox/4.0/account/account_uid--cookie "openx3_access_token=token_string"
 ```
 Where: ```account_uid_n``` is the UID of the account to be read.
 
-#### Sample read response
+### Sample read response
 ```
 [
 	{
@@ -303,7 +303,7 @@ Where: ```account_uid_n``` is the UID of the account to be read.
 	}
 ]
 ```
-#### Sample list request
+### Sample list request
 
 To list all the objects of the specified type:
 
@@ -311,11 +311,11 @@ To list all the objects of the specified type:
 curl -X GET http://openx_server_name/ox/4.0/account --cookie "openx3_access_token=token_string"
 ```
 
-#### Batch Operations
+## Batch Operations
 
 Batch operations allow you to create, update, or delete multiple objects in one call.
 
-##### Sample batch create
+### Sample batch create
 ```
 curl -X POST --header "Content-Type: application/json" openx_server_name/ox/4.0/account \
 --cookie "openx3_access_token=token_string\
@@ -338,7 +338,7 @@ curl -X POST --header "Content-Type: application/json" openx_server_name/ox/4.0/
                 }
  ]'
 ```
-##### Sample batch create response
+### Sample batch create response
 
 When the creation is successful, the HTTP response includes 200 Created and a response body such as the following example:
 ```
@@ -407,13 +407,13 @@ When the creation is successful, the HTTP response includes 200 Created and a re
  }
 ]
 ```
-##### Sample batch delete
+### Sample batch delete
 ```
 curl -X DELETE --header "Content-Type: application/json" http://openx_server_name/ox/4.0/account \
 --cookie "openx3_access_token=token_string \
   --data='["account_uid_1", account_uid_2", "account_uid_3", "account_uid_n]'
 ``` 
-#### Available Fields
+## Available Fields
 
 You can make an available_fields request to determine an object's fields and values. Some available_fields requests require URI parameters, but if you do not include them the error response will indicate what is needed. For example, if you call ```GET /account/available_fields```, you will receive the following error response:
 ```
@@ -434,7 +434,7 @@ You can make an available_fields request to determine an object's fields and val
 ```
 This response points out that you need to include a ```type_full``` request parameter in your call to the account object. For example, if you append ```?type_full=account.publisher``` to your request, the Ad Server will provide information about all the account fields for an account of type ```account.publisher```.
 
-##### Sample ```available_fields``` request specifying a ```type_full``` value:
+### Sample ```available_fields``` request specifying a ```type_full``` value:
 ```
 openx_server_name/ox/4.0/account/available_fields?type_full=account.publisher --cookie "openx3_access_token=curl -X GET http://token_string"
 
@@ -1065,7 +1065,7 @@ Where:
 
 Tip: You can also include action=create or action=update when calling the API for available and required fields of an object. For example, the set of required fields for creating a user is different than for updating a user, such as the user.email field, which is required when creating but not when updating.
 
-#### Pagination
+# Pagination
 
 The size of the data displayed in a response is limited by the following request parameters:
 
@@ -1074,13 +1074,13 @@ The size of the data displayed in a response is limited by the following request
 
 If there is too much information to display in a single page, the response body will include "has_more": true. You can access the additional values by modifying the offset and limit paging values.
 
-##### Sample list request including pagination parameters
+## Sample list request including pagination parameters
 
 For example, to list account records 50 through 75, specify an offset of 50 and a limit of 25:
 ```
 curl -X GET http://openx_server_name/ox/4.0/accountoffset=50&limit=25 --cookie "openx3_access_token=token_string"
 ```
-### URI parameters
+# URI parameters
 
 The URIs described in the API reference represent the supported request syntax, to which you can add certain supported request parameters. You can include request parameters in your API calls as query string arguments; you can append the first parameter after a question mark (?) and additional parameters separated by ampersands (&) in any order or combination.
 The OpenX API supports the various parameters, such as the following:
@@ -1094,14 +1094,14 @@ Important: Routine use of the pretty parameter negatively impacts performance. D
 
 Depending on the resource you are calling, many additional parameters may be available. Making calls without required parameters results in an error response, which typically indicates what was missing from the request. You can call available_fields for an object to see fields listed as required: true.
 
-#### About IDs and UIDs
+# About IDs and UIDs
 OpenX API objects have object_name_id ("ID") and object_name_uid ("UID") fields. For example, you can include account_id=string or account_uid=string values in some API calls.
 
 IDs were supported in API v3 and OpenX continues to maintain IDs. UIDs were introduced with API v4 for internal reasons and they are typically interchangeable with IDs. You can usually specify both IDs and UIDs in API requests that include a full JSON object (for an example, see Create).
 
 You do not have to specify UIDs unless they are listed as required by the available_fields create or update response for the object. For example, to create an order, the account_uid is required. If you specify the account_id instead, the call will not work. As a best practice, you should use IDs whenever possible; however, if IDs are not available or do not work, use UIDs in their place.
 
-### Response codes and error handling
+# Response codes and error handling
 
 Most ```create``` and ```update``` operations require particular parameters. The API responds with an HTTP response code of 2xx when the operation is successful or an error code of 4xx, a text description of the error, and JSON content listing the incorrect or missing fields, along with the reason they were rejected. For example, if you ```POST``` an order without any parameters, the API responds with error code 400, and JSON in the response body indicating the required fields.
 
@@ -1131,7 +1131,7 @@ Value | The allowable values for the field are constrained to a given set or mus
 
 For information about HTTP status codes, see RFC 1945.
 
-## Use Cases
+# Use Cases
 
 This section describes the following common tasks using the Platform API:
 
@@ -1143,7 +1143,7 @@ This section describes the following common tasks using the Platform API:
 * Working with forecasts
 * Working with reports
 
-### Working with accounts
+## Working with accounts
 
 Depending on your use case, the account object is used in the following way:
 
@@ -1508,7 +1508,7 @@ To retrieve information about specific inventory objects, use the UIDs from the 
 * Read the audience segment with the specified ID:
 ```curl http://openx_server_name/ox/4.0/audiencesegment/536871535 --cookie "openx3_access_token=token_string"```
 
-### Create a site
+## Create a site
 
 To create a site:
 
@@ -1593,7 +1593,7 @@ For example, create a site for the web delivery medium.
 
 The API creates the site and returns the ID for the new site object.
 
-### Creating an ad unit
+## Creating an ad unit
 
 To create an ad unit:
 
@@ -1795,9 +1795,9 @@ Response listing available files for an event feed
 		 ]
 		}
   ```
-  ### Listing available fields for an event feed
+### Listing available fields for an event feed
   
-  After you log in to the OpenX system that you want to access data for, you can retrieve the list of event feed files available to you per event type. For example, if you are interested in click events, retrieve the list of click event feed files. Then you can determine what files you want to download.
+After you log in to the OpenX system that you want to access data for, you can retrieve the list of event feed files available to you per event type. For example, if you are interested in click events, retrieve the list of click event feed files. Then you can determine what files you want to download.
 
 To retrieve the list of available data sets for a particular event type:
 
@@ -2098,7 +2098,7 @@ The API returns the attributes and value details for the specific order:
 	}
 ]
 ```
-### Creating an order
+## Creating an order
 
 To create an order:
 
@@ -2166,7 +2166,7 @@ curl http://openx_server_name/ox/4.0/order --cookie "openx3_access_token=token_s
 ```
 The API creates the order and returns the ID for the new order object.
 
-### Creating a line item
+## Creating a line item
 
 To create a line item:
 
@@ -2290,14 +2290,14 @@ curl -X POST --header "Content-Type: application/json" http://openx_server_name/
 ```    
 The API creates the line item and returns the UID for the new line item object.
 
-### Creating an ad
+## Creating an ad
 
 To create an ad:
 
-Create a line item and retrieve its UID, or retrieve the list of line items to determine the one to create the ad for.
-Upload a creative.
-Create a creative.
-Get the list of available fields for creating an ad:
+1. Create a line item and retrieve its UID, or retrieve the list of line items to determine the one to create the ad for.
+2. Upload a creative.
+3. Create a creative.
+4. Get the list of available fields for creating an ad:
 ```
 curl -X GET http://openx_server_name/ox/4.0/ad/available_fields?type_full=ad.image --cookie "openx3_access_token=token_string"
 ```
@@ -2419,7 +2419,7 @@ curl -X POST --header "Content-Type: application/json" http://openx_server_name/
 ```
 The API creates the image ad and returns the ID for the new image ad object.
 
-### Uploading a creative
+### Upload a creative
 
 Upload a creative file to the OpenX Ad Server to reference in creatives and use in ads.
 ```
@@ -2428,7 +2428,7 @@ curl -X POST --header "Content-Type: application/json" http://openx_server_name/
 ```
 The API uploads the creative and returns the details for the creative.
 
-### Creating a creative
+### Create a creative
 
 Create a creative object which references an uploaded creative.
 
@@ -2449,7 +2449,7 @@ curl -X POST --header "Content-Type: application/json" http://openx_server_name/
 ```
 The API creates the creative and returns the ID for the new creative object.
 
-## Working with comments
+# Working with comments
 
 If you do not wish to use the UI to add or edit comments, you may use the API to add (```POST```) and edit (```PUT```) comments for an object, as well as retrieve a list of all comments for a specific object (```GET```). The steps for adding and editing comments for objects are described below.
 You can:
@@ -2457,7 +2457,7 @@ You can:
 * Edit an existing comment
 * Get a list of comments
 
-Add a new comment
+## Add a new comment
 
 To add a comment to an existing object, follow the steps described below.
 
@@ -2526,7 +2526,7 @@ user_id | The ID associated with the user who created the comment. | 1610845423 
 user_uid | The UID associated with the user who created the comment. | 200165d2-acc0-fff1-8123-0c9a66 |
 v | The API version. | 3 |
 
-### Edit an existing comment
+## Edit an existing comment
 
 In addition to adding a comment to an object, you may also edit comments for an existing object. To edit a comment:
 
@@ -2594,7 +2594,7 @@ user_id	| The ID associated with the user who created the comment. | 1610845423 
 user_uid | The unique ID associated with the user who created the comment. | 60038cef-acc0-fff1-8123-0c9a66 |
 v | The version of the API. |3 |
 
-### Get a list of comments
+## Get a list of comments
 
 You can also get a list of comments associated with an object by making a ```GET``` request to the OpenX Server.
 
@@ -2661,7 +2661,7 @@ user_uid | The unique ID associated with the user who created the comment. | 600
 v | The version of the API. | 3 |
 
 
-### Working with forecasts
+# Working with forecasts
 
 The OpenX Platform API provides the ability to forecast the impact of creating a new line item on existing line items. Much like the OpenX UI, the API enables you to perform a number of different forecasting actions to create and manage forecasts. Before using the Forecasting API, you should already be familiar with how forecasting works using the OpenX user interface. If, however, you are unfamiliar with how forecasting works, refer to the Forecasting documentation for more information on forecasts and availability.
 
@@ -2674,11 +2674,11 @@ Forecasting enables you to:
 
 When working with forecasting, you have the option to either use the OpenX user interface or API to run forecasts. This section describes how to run forecasts using the Forecasting API.
 
-#### API request structure
+## API request structure
 
 When you make an API request, you must follow the standard HTTP API request structure to ensure the request is properly formatted. You can find more information about how to construct an HTTP request in the Conventions section of this Developer's Guide.
 
-#### Running a forecast
+## Running a forecast
 
 There are different operations you can perform using the Forecasting API. Typically, when you run a forecast, you want to see what impact, if any, adding a new line item will have on existing line items and revenue. By making a single call with your desired arguments, you will see the impact of your line item on other line items and revenue.
 
@@ -2721,7 +2721,6 @@ You will want to make these API calls so you can view the different targeting ru
 ```
 curl '<your server instance>/ox/4.0/forecast_augur/forecastrules?avail2=true' -H 'Accept: application/json, text/javascript, /; q=0.01' -H 'X-Requested-With: XMLHttpRequest' -H 'Accept-Language: en-us' -H 'X-Openx-Client: 4.43.0.2335' -H 'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.86 Safari/537.36' -H 'Content-Type: application/json' --compressed
 ```
-
 In each of these API calls, there are a number of arguments that can be passed with the call, which are listed in the table below.
 
 Request Value |	Value |
@@ -2830,13 +2829,13 @@ Example
    "forecasted":4408897
 }
 ```
-## Working with history
+# Working with history
 
 You can get history information associated with an object by making a ```GET``` request to the OpenX Server. For more information about the history feature, see History.
 
 Note: All examples assume that you have been authenticated.
 
-1. From the terminal window on your system, make the following ```GET``` request to the OpenX server (in this case, an order):
+From the terminal window on your system, make the following ```GET``` request to the OpenX server (in this case, an order):
 ```
 curl -v -X GET 'http://server_name.openx.net/ox/4.0/audittrail?obj_type=order&obj_id=1611010849'  -H "Content-Type:application/json"--cookie $COOKIE | python -mjson.tool
 ```
@@ -2853,7 +2852,7 @@ timestamp | Use timestamp to return history information for an object based on a
 obj_id	| Specifies an object's id. When just an object id is specified, returns all parsed history records for the specified object revision, displaying the most recent first.|
 user | Specifies the user, indicated by an email address, who made a modification to an object. |
 
-2. The OpenX server processes the ```GET``` request and returns a list of all history information for the specified order object. An example of history is shown below.
+The OpenX server processes the ```GET``` request and returns a list of all history information for the specified order object. An example of history is shown below.
 ```
 [{
 	"uid": "60061321-c001-fff1-8123-b0769b",
@@ -2912,7 +2911,7 @@ revision | The revision number of the object. | 1 |
 limit | The maximum number of records to return. | 30 |
 offset | The distance (displacement) from the beginning of the object until a given element. | 0 |
 
-Examples
+## Examples
 
 Note: The following samples show both ways to create a history call:
 
@@ -2921,7 +2920,7 @@ Note: The following samples show both ways to create a history call:
 
 Note: Also, the following samples show the abbreviated form of the ```GET``` call as opposed to a full curl call.
 
-Return object history with limit and sort
+## Return object history with limit and sort
 
 The following sample returns the history of changes for order number 1611010849. The default settings are: "limit=20 sort=-revision".
 
@@ -3000,7 +2999,7 @@ Sample response
 }
 ```
 
-Return history by revision
+## Return history by revision
 
 The following sample specifies a specific revision (1) in the history.
 
@@ -3079,7 +3078,7 @@ Sample response
 }
 ```
 
-Return history by user
+## Return history by user
 
 The following sample specifies more filters including "user" which is an email address. Note that the email value "john.smith+i59_adv1@openx.com" must be url-encoded because the plus sign (+) has a special meaning (space) in URLs. Therefore, it must be encoded as %2b.
 
@@ -3158,13 +3157,13 @@ Sample response
 }
 ```
 
-Additional Samples
+## Additional Samples
 
 Note: The following samples show only the second way to create a history call (by querying the history (audittrail) endpoint and passing in the object type, object id, and additional parameters).
 
 Note: The following samples show the full ```curl``` call.
 
-Return all history for an object
+## Return all history for an object
 
 The following sample returns all history records for the specified object id. If more than ten records exist in the database, it returns the most recent ten. To return more than ten records, use limit=int.
 
@@ -3172,7 +3171,7 @@ The following sample returns all history records for the specified object id. If
 ```
 curl -v -X GET 'http://server_name.openx.net/ox/4.0/audittrail?&obj_id=object_id'  -H "Content-Type:application/json"--cookie $COOKIE | python -mjson.tool
 ```
-Return history for a specified revision
+## Return history for a specified revision
 
 The following sample returns one history record for the specified object id and the specified revision.
 
@@ -3180,7 +3179,7 @@ The following sample returns one history record for the specified object id and 
 ```
 curl -v -X GET 'http://server_name.openx.net/ox/4.0/audittrail?&obj_id=object_id&revision=integer'  -H "Content-Type:application/json"--cookie $COOKIE | python -mjson.tool
 ```
-Return history modified by a specified user
+## Return history modified by a specified user
 
 The following sample returns all history records for the specified object id that were modified by the specified user (indicated by the email address).
 
@@ -3188,7 +3187,7 @@ The following sample returns all history records for the specified object id tha
 ```
 curl -v -X GET 'http://server_name.openx.net/ox/4.0/audittrail?&obj_id=object_id&user=email_address'  -H "Content-Type:application/json"--cookie $COOKIE | python -mjson.tool
 ```
-Return object history after a specified date
+## Return object history after a specified date
 
 The following sample returns all history records for the specified object id, with a timestamp greater than (>) a specified date.
 
@@ -3196,7 +3195,7 @@ The following sample returns all history records for the specified object id, wi
 ```
 curl -v -X GET 'http://server_name.openx.net/ox/4.0/audittrail?&obj_id=object_id&timestamp>2016-01-01'  -H "Content-Type:application/json"--cookie $COOKIE | python -mjson.tool
 ```
-Return object history with offset and limit
+## Return object history with offset and limit
 
 The following sample returns all history records for the specified object id, with a limit of 30 and an offset of 10.
 
@@ -3204,7 +3203,7 @@ The following sample returns all history records for the specified object id, wi
 ```
 curl -v -X GET 'http://server_name.openx.net/ox/4.0/audittrail?&obj_id=object_id&limit=30&offset=10'  -H "Content-Type:application/json"--cookie $COOKIE | python -mjson.tool
 ```
-Return object history with offset, limit, and sort
+## Return object history with offset, limit, and sort
 
 The following sample returns all history records for the specified object id, with a limit of 30 and an offset of 10, sorted by timestamp (descending).
 
@@ -3212,7 +3211,7 @@ The following sample returns all history records for the specified object id, wi
 ```
 curl -v -X GET 'http://server_name.openx.net/ox/4.0/audittrail?&obj_id=object_id&limit=30&offset=10&sort=-timestamp'  -H "Content-Type:application/json"--cookie $COOKIE | python -mjson.tool
 ```
-### Accessing Reports via OpenX Reporting API
+# Accessing Reports via OpenX Reporting API
 
 Even though you can access reports using the OpenX user interface, you may also run these same reports using the OpenX API. You can perform many of the same steps in accessing reports using the API as you would when using the OpenX user interface, with the main difference being that you will only need to make a single API request to configure the date range and attributes you want to see in the report.
 
@@ -3220,7 +3219,7 @@ If you decide to access reports via the OpenX API, it is assumed you are already
 
 To run simple reporting service (SRS) reports, make the following report object calls:
 
-1. ```GET /report/get_reportlistList``` all reports that are available to you based on your account and user permissions. The reports listed by this request typically correspond to the SRS reports available to you in the OpenX UI.
+```GET /report/get_reportlistList``` all reports that are available to you based on your account and user permissions. The reports listed by this request typically correspond to the SRS reports available to you in the OpenX UI.
 
 Sample request:
 ```
@@ -3509,7 +3508,7 @@ Sample response
   "status": "OK"
 }
 ```
-2. ```GET /report/get_report_inputs```. Determine the needed parameters for the specified report.
+```GET /report/get_report_inputs```. Determine the needed parameters for the specified report.
 
 Sample request for report inputs:
 ```
@@ -3771,12 +3770,13 @@ Sample response for the Inventory Detailed Performance report (```inv_perf_pub``
 Where: 
 "required": "1" indicates a parameter that is required when running a report. You can include other values as needed.
 
-3. ```GET /report/run```. Run the specified report with required and desired URI parameters.
+```GET /report/run```. Run the specified report with required and desired URI parameters.
 
 Available parameters for the report are listed in the response to ```GET /report/get_report_inputs```.
 
 Recommended ```run``` parameters:
 * ```report```. The report code, such as ```report=adunit_size_sum```. You can retrieve the available report codes using the ```GET /report/get_reportlist``` call.
+
 * start_date
 
 * A specific date in yyyy-mm-dd HH:MM:SS format
@@ -3784,7 +3784,9 @@ OR
 * An integer for the days backward from today. For example, 7 means "seven days ago" and 0 means "starting today" (inclusive).
 
 * end_date
+
 A specific date in yyyy-mm-dd HH:MM:SS format
+
 OR
 A negative integer for the days from now. For example, -7 means "until seven days from now" and 0 means "before today" (exclusive).
 
@@ -4118,14 +4120,14 @@ Sample Inventory Detailed Performance report in JSON format
   "status": "OK"
 }
 ```
-4. Parse the JSON response for use with your reporting integration.
+Parse the JSON response for use with your reporting integration.
 
-## Authentication Via Client Libraries
+# Authentication Via Client Libraries
 Before you can access reports via the OpenX API, you must first be authenticated. You can use an existing OpenX client library or your own library. If you use one of these client libraries, the back-end authentication logic is automatically implemented for you via the client library and you need not perform any OAuth implementation steps. If, however, you choose to write your own client library, you will then need to implement the OAuth authentication logic yourself.
 
 For more detailed information on how to implement authentication logic, refer to the Authentication section.
 
-## Running a Report Using the OpenX API
+# Running a Report Using the OpenX API
 
 When generating reports, you likely will want to use a program to make these calls on an predetermined automated basis (hourly, daily, weekly, etc.). If, however, you wish to make these API calls manually, or through a browser, then the examples below provide the necessary information for you to make these individual calls through a terminal window or browser.
 
@@ -4133,7 +4135,7 @@ When making a request using the API, there are a number of parameters you may pa
 
 Note: : There are two different report formats you can use in your request: CSV & JSON. you can specify the report format by entering format (csv or JSON) in the report_format parameter.
 
-### Bid Performance Report Example
+## Bid Performance Report Example
 One type of report you may wish to run is the Bid Performance Report, which provides insight into bid activity based on inventory, demand, and Private Marketplace deal information. This can help you evaluate both Ad Exchange and Private Marketplace performance.
 When you make the Bid Performance Report request, the report is generated with different columns based on the input parameters and the breakout columns you have specified.
 
@@ -4196,7 +4198,7 @@ curl '<api_url>'/ox/4.0/report/run?start_date=2016-01-19 10:00:00&end_date=2016-
 ```
 The table below lists the parameters being passed in this request.
 
-Bid Performance Report w/o Optional Columns Request Values
+## Bid Performance Report w/o Optional Columns Request Values
 
 Parameter | Description	| Example Value |
 --------- | ------------ | -------------- |
@@ -4215,7 +4217,7 @@ curl '<api_url>'/ox/4.0/report/run?start_date=2016-01-19 10:00:00&end_date=2016-
 ```
 In this example, note that you are passing the values listed in the table below.
 
-Bid Performance Report w/ Optional Columns Request Values
+## Bid Performance Report w/ Optional Columns Request Values
 
 Parameter | Description | Example Value |
 --------- | ------------ | ------------- |
@@ -4235,7 +4237,7 @@ curl '<api_url>'/ox/4.0/report/run?start_date=2016-01-19 10:00:00&end_date=2016-
 ```
 Note that you are passing the values listed in the table below as part of the request.
 
-Bid Performance Report Publisher Filters Request Values
+## Bid Performance Report Publisher Filters Request Values
 
 Parameter | Description | Example Value |
 --------- | ------------ | ---------------- |
@@ -4252,7 +4254,7 @@ report | The type of report. | bid_perf |
 
 Note: When entering dates in the request, the date format must be "YYYY-MM-DD  HH:MM:SS." Please note that the time displayed is the local time for the server instance.
 
-#### Making a cURL Request
+## Making a cURL Request
 You may also generate a Bid Performance Report by making a single cURL call. Like the URL example above, this example assumes you are already logged in and authenticated; however, unlike the example above, make sure you take note of the cookie information, as you will need to include this information in your cURL call.
 
 To generate a Bid Performance Report using a single cURL call, enter the following command:
@@ -4261,7 +4263,7 @@ curl '<api_url>'/ox/4.0/report/run?start_date=2016-01-19 10:00:00&end_date=2016-
 ```
 Note: The following parameters are used in this request.
 
-Bid Performance Report cURL Request Values
+## Bid Performance Report cURL Request Values
 
 Parameter | Description | Example Value
 --------- | ----------- | --------- |
@@ -4276,13 +4278,13 @@ report_format | The output format for the report. Options are CSV and JSON. | cs
 report | The type of report.| bid_perf|
 cookie | The session access token and cookie.| openx3_access_token=cf708d438a38193a81c953fc5c7346ca438b056a5e2b9reports=%7B%22name%22%3A%22600000e0-acc0-fff1-8123 9c5e2e%22%2C%22success%22%3Atrue%2C%22server%22%3A%22|
 
-### Working with a Completed Report
+# Working with a Completed Report
 
 Once you have structured your request and selected your output format (CSV or JSON), the API will process the request and return raw data based on the selected input parameters. You can then use this data in your preferred visualization tool (e.g. Excel, Word, etc.) to sort and analyze the data.
 
-## Platform API reference
+# Platform API reference
 
-### Objects
+## Objects
 
 The OpenX Platform API includes the following objects, which support CRUD operations:
 
@@ -4310,7 +4312,7 @@ The OpenX Platform API includes the following objects, which support CRUD operat
 
 Tip: Objects are identified by both their object_name_id ("ID") and object_name_uid ("UID") fields. For more details, see About IDs and UIDs.
 
-### Services
+# Services
 
 The Platform API includes the following services, which support read (```GET```) operations:
 
@@ -4328,7 +4330,7 @@ The Platform API includes the following services, which support read (```GET```)
 * session
 * subtypes
 
-### Account object
+## Account object
 
 A business unit or business relationship as it is represented in OpenX, such as an ad network, advertiser, publisher, or agency
 
@@ -4842,7 +4844,7 @@ Sample batch create
 * ```PUT /account```. Update the specified accounts.
 * ```PUT /account/account_UID```. Update the specified account.
 
-### Ad object
+## Ad object
 
 The functional unit that displays in the ad space and which represents the message that an advertiser wants an end-user to view
 The ad object has the following calls:
@@ -5138,9 +5140,13 @@ Sample response for ```GET /ad/available_fieldstype_full=ad.type_full=ad.image``
   }
 }
 ```
-* ```GET /ad/performance/ad_UID```. Get performance metrics for the specified ad within the (optional) date range.
-Parameters
-```start_date```
+### GET /ad/performance/ad_UID
+
+```GET /ad/performance/ad_UID```. Get performance metrics for the specified ad within the (optional) date range.
+
+#### Parameters
+
+start_date
 
 A specific date in yyyy-mm-dd HH:MM:SS format
 
@@ -5163,7 +5169,7 @@ A negative integer for the days from now. For example, -7 means "until seven day
 * ```PUT /ad```. Update the specified ads.
 * ```PUT /ad/ad_UID```. Update the specified ad.
 
-### Ad unit object
+## Ad unit object
 
 Specific areas on your site where you want to display ads. The adunit object has the following calls:
 * ```DELETE /adunit```. Delete the specified ad units.
@@ -5525,17 +5531,20 @@ Sample response for ```GET /adunit/available_fieldstype_full=adunit.web```
   }
 }
 ```
-* ```GET /adunit/list_ad_tags```. List ad tags and basic information for the specified adunit UIDs.
+### GET /adunit/list_ad_tags
+```GET /adunit/list_ad_tags```. List ad tags and basic information for the specified adunit UIDs.
 
-Parameters
+#### Parameters
 
 ```adunit_uids (Required)```. A comma-separated string of ad unit UIDs, such as adunit_uids=278-e0ad-ff1-8123-0c9a,288-e0ad-ff1-8123-0c9a
 
 ```format (Optional)```. Use format=txt to download ad tags in a text file.
 
+### GET /adunit/performance/ad_unit_UID
+
 ```GET /adunit/performance/ad_unit_UID```. Get the performance metrics for the specified ad unit within the (optional) date range.
 
-Parameters
+#### Parameters
 
 start_date
 
@@ -5557,7 +5566,7 @@ A negative integer for the days from now. For example, -7 means "until seven day
 * ```POST /adunit/ad_unit_UID/clone```. Clone the specified ad unit.
 * ```POST /adunit/list_ad_tags```. List ad tags and basic information for the specified adunit UIDs.
 
-Parameters
+#### Parameters
 
 ```adunit_uids (Required)```. A comma-separated string of ad unit UIDs, such as adunit_uids=278-e0ad-ff1-8123-0c9a,288-e0ad-ff1-8123-0c9a
 
@@ -5566,7 +5575,7 @@ Parameters
 * ```PUT /adunit```. Update the specified ad units.
 * ```PUT /adunit/ad_unit_UID```. Update the specified ad unit.
 
-### adunitgroup object
+## adunitgroup object
 
 Collections of ad units used for inventory to be filled with companion ads or to map items in a CMS to inventory items
 
@@ -5766,10 +5775,11 @@ Sample available_fields response
   }
 }
 ```
+### GET /adunit/performace/ad_unit_group_UID
 
 * ```GET /adunitgroup/performance/ad_unit_group_UID```. Get the performance metrics for the specified ad unit group within the (optional) date range.
 
-Parameters
+#### Parameters
 
 start_date
 
@@ -5792,7 +5802,7 @@ A negative integer for the days from now. For example, -7 means "until seven day
 * ```PUT /adunitgroup```. Update the specified ad unit groups.
 * ```PUT /adunitgroup/ad_unit_group_UID```. Update the specified ad unit group.
 
-### audiencesegment object
+## audiencesegment object
 
 An inventory object that represents a group of users with similar traits or characteristics. The ```audiencesegment``` object has the following calls:
 
@@ -5804,7 +5814,7 @@ An inventory object that represents a group of users with similar traits or char
 * ```GET /audiencesegment/available_fields```. List the available fields to create or update an audience segment.
 * ```GET /audiencesegment/performance/audience_segment_UID```. Get the performance metrics for the specified audience segment within the (optional) date range.
 
-Parameters
+### Parameters
 
 start_date
 
@@ -5829,7 +5839,7 @@ A negative integer for the days from now. For example, -7 means "until seven day
 * ```PUT /audiencesegment```. Update the specified audience segments.
 * ```PUT /audiencesegment/audience_segment_UID```. Update the specified audience segment.
 
-### audit_trail service
+## audit_trail service
 
 A service that logs changes to data (creation, modification, or deletion) and allows a system administrator to review historical changes to the following objects:
 
@@ -5849,7 +5859,7 @@ GET /audit_trail/object_UID. List the audit trail for the specified object (this
 ```
 The ```limit``` and ```offset``` URI parameters allow pagination of the results.
 
-### comment object
+## comment object
 
 The ```comment``` object supports the logging of comments for any API object, such as via its Description field in the OpenX UI. The ```comment``` object has the following calls:
 
@@ -6034,7 +6044,7 @@ Response
 
 ```PUT /comment/comment_UID```. Update the comment specified by its ID or UID.
 
-### competitiveexclusion object
+## competitiveexclusion object
 
 Advertiser account rules used to block competing advertisers from displaying their ads on the same webpage. The ```competitiveexclusion``` object has the following calls:
 
@@ -6048,7 +6058,7 @@ Advertiser account rules used to block competing advertisers from displaying the
 * ```PUT /competitiveexclusion```. Update the specified competitive exclusion.
 * ```PUT /competitiveexclusion/competitive_exclusion_UID```. Update the specified competitive exclusion.
 
-### conversiontag object
+## conversiontag object
 
 A conversion tag is a piece of code that tracks how users respond to ads served for orders. The ```conversiontag``` object has the following calls:
 
@@ -6064,7 +6074,7 @@ A conversion tag is a piece of code that tracks how users respond to ads served 
 * ```PUT /conversiontag```. Update the specified conversion tags.
 * ```PUT /conversiontag/conversion_tag_UID```. Update the specified conversion tag.
 
-### creative object
+## creative object
 
 The media asset to use in your ad (such as an image or video file) that you can upload to the OpenX CDN. The creative references a local or remote file. The ```creative``` object has the following calls:
 
@@ -6079,7 +6089,7 @@ The media asset to use in your ad (such as an image or video file) that you can 
 * ```PUT /creative```. Update the specified creatives.
 * ```PUT /creative/creative_UID```. Update the specified creative.
 
-### dashboard service
+## dashboard service
 
 A set of high-level reports and links provided by the Simple Reporting Service (SRS). The ```dashboard``` service has the following calls that return a JSON or XML representation of the corresponding report data:
 
@@ -6087,7 +6097,7 @@ A set of high-level reports and links provided by the Simple Reporting Service (
 * ```GET /dashboard/totals_by_day```. Return Totals by Day report data.
 * ```GET /dashboard/totals_by_time```. Return Totals by Time report data.
 
-### deal object
+## deal object
 
 A prearranged agreement to sell specific inventory, such as a direct deal between a publisher and a demand partner. The ```deal``` object has the following calls:
 
@@ -6105,7 +6115,7 @@ Tip: If a deal is associated with a custom package, its package_name and package
 * ```PUT /deal```. Update the specified deals.
 * ```PUT /deal/deal_UID```. Update the specified deal.
 
-### eventfeed service
+## eventfeed service
 
 The ```eventfeed``` service retrieves transaction-level delivery data for various ad serving events. For details, see working with event-level feeds.
 
@@ -6115,7 +6125,7 @@ Note: Accessing event-level feeds requires a specific OpenX configuration. For d
 * ```GET /eventfeed/fetch```. Download files for the specified event feed. For details, see downloading the event feed file.
 * ```GET /eventfeed/schema```. Retrieve a schema file for the specified event. For details, see event feed file format.
 
-### floorrule object
+## floorrule object
 
 The ```floorrule``` object allows you to manage selling rules regarding the minimum price you are willing to accept for ad space and related details. It has the following calls:
 
@@ -6133,7 +6143,7 @@ Tip: If a floor rule is associated with a custom targeting selection and not a s
 * ```PUT /floorrule```. Update the specified floor rules.
 * ```PUT /floorrule/floor_rule_UID```. Update the specified floor rule.
 
-### geo service
+## geo service
 
 The ```geo``` service provides geolocation values you can use for targeting. It has the following calls:
 
@@ -6155,7 +6165,7 @@ Parameters
 * size (Recommended). The maximum number of matching results to return. We recommend you limit the results of your queries, such as size=100.
 * sort (Optional). The field to sort by, such as sort=city
 
-### lineitem object
+## lineitem object
 
 The ```lineitem``` object provides line item details associated with orders, such as pricing, goals, and targeting. It has the following calls:
 
@@ -6195,7 +6205,7 @@ A negative integer for the days from now. For example, -7 means "until seven day
 * ```PUT /lineitem```. Update the specified line items.
 * ```PUT /lineitem/line_item_UID```. Update the specified line item.
 
-### market service
+## market service
 
 The ```market``` service retrieves information about advertisers, brands, and market operators. It has the following calls:
 
@@ -6204,14 +6214,14 @@ The ```market``` service retrieves information about advertisers, brands, and ma
 * ```GET /market/operators```. List market operators.
 * ```POST /market/brands```. Query for brands.
 
-### monetization service
+## monetization service
 
 The monetization service retrieves information about demand sources from the market operator. It has the following calls:
 
 * ```GET /monetization/demand_sources```. List all demand sources.
 * ```GET /monetization/demand_sources/demand_source_ID```. List the specified demand source.
 
-### optimization object
+## optimization object
 
 The ```optimization``` object represents real-time selling rules with fields for targeting criteria, minimum prices, advertiser and content filters, and so on. It has the following calls:
 
@@ -6225,7 +6235,7 @@ The ```optimization``` object represents real-time selling rules with fields for
 * ```PUT /optimization```. Update the specified optimizations.
 * ```PUT /optimization/optimization_UID```. Update the specified optimization.
 
-### options service
+## options service
 
 The ```options``` service retrieves data for the specified options key. It has the following call:
 ```
@@ -6422,7 +6432,7 @@ Depending on your account and permissions, available option keys may include:
 * ```web_location_options```
 * ```web_size_options```
 
-### order object
+## order object
 
 The ```order``` object provides calls to manage direct demand for ad space. Depending on your OpenX configuration, use it to manage demand for third-party networks or exchanges. It has the following calls:
 
@@ -6462,7 +6472,7 @@ A negative integer for the days from now. For example, -7 means "until seven day
 * ```PUT /order```. Update the specified orders.
 * ```PUT /order/order_UID```. Update the specified order.
 
-### package object
+## package object
 
 The ```package``` object represents specific inventory associated with one or more deals, such as a site section, content categories, ad sizes, page positions, and so on. It has the following calls:
 
@@ -6478,7 +6488,7 @@ The ```package``` object represents specific inventory associated with one or mo
 * ```PUT /package```. Update the specified packages.
 * ```PUT /package/package_UID```. Update the specified package.
 
-### paymenthistory object
+## paymenthistory object
 
 The ```paymenthistory``` object provides payment details for a specified account. It has the following calls:
 
@@ -6492,7 +6502,7 @@ The ```paymenthistory``` object provides payment details for a specified account
 * ```PUT /paymenthistory```. Update the payment histories with the specified IDs.
 * ```PUT /paymenthistory/payment_history_ID```. Update the specified payment history.
 
-### report object
+## report object
 
 The report object provides the following calls to the simple reporting service (SRS):
 
@@ -11267,7 +11277,7 @@ This request returns a response similar to the following example:
 </InLine>
 </Ad>
 </VAST>
-```
+
 
 The response contains the following elements:
 
