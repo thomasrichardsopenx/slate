@@ -7206,17 +7206,17 @@ A negative integer for the days from now. For example, -7 means "until seven day
 Parameters
 
 ```report```. The report code, such as report=adunit_size_sum. You can retrieve the available report codes using the ```GET /report/get_reportlist call```.
-```
+
 start_date
-```
+
 A specific date in yyyy-mm-dd HH:MM:SS format
 
 OR
 
 An integer for the days backward from today. For example, 7 means "seven days ago" and 0 means "starting today" (inclusive).
-```
+
 end_date
-```
+
 A specific date in yyyy-mm-dd HH:MM:SS format
 
 OR
@@ -7430,65 +7430,65 @@ http://openx_server_name/ox/4.0/report/download/3bcbd450-750a-45e6-b828-5cb448a2
 ```GET /report/traffic_by_account_time```. Return traffic-by-account-time data.
 
 Parameters
-```
+
 start_date
-```
+
 A specific date in yyyy-mm-dd HH:MM:SS format
 
 OR
 
 An integer for the days backward from today. For example, 7 means "seven days ago" and 0 means "starting today" (inclusive).
-```
+
 end_date
-```
+
 A specific date in yyyy-mm-dd HH:MM:SS format
 
 OR
 
 A negative integer for the days from now. For example, -7 means "until seven days from now" and 0 means "before today" (exclusive).
-```
-GET /report/traffic_by_order. Return traffic-by-order data.
-```
+
+```GET /report/traffic_by_order```. Return traffic-by-order data.
+
 Parameters:
-```
+
 start_date
-```
+
 A specific date in yyyy-mm-dd HH:MM:SS format
 
 OR
 
 An integer for the days backward from today. For example, 7 means "seven days ago" and 0 means "starting today" (inclusive).
-```
+
 end_date
-```
+
 A specific date in yyyy-mm-dd HH:MM:SS format
 
 OR
 
 A negative integer for the days from now. For example, -7 means "until seven days from now" and 0 means "before today" (exclusive).
-```
-GET /report/traffic_lineitem_alerts. Return traffic line item alerts.
-```
+
+```GET /report/traffic_lineitem_alerts```. Return traffic line item alerts.
+
 Parameters
-```
+
 start_date
-```
+
 A specific date in yyyy-mm-dd HH:MM:SS format
 
 OR
 
 An integer for the days backward from today. For example, 7 means "seven days ago" and 0 means "starting today" (inclusive).
-```
+
 end_date
-```
+
 A specific date in yyyy-mm-dd HH:MM:SS format
 
 OR
 
 A negative integer for the days from now. For example, -7 means "until seven days from now" and 0 means "before today" (exclusive).
-```
-GET /report/video_ad_type_options. Return a list of video ad type IDs used to filter the Video Events By Advertiser report (video_perf).
-```
+
+```GET /report/video_ad_type_options. Return a list of video ad type IDs used to filter the Video Events By Advertiser report (video_perf).```
+
 Response
 ```
 [
@@ -7521,17 +7521,17 @@ This response is only available for accounts that have access to the Video Event
 Parameters
 
 * ``floor_uids```. A comma-separated list of brand floor UIDs
-```
+
 start_date
-```
+
 A specific date in yyyy-mm-dd HH:MM:SS format
 
 OR
 
 An integer for the days backward from today. For example, 7 means "seven days ago" and 0 means "starting today" (inclusive).
-```
+
 end_date
-```
+
 A specific date in yyyy-mm-dd HH:MM:SS format
 
 OR
@@ -7565,17 +7565,17 @@ format. (Optional) Set format=txt to export ad tags in a text file
 ```GET /site/performance/site_UID```. Get performance metrics for the specified site within the (optional) date range.
 
 Parameters:
-```
+
 start_date
-```
+
 A specific date in yyyy-mm-dd HH:MM:SS format
 
 OR
 
 An integer for the days backward from today. For example, 7 means "seven days ago" and 0 means "starting today" (inclusive).
-```
+
 end_date
-```
+
 A specific date in yyyy-mm-dd HH:MM:SS format
 
 OR
@@ -7609,17 +7609,17 @@ The ```sitesection``` object represents a grouping of ad space in a site. It has
 * ```GET /sitesection/performance/site_section_UID```. Get performance metrics for the specified site section within the (optional) specified date range.
 
 Parameters:
-```
+
 start_date
-```
+
 A specific date in yyyy-mm-dd HH:MM:SS format
 
 OR
 
 An integer for the days backward from today. For example, 7 means "seven days ago" and 0 means "starting today" (inclusive).
-```
+
 end_date
-```
+
 A specific date in yyyy-mm-dd HH:MM:SS format
 
 OR
@@ -7635,9 +7635,9 @@ A negative integer for the days from now. For example, -7 means "until seven day
 ### subtypes service
 
 The ```subtypes`` service retrieves the subtypes that can be created for the various object, such as subtypes of the account, lineitem, order, and site objects. It has the following call:
-```
+
 GET /subtypes
-```
+
 Sample GET /subtypes response
 ```
 {
@@ -7879,10 +7879,10 @@ Parameters
 
 For a complete list of parameters, see the OAuth specification. There are a few parameters worth mentioning:
 
-Parameter | Description
+Parameter | Description |
 Oauth_nonce | This parameter contains a nonce or "only once string"; it is a unique string that changes on each OAuth request. There is no specification on how the nonce should be constructed, but it is important to make sure it changes on each call; it is how the server knows there are no duplicate requests. |
 oauth_token | This value changes based on the stage of the OAuth handshake. Before authorization and when getting a request token, this parameter is excluded entirely. When retrieving an access token, this parameter is set to the request token. Once an access token has been obtained, this parameter, for all future requests, is set to the access token. |
-UNIX timestamp | The oauth_timestamp field requires a UNIX timestamp. Some programming libraries may provide a function for this.
+UNIX timestamp | The oauth_timestamp field requires a UNIX timestamp. Some programming libraries may provide a function for this. |
 
 Process Overview
 The following graphic illustrates the flow of information in the OAuth process. It takes place is basically three steps:
@@ -7895,88 +7895,121 @@ The numbered steps in the graphic correspond to the numbered steps in this secti
 
 ### About signing requests
 
-Signing Requests
+#### Signing Requests
+
 OAuth defines a method for validating the authenticity of HTTP requests. This method is called Signing Requests. Instead of sending full credentials (specifically passwords), OAuth uses digital signatures with each request. Digital signatures allow the recipient to verify that the content of the request has not changed in transit. To do that, the sender uses a mathematical algorithm to calculate the signature of the request and includes it with the request.
+
 All of your requests must be signed using the HMAC-SHA1 hashing algorithm. The server checks your hash to make sure it matches the hash it generates. If it does, the data you sent has not been compromised. The following explains how to sign requests.
-Base String
+
+#### Base String
+
 To authenticate programmatically:
+
 Create a "base string" using the "resource url" and the HTTP method (POST, GET) you will use before that:
-POST http://sso_openx.com
+
+```POST http://sso_openx.com```
+
 Next, sort all of your parameters in alphabetical order. (Each request will be accompanied by a set of parameters. Each step in the process requires a different set of parameters, as described in the following sections. Alphabetically sorting them ensures that the hashing algorithm produces the same result on both Consumer and Provider sides).
+
 Add a URL-encoded equal sign and value to each parameter. For every parameter except the last one, add a URL-encoded ampersand.
+
 Add all of the parameters to the string you started in step 1.
+
 The result is the final Base String. An example Python base string is shown below.
-POST&http%3A%2F%2Fsso_openx.com%2Fapi%2Ftest.json&parama%3Dparamaval%26paramb%3Dparambval %26version%3D1.0
+
+```POST&http%3A%2F%2Fsso_openx.com%2Fapi%2Ftest.json&parama%3Dparamaval%26paramb%3Dparambval %26version%3D1.0```
+
 The parameter name and parameter value should be URL-encoded. You can build a function to handle URL encoding. Also make sure the URL itself is encoded.
-Hashing
+
+#### Hashing
+
 The Base String is hashed using token credentials. Token credentials are different depending on what part of the OAuth handshake you are currently performing. If you're asking for a request token, your token credentials are the Consumer secret followed by an ampersand (&) often called a "dangling ampersand". This is because you don't have a token yet, so there is no token secret.
+
 If you have a request token and are requesting an access token, your token credentials are the Consumer secret, an ampersand (&), and the request token secret. If youÌve received authorization and can now make requests on the User's behalf, your token credentials are the Consumer secret, followed by an ampersand (&), followed by the access token secret. Whichever string is relevant to you, this string is what you apply as the key when applying the HMAC-SHA1 hashing algorithm. The Base String is the value to hash. You send your final signature to the server along with the rest of the request as the oauth_signature parameter.
-URL Encoding
+
+#### URL Encoding
+
 When you transmit special characters over the internet, they must be encoded so that they do not get misrepresented as meaningful characters. URL-encoding converts special-purpose characters such as the ampersand into hexadecimal notation based on the character's ASCII value. For instance, the ASCII value for a space ( ) character is 32. In binary, it looks like:
+
 0010 0000
+
 which is 0x20 in hexadecimal notation, so the URL-encoded space character is:
+
 %20
+
 Most language libraries, such as Python, provide a function to encode URLs.
-Executing an HTTP Call
+
+#### Executing an HTTP Call
+
 OAuth specifies three ways to send credentials:
-On the query string (not recommended)
-POST parameters (OK, but may have problems)
-The authorization HTTP header (recommended)
+
+* On the query string (not recommended)
+* POST parameters (OK, but may have problems)
+* The authorization HTTP header (recommended)
+
 A header is at the front of an HTTP request and gives the server information about the type of request, the length in bytes of the request, etc. For OAuth, one more header is added: "Authorization". The following shows the header. Line breaks have been inserted for readability, but when building your header, you would not include these line breaks.
+```
 Authorization: OAuth oauth_consumer_key="xxxx",
 oauth_token="xxxx",
 oauth_version="1.0",
 oauth_signature="xxxx",
-...
+```
 
 ### Methods of authentication
 
 You can authenticate in two ways:
-Browser-Based - Use browser-based authentication if you are providing an interactive web-based login form for users other than yourself.
-Programmatically - Use programmatic authentication if you are accessing OpenX protected resources with your own credentials only and don't plan on providing a web-based login form for other users.
-Technical Differences
-The following sections show the differences between browser-based and programmatic authentication.
-URL Differences
-Browser-based	Different?	Programmatic
-https://sso.openx.com/api/index/initiate	No	https://sso.openx.com/api/index/initiate
-https://sso.openx.com/login/login	Yes	https://sso.openx.com/login/process
-https://sso.openx.com/api/index/token	No	https://sso.openx.com/api/index/token.
-Callback URL Difference
-Browser-based	Programmatic
-Your applications' callback URL	oob (out of band)
-Cookie Difference
-Browser-based	Programmatic
-Does not require that you persist the access token in a cookie. When the user has completed the session, the access token will be released.	Requires that you persist the access token in a cookie named openx3_access_token until the session is complete.
 
-#### Browser-based authentication
+* Browser-Based - Use browser-based authentication if you are providing an interactive web-based login form for users other than yourself.
+* Programmatically - Use programmatic authentication if you are accessing OpenX protected resources with your own credentials only and don't plan on providing a web-based login form for other users.
+
+#### Technical Differences
+
+The following sections show the differences between browser-based and programmatic authentication.
+
+URL Differences
+Browser-based | Different? | Programmatic |
+https://sso.openx.com/api/index/initiate | No | https://sso.openx.com/api/index/initiate |
+https://sso.openx.com/login/login | Yes | https://sso.openx.com/login/process |
+https://sso.openx.com/api/index/token | No | https://sso.openx.com/api/index/token. |
+
+Callback URL Difference
+
+Browser-based | Programmatic |
+Your applications' callback URL | oob (out of band)
+
+Cookie Difference
+Browser-based | Programmatic |
+Does not require that you persist the access token in a cookie. When the user has completed the session, the access token will be released. | Requires that you persist the access token in a cookie named openx3_access_token until the session is complete.
+
+### Browser-based authentication
 
 Use Case: You would use browser-based authentication if you are providing an interactive web-based login form for users other than yourself.
+
 Browser-based SSO logins redirect the User back to their application and pass oauth_token and oauth_verifier onto the end of the specified callbackUrl.
 
 Authenticating a User using OAuth involves the following steps:
 
-1. The Consumer (your application) requests and obtains an unauthorized request token
-2. Authorize the User
-3. Request an access token
-4. Use the access token to access protected resources
+Step 1 - The Consumer (your application) requests and obtains an unauthorized request token
+Step 2 - Authorize the User
+Step 3 - Request an access token
+Step 4 - Use the access token to access protected resources
 
 These steps are described in detail below.
 
-1. The Consumer (your application) requests and obtains an unauthorized request token
+Step 1 - The Consumer (your application) requests and obtains an unauthorized request token
+
 The client application requests and obtains a request token from the OAuth server (https://sso.openx.com/api/index/initiate). The request command also passes in the value of the callbackUrl parameter (the URL to which the OAuth server will redirect the User upon successful authentication).
 
-The client application sends a POST request to https://sso.openx.com/api/index/initiate including the parameters listed below.
+Sub-Step 1.1 - The client application sends a ```POST``` request to ```https://sso.openx.com/api/index/initiate``` including the parameters listed below.
 
-When OpenX receives the request, it verifies the request using its copy of the Consumer secret and returns a response to the client application, including the request token.
+Sub-Step 1.2 - When OpenX receives the request, it verifies the request using its copy of the Consumer secret and returns a response to the client application, including the request token.
 
-Each sub-step is explained below.
-
-The client application sends a POST request for a request token. The first step requests a request token using the parameters listed below.
+The client application sends a ```POST``` request for a request token. The first step requests a request token using the parameters listed below.
 
 Parameter |	Description |
 --------- |    ------------ |
 oauth_realm |	The realm value is a string, generally assigned by the origin server. The realm parameter allows the protected resources on a server to be partitioned. For example, oauth realm="http://server.example.com/". |
-oauth_consumer_key |	The Consumer Key, supplied to you by OpenX. |
+oauth_consumer_key | The Consumer Key, supplied to you by OpenX. |
 oauth_signature_method | The signature method the Consumer used to sign the request. |
 oauth_signature | The signature is created using the signature process which encodes the Consumer Secret and Token Secret into a verifiable value which is included with the request. For the first request (for the request token), no Token Secret yet exists. So, the signature creation process uses the Consumer Secret and an empty Token Secret. |
 oauth_timestamp |  The timestamp is expressed in the number of seconds since January 1, 1970 00:00:00 GMT. The timestamp value MUST be a positive integer and MUST be equal or greater than the timestamp used in previous requests. |
@@ -7984,20 +8017,18 @@ oauth_nonce |	The Consumer must generate a Nonce value that is unique for all re
 oauth_version |	Optional. If present, value must be 1.0. Service Providers must assume the protocol version to be 1.0 if this parameter is not present. Service Providers' response to non-1.0 value is left undefined. |
 oauth_callback | For browser-based authentication, use this parameter to specify to which URL the User will be re-directed. For programmatic authentication, use oob (out of band). |
 
-Sub-step 1.2 Service Provider (OpenX) returns an unauthorized request token.
-
+Sub-step 1.2 - Service Provider (OpenX) returns an unauthorized request token.
 The result of step one provides your client application (the Consumer) with an unauthorized request token and oauth_token_secret. The next step allows your User to authorize the request token. To do so, the client application redirects the User to the authorization server (OpenX) login page.
 
-2. Authorize the User
+Step 2 - Authorize the User
 The User can now authenticate to SSO using the Authorize URL (https://sso.openx.com/login/login), passing in the request token. If successful, the SSO server redirects the User to the callbackUrl (with the oauth_token and oauth_verifier query string parameters appended).
 
-* For browser-based authentication, the client application (Consumer) should redirect the User to a login page using a POST request using the url: https://sso.openx.com/login/login. The POST request also passes in the unauthorized request token (oauth_token).
+Substep 2.1 - For browser-based authentication, the client application (Consumer) should redirect the User to a login page using a POST request using the url: https://sso.openx.com/login/login. The POST request also passes in the unauthorized request token (oauth_token).
 
-* The User grants access to the client application by entering a valid username and password. The OpenX authorization server generates an authorized request token.
+Substep 2.2 - The User grants access to the client application by entering a valid username and password. The OpenX authorization server generates an authorized request token.
 
-* The Service Provider redirects the User to the URL specified by the callback URL (callbackUrl). The response includes both the oath_token and the oath_verifier.
+Substep 2.3 - The Service Provider redirects the User to the URL specified by the callback URL (callbackUrl). The response includes both the oath_token and the oath_verifier.
 
-Each sub-step is explained below.
 Sub-step 2.1 Consumer directs the User to Service Provider (OpenX)
 The Consumer (your app) redirects the User to the Service Provider by constructing an HTTP GET request to the Service Provider's User Authorization URL with the following parameters:
 
@@ -8006,33 +8037,31 @@ Parameter | 	Description |
 oauth_token | The unauthorized request token obtained in the previous step. |
 oauth_callback | The Consumer should specify a URL the Service Provider will use to redirect the User back to the Consumer when Obtaining User Authorization is complete. |
 
-Sub-step 2.2 The Service Provider obtains the User's user name and password
+Sub-step 2.2 The Service Provider obtains the User's user name and password.
+
 The Service Provider verifies the User's identity by obtaining the User's username and password.
 
-Sub-step 2.3 The Service Provider redirects the User back to the Consumer site
+Sub-step 2.3 The Service Provider redirects the User back to the Consumer site.
 
-After the User authenticates with the Service Provider and grants permission for Consumer access, the Service Provider notifies the Consumer that the Request Token has been authorized by doing the following: The Service Provider constructs an HTTP GET request URL using the provided oauth_callback, and redirects the User's web browser back to that URL with the following parameters:
+After the User authenticates with the Service Provider and grants permission for Consumer access, the Service Provider notifies the Consumer that the Request Token has been authorized by doing the following: The Service Provider constructs an HTTP ```GET``` request URL using the provided ```oauth_callback```, and redirects the User's web browser back to that URL with the following parameters:
 
 Parameter | 	Description |
 --------- |     ----------- |
 oauth_token | The Request Token the User authorized or denied. |
 oauth_verifier | The verification code. |
 
-3. Request an access token
+Step 3 - Request an access token
 
-After the User has been authenticated in Step 2, in Step 3, the client application exchanges the authorized request token for an access token. The client application makes a POST request to https://sso.openx.com/api/index/token while passing the required parameters including oath_token and oath_verifier. The OpenX authorization server verifies the parameters and returns the access token in the response.
+After the User has been authenticated in Step 2, in Step 3, the client application exchanges the authorized request token for an access token. The client application makes a ```POST``` request to ```https://sso.openx.com/api/index/token``` while passing the required parameters including ```oath_token``` and ```oath_verifier```. The OpenX authorization server verifies the parameters and returns the access token in the response.
 
 The Consumer exchanges the (temporary) Request Token for a (permanent) Access Token capable of accessing the Protected Resources. Obtaining an Access Token includes the following sub-steps:
 
-* Consumer (your application) requests an access token
-* The Service Provider (OpenX) grants an access token
+Sub-step 3.1 - Consumer (your application) requests an access token
+Sub-step 3.2 - The Service Provider (OpenX) grants an access token
 
-Each step is explained below.
+Substep 3.1 - The Consumer (Your application) requests an access token.
 
-The Consumer (Your application) requests an access token
-
-The Request Token and Token Secret are exchanged for an Access Token and Token Secret. To request an Access Token, the Consumer makes an HTTP request to the Service Provider's Access Token URL. The Service Provider documentation specifies the HTTP method for this request, an HTTP POST is recommended. The request MUST be signed per Signing Requests, and contains the following parameters:
-
+The Request Token and Token Secret are exchanged for an Access Token and Token Secret. To request an Access Token, the Consumer makes an HTTP request to the Service Provider's Access Token URL. The Service Provider documentation specifies the HTTP method for this request, an HTTP ```POST``` is recommended. The request MUST be signed per Signing Requests, and contains the following parameters:
 
 Parameter |	Description |
 --------- |     ----------- |
@@ -8047,59 +8076,68 @@ oauth_callback | For browser-based authentication, use this parameter to specify
 
 No additional Service Provider specific parameters are allowed when requesting an Access Token to ensure all Token related information is present prior to seeking User approval.
 
-Service Provider Grants an Access Token (Response)
+Sub-step 3.2 - Service Provider Grants an Access Token (Response)
 
 The Service Provider generates an Access Token and Token Secret and returns them in the HTTP response body. Your application must store the Access Token and Token Secret and use them when signing Protected Resources requests. The response contains the following parameters:
 
 Parameter |	Description |
 --------- |     ----------- |
-oauth_token |	The Access Token. |
-oauth_token_secret |	The Token Secret. |
+oauth_token | The Access Token. |
+oauth_token_secret | The Token Secret. |
 
-4. Use the access token to access protected resources
+Step 4 - Use the access token to access protected resources
 
 The client application uses the access token to perform OpenX API operations.
 
-#### Programmatic authentication
+### Programmatic authentication
 
 Use Case: You would use programmatic authentication if you are accessing OpenX protected resources with your own credentials only and don't plan on providing a web-based login form for other Users.
-To run automated processes, include a valid username and password in your code or make them available to the code. If successful, programmatic logins return oauth_token and oauth_verifier in the body of the response.
-Important: Your client application must be able to persist cookies across an HTTP 302 redirect in a cookie named openx3_access_token, which must be present in all API requests.
+
+To run automated processes, include a valid username and password in your code or make them available to the code. If successful, programmatic logins return ```oauth_token``` and ```oauth_verifier``` in the body of the response.
+
+Important: Your client application must be able to persist cookies across an HTTP 302 redirect in a cookie named ```openx3_access_token```, which must be present in all API requests.
+
 Authenticating a User using OAuth involves the following steps:
-  * Step 1 - Request an unauthorized request token
-  * Step 2 - Authorize the User
-  * Step 3 - Request an access token
-  * Step 4 - Use the access token to access protected resources
+
+Step 1 - Request an unauthorized request token
+Step 2 - Authorize the User
+Step 3 - Request an access token
+Step 4 - Use the access token to access protected resources
+
 These steps are the same as Browser-Based Authentication except for a few details, which will be explained in each step. Only the differences will be explained in this procedure.
 
-1. Request an unauthorized request token
+Step 1 - Request an unauthorized request token
 
 Difference between programmatic and browser-based authentication:
 
 Because this is programmatic authentication instead of browser-based, you must set the callbackUrl to oob (out-of-band), which tells the OAuth server that you are not redirecting a User to a URL. The OAuth Server returns the request token.
 
-2. Authorize the User
-3. 
+Step 2 - Authorize the User
+
 Difference between programmatic and browser-based authentication:
 
-Authorize the request token by sending an HTTP POST request to https://sso.openx.com/login/process with the following parameters:
+Authorize the request token by sending an HTTP ```POST``` request to https://sso.openx.com/login/process with the following parameters:
 
-Parameter	Description
-Email	The User's email address
-Password	The User's password
-oauth_token	The OAuth request token
+Parameter | Description |
+Email | The User's email address |
+Password | The User's password |
+oauth_token | The OAuth request token |
+
 Sub-steps
 For programmatic authentication, the client application must pass in the request token (oauth_token) and the User's email and password to https://sso.openx.com/login/process (NOT https://sso.openx.com/login/login).
 
 Step 3 - Request an access token
 Difference between programmatic and browser-based authentication:
+
 This process is the same as browser-based authentication with the addition of a third sub-step:
 Sub-step 3.3: Consumer (your application) persists the access token in a cookie
+
 The Consumer (your application) should now persist the access token in a cookie so that it can be used to access the protected resources. The cookie should be named openx3_access_token, which must be present in all API requests.
 
 Step 4 - Use the access token to access protected resources
 Difference between programmatic and browser-based authentication:
 None
+
 The client application uses the access token to perform OpenX API operations.
 
 Important: You must refresh the OpenX session at least once every two hours or your session will expire.
@@ -8115,17 +8153,18 @@ All calls to the Platform API must be authenticated with a security token, which
 
 The following sample OAuth session log shows successfully signed OAuth requests using the following calls:
 
-* Step 1 - POST /api/index/initiate
-* Step 2 - POST /login/process
-* Step 3 - POST /api/index/token
+Step 1 - ```POST /api/index/initiate```
+Step 2 - ```POST /login/process```
+Step 3 - ```POST /api/index/token```
 
 In the final call to sso.openx.com/api/index/token, the oauth_token value in the response is the value used for the openx3_access_token cookie for API requests.
 
-1. Request an unauthorized request token
+Step 1 - Request an unauthorized request token
 
 The following sample shows the values for the header fields. To send these values on a command line, you could use curl but your client application will most likely transfer these values using your preferred language (PHP, Python, Ruby on Rails, etc.)
 
 Request: POST /api/index/initiate
+```
 > POST /api/index/initiate HTTP/1.1
 > Accept-Encoding: identity
 > Content-Length: 0
@@ -8136,7 +8175,9 @@ Request: POST /api/index/initiate
 > Authorization: OAuth realm="", oauth_nonce="5318660", oauth_timestamp="1387318515", 
   oauth_consumer_key="3bb1...ae5", oauth_signature_method="HMAC-SHA1", oauth_version="1.0", 
   oauth_signature="O33SvRJBlBsrVglailYYPutCmGI%3D", oauth_callback="oob"
+```
 Response to POST /api/index/initiate
+```
 > HTTP/1.1 200 OK
 < Date: Tue, 17 Dec 2015 22:15:15 GMT
 < Server: Apache/2.2.3 (CentOS)
@@ -8150,10 +8191,12 @@ Response to POST /api/index/initiate
 < Content-Type: application/x-www-form-urlencoded
 <
 < oauth_token=944b...ccf3&oauth_token_secret=8111...03f&oauth_callback_confirmed=true
+```
 
-2. Authorize User
+Step 2 - Authorize User
 
-Request: POST /login/process
+Request: ```POST /login/process```
+```
 > POST /login/process HTTP/1.1
 > Accept-Encoding: identity
 > Content-Length: 211
@@ -8167,7 +8210,9 @@ Request: POST /login/process
   oauth_token="944b...ccf3", oauth_signature="QTp3PJmWeXVzWQCf%2FmDZJcRxX1Y%3D", oauth_callback="oob"
 >
 > password=Testing123&oauth_token=944b...ccf3&email=test_account_google@openx.com
-Response to POST /login/process
+```
+Response to ```POST /login/process```
+```
 < HTTP/1.1 200 OK
 < Date: Tue, 17 Dec 2015 22:15:15 GMT
 < Server: Apache/2.2.3 (CentOS)
@@ -8180,10 +8225,11 @@ Response to POST /login/process
 < Content-Type: text/html; charset=UTF-8
 <
 < oob?oauth_token=944b...ccf3&oauth_verifier=fb6f21ce8e
+```
+Step 3 - Request an access token
 
-3. Request an access token
-4. 
 Request: POST /api/index/token
+```
 > POST /api/index/token HTTP/1.1
 > Accept-Encoding: identity
 > Content-Length: 0
@@ -8195,7 +8241,9 @@ Request: POST /api/index/token
 > Authorization: OAuth realm="", oauth_nonce="93393548", oauth_timestamp="1387318516", 
   oauth_signature_method="HMAC-SHA1", oauth_consumer_key="3bb1Öae5", oauth_verifier="fb6f21ce8e", 
   oauth_version="1.0", oauth_token="944b...ccf3", oauth_signature="QjBqYFGhCtp6vmtqDsxXElB8Mh8%3D", oauth_callback="oob"
+```
 Response to POST /api/index/token
+```
 < HTTP/1.1 200 OK
 < Date: Tue, 17 Dec 2015 22:15:16 GMT
 < Server: Apache/2.2.3 (CentOS)
@@ -8207,16 +8255,18 @@ Response to POST /api/index/token
 < Connection: close
 < Content-Type: application/x-www-form-urlencoded
 < oauth_token=7e1a...ccf4&oauth_token_secret=dc5d...43ad&email=test_account_google@openx.com
+```
 Access is granted and the final oauth_token above (7e1a...ccf4) becomes the openx3_access_token cookie in your API requests and must be sent every time.
 
-4. Use the access token to access protected resources
+Step 4 - Use the access token to access protected resources
 
 Syntax
-curl -X GET http://<openx_server_name>/ox/4.0/account/<account_uid> --cookie
-        "openx3_access_token=token_string"
+
+```curl -X GET http://<openx_server_name>/ox/4.0/account/<account_uid> --cookie "openx3_access_token=token_string"```
+
 Example
-curl -X GET http://openx_myserver.com/ox/4.0/account/879546 --cookie
-        "openx3_access_token=e735c37c5cl...9778j1on41v6rj5"
+
+```curl -X GET http://openx_myserver.com/ox/4.0/account/879546 --cookie "openx3_access_token=e735c37c5cl...9778j1on41v6rj5"```
 
 ## Release notes
 
@@ -8225,8 +8275,9 @@ curl -X GET http://openx_myserver.com/ox/4.0/account/879546 --cookie
 #### TFCD Query Argument Added
 
 The tfcd query argument has been added to the Ad Request API request parameters to ensure COPPA compliance. Possible values are 0 and 1.
-  - 0 = Not COPPA compliant
-  - 1 = COPPA compliant
+
+0 = Not COPPA compliant
+1 = COPPA compliant
 
 For more information about the tfcd query argument, refer to the Ad Tag Parameters page.
 
@@ -8234,7 +8285,8 @@ For more information about the tfcd query argument, refer to the Ad Tag Paramete
 
 #### 'Adproduct' call removed
 
-For this release, all adproduct calls have been removed and are no longer accessible to users via the OpenX UI and Platform API.
+For this release, all ```adproduct``` calls have been removed and are no longer accessible to users via the OpenX UI and Platform API.
+
 Updated ad tags
 
 OpenX ad tags are now automatically updated to detect HTTP/HTTPS. Ad tags are now protocol-less and will work automatically for both secure and non-secure sites without requiring users to manually change the tags from HTTP to HTTPS.
@@ -8247,7 +8299,7 @@ The OpenX Platform API now supports enhanced API functionality for forecasting a
 
 #### Forecasting
 
-Users may now run forecasts using the OpenX Platform API. Users wil still be able to use this feature via the user interface; however, if you choose to use the OpenX Platform API, you only need to make a single POST call to run a forecast.
+Users may now run forecasts using the OpenX Platform API. Users wil still be able to use this feature via the user interface; however, if you choose to use the OpenX Platform API, you only need to make a single ```POST``` call to run a forecast.
 
 For more detailed information about forecasting via the OpenX Platform API, please see the Forecasting documentation.
 
@@ -8255,9 +8307,9 @@ For more detailed information about forecasting via the OpenX Platform API, plea
 
 With this release, you may generate three different reports using the Platform API. You will still be able to access and generate these reports via the user interface, but you will now also be able to generate these reports via the Platform API. The three type of reports you can generate using the Platform API are:
 
-  - Bid Performance Report
-  - Exchange Report
-  - SSP Revenue Report
+* Bid Performance Report
+* Exchange Report
+* SSP Revenue Report
 
 Please see the Reporting documentation for more detailed information on how to use the OpenX Platform API for reporting.
 
@@ -8267,17 +8319,17 @@ Please see the Reporting documentation for more detailed information on how to u
 
 The OpenX API now supports adding, editing, and retrieving comments using the OpenX API. With the OpenX API, you can:
 
- - Add a new comment to an object
- - Edit your own comments
- - Retrieve a list of comments for an object
+* Add a new comment to an object
+* Edit your own comments
+* Retrieve a list of comments for an object
 
 Comments can be used to add notes to objects (e.g. line items, creatives, etc.) for other users to see; however, users will not be notified about new comments. Furthermore, one can only view comments when in the edit mode of an object.
 
-If you are using the API to add/edit a comment, the following objects can have comments applied: account, ad, adunit, adunitgroup, audiencesegment, creative, creativetemplate, lineitem, optimization, order, site, deal, floorrule, and package
+If you are using the API to add/edit a comment, the following objects can have comments applied: ```account, ad, adunit, adunitgroup, audiencesegment, creative, creativetemplate, lineitem, optimization, order, site, deal, floorrule```, and ```package```.
 
 Refer to the Working With Comments section for more detailed information on using this feature.
 
-# Ad Request API
+#### Ad Request API
 An ad tag is a small piece of code that defines the ad space where you want to display ads. When you place ad tags in your inventory, they send ad requests to OpenX, which sends delivery responses to serve ads to end users. Each ad tag includes parameters describing the inventory that advertising campaigns can target. You can customize ad requests to support your particular implementation and target certain types of ads.
 
 The OpenX Ad Request API supports the following types of ad requests:
@@ -8297,7 +8349,7 @@ For individual ad units ("standalone") or ad unit group requests, you can typica
 
 Note: These topics assume that you are a software developer with an understanding of ad serving and that you know how to configure your ad space to make calls to external services.
 
-## Ad request parameters
+#### Ad request parameters
 
 OpenX uses parameter values (also known as "query args") during ad selection to target the most appropriate ads to your ad space. Depending on the type of ad request, OpenX may do one of the following:
 
@@ -8404,7 +8456,7 @@ The openrtb ad request parameter supports a percent-encoded string generated fro
 Sample openrtb parameter included in an ad request:
 
 The following ad request shows how you can include various ad request parameters—including the openrtb parameter, which specifies a percent-encoded string.
-
+```
 http://delivery_server_domain/w/1.0/acj?
 o=7889550390&callback=OX_7889550390&auid=537627288&res=320x568x32&plg=qt%2Cpm&ch=UTF-8&tz=420&ws=320x50&sd=1&openrtb=%7B%22cur%22%3A%20%5B%22USD%22%5D%2C%20%22site%22%3A
 %20%7B%22publisher%22%3A%20%7B%
@@ -8423,6 +8475,7 @@ o=7889550390&callback=OX_7889550390&auid=537627288&res=320x568x32&plg=qt%2Cpm&ch
 20like%20Gecko%29%20Version/5.1.7%20Safari/534.57.2%22%7D%2C%20%22id%22%3A
 %20%2280ce30c53c16e6ede735f123ef6e32361bfc7b22
 %22%2C%20%22user%22%3A%20%7B%22id%22%3A%20%2255816b39711f9b5acf3b90e313ed29e51665623f%22%7D%7D
+```
 
 Where:
 * http is the protocol. If your ad space uses SSL/TLS, use https instead.
@@ -8438,7 +8491,7 @@ Where:
 ### Sample JSON object including OpenRTB values
 
 The following JSON object shows the structure of the OpenRTB data before removing unnecessary white space and before percent encoding.
-
+```
 {'at': 1,
  'cur': ['USD'],
  'device': {'ip': '123.145.167.10',
@@ -8456,6 +8509,7 @@ The following JSON object shows the structure of the OpenRTB data before removin
                         'id': '8953',
                         'name': 'example.com'}},
  'user': {'id': '55816b39711f9b5acf3b90e313ed29e51665623f'}}
+```
 
 Where:
 * at. Corresponds to OpenRTB's BidRequest.at field, which specifies an auction type of 1 (first price). Note: This field is not passed from publishers to OpenX Ad Exchange. Do not include it because it will be ignored and it will only increase the length of your request.
@@ -8471,15 +8525,17 @@ Note: This field is not passed from publishers to OpenX Ad Exchange. Do not incl
 To improve performance, remove all unneeded white space and line breaks from your JSON object before generating a percent-encoded version of it as shown in the following example.
 
 JSON string prepared for percent-encoding:
-
+```
 {"cur": ["USD"], "site": {"publisher": {"domain": "example.com", "cat": ["IAB3-1"], "id": "8953", "name": "example.com"}, "domain": 
 "www.example.com", "page": "http://www.example.com/1234.html ", "id": "102855", "cat": ["IAB3-1"]}, "imp": [{"banner": {"h": 250, 
 "pos": 0, "w": 300}, "id": "1", "bidfloor": 0.03}], "at": 1, "device": {"ip": "123.145.167.10", "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 
 10_6_8) AppleWebKit/537.13 (KHTML, like Gecko) Version/5.1.7 Safari/534.57.2"}, "id": "80ce30c53c16e6ede735f123ef6e32361bfc7b22", 
 "user": {"id": "55816b39711f9b5acf3b90e313ed29e51665623f"}}
+```
 
 You can pass as many supported OpenRTB fields as you find useful to characterize your inventory except for those that cannot be passed by publishers.
-OpenX  the following fields because many buyers target them:
+
+OpenX uses the following fields because many buyers target them:
 
 * BidRequest.app.bundle
 * BidRequest.app.name
@@ -10912,120 +10968,182 @@ inview. The view-tracking URL for the selected ad
 click. The click-tracking URL for the selected ad
 
 ### Server-to-server ad calls
+
 Typically, ad serving involves a client (such as a web browser or app) making requests directly to OpenX. A server-to-server ad call is an alternative implementation where you proxy ad requests: the client talks to an intermediate (third-party) system, which then makes calls to OpenX. This approach applies to any programmatic integrations, such as custom mobile device implementations, custom desktop applications, and other device-to-server scenarios.
-For example, if youhave an Ad Marvel account, you can make server-to-server ad calls between Ad Marvel and OpenX. To set this up, contact your Ad Marvel account manager and provide them with your OpenX delivery domain and ad unit ID. AdMarvel will then set up the server-to-server integration and incorporate OpenX report data in your AdMarvel reports. For details, see AdMarvel demand partners.
+
+For example, if you have an Ad Marvel account, you can make server-to-server ad calls between Ad Marvel and OpenX. To set this up, contact your Ad Marvel account manager and provide them with your OpenX delivery domain and ad unit ID. AdMarvel will then set up the server-to-server integration and incorporate OpenX report data in your AdMarvel reports. For details, see AdMarvel demand partners.
+
 To help solve special integration issues, OpenX supports various types server-to-server implementations through ad requests.
+
 Important: Proxied ad requests do not comply with some IAB specifications. Work with your OpenX account manager to ensure a complete and proper integration via server-to-server ad calls.
+
 To ensure that ad serving features (such as frequency capping and targeting) work properly, follow these guidelines when making server-to-server ad calls:
-User IDs. If you are using typical web ad requests, OpenX uses the OX_u cookie, which contains a unique user ID. Ideally, you proxy this cookie from the client to the Ad Server. This requires:
+
+* User IDs. If you are using typical web ad requests, OpenX uses the ```OX_u``` cookie, which contains a unique user ID. Ideally, you proxy this cookie from the client to the Ad Server. This requires:
+
 Extraction of the Set-Cookie header that OpenX sends to pass the cookie to the client
 Retrieval of the cookie sent by the client to your servers
 Forwarding the cookie to OpenX Ad Server
 Alternatively, you can use the xid parameter.
+
 HTTP headers. OpenX uses the following HTTP headers, which should be forwarded from the client or set up to reflect realistic values in your server:
-Accept-Language
-Host
-Referer
-User-Agent
-X-Forwarded-For
+* Accept-Language
+* Host
+* Referer
+* User-Agent
+* X-Forwarded-For
+
 Important: The User-Agent header is critical for validating requests against known spiders and bots. You must forward the exact client user agent string or ensure that any custom user agent is pre-pended with "Mozilla Compatible".
+
 Query arguments. In addition to required ad request parameters, we suggest you provide additional information in your server-to-server ad requests. For example, the tz (timezone) parameter is recommended.
 
 ## Structured response
+
 If you need to manipulate a structured response to render ads in a custom application, you can implement an ad request to OpenX that has a corresponding structure. For example, you might create an ad request to display ads on a mobile device or a desktop application. Your application must be able to parse the response and then serve the selected ads. OpenX provides structured responses in XML, JSON, and JSONP.
+
 You can make the following types of requests for a structured response:
-Standalone. Requests an ad for a single ad unit.
-Ad unit group. Requests ads for multiple ad units in a single call, referenced by an ad unit group ID. This type of request is required for companion ad placement.
-Multi-ad unit. Requests ads for multiple ad units in a single call.
+
+* Standalone. Requests an ad for a single ad unit.
+* Ad unit group. Requests ads for multiple ad units in a single call, referenced by an ad unit group ID. This type of request is required for companion ad placement.
+* Multi-ad unit. Requests ads for multiple ad units in a single call.
+
 You can also request a delivery response for one or more ad units and one or more ad unit groups in a single call to OpenX Ad Server.
 When a user interacts with your custom application, which has been designed to communicate with OpenX:
-The custom application invokes an ad request for the ad unit, ad unit group, or multiple ad units.
-The Ad Server receives the request, performs ad selection, and returns a structured delivery response.
-The custom application parses the response and renders the selected ad in the appropriate location.
+
+* The custom application invokes an ad request for the ad unit, ad unit group, or multiple ad units.
+* The Ad Server receives the request, performs ad selection, and returns a structured delivery response.
+* The custom application parses the response and renders the selected ad in the appropriate location.
+
 To configure your custom application:
-Create ad units or ad unit groups in the OpenX UI or via the OpenX API.
-Implement the appropriate logic and configuration in your custom application to generate OpenX ad requests based on corresponding examples provided in this ad requests section.
-Configure your custom application with the appropriate ad unit or ad unit group IDs.
-Implement the appropriate logic in your application to parse the structured response from OpenX, and then render the ads to the end user.
+
+* Create ad units or ad unit groups in the OpenX UI or via the OpenX API.
+* Implement the appropriate logic and configuration in your custom application to generate OpenX ad requests based on corresponding examples provided in this ad requests section.
+* Configure your custom application with the appropriate ad unit or ad unit group IDs.
+* Implement the appropriate logic in your application to parse the structured response from OpenX, and then render the ads to the end user.
+
 Note: These ad requests use a client-side impression counting mechanism. Your custom application should be configured to handle this operation. Work with your OpenX account manager to ensure a complete and proper integration.
 
 ### Standalone ad requests
+
 The following example shows an ad request for an XML response, which will fulfill a single ad unit.
+
 Standalone request XML ad request
+```
 http://delivery_server_domain/w/1.0/arx?auid=6
+```
 The following example shows a request for a standalone JSON response, which will fulfill a single ad unit.
+
 Standalone request JSON ad request
+```
 http://delivery_server_domain/w/1.0/arj?auid=6
+```
 The following example shows a request for a standalone JSONP response, which will fulfill a single ad unit.
+
 Standalone request JSONP ad request
+```
 http://delivery_server_domain/w/1.0/arj?auid=6&callback=foo
+```
 Where:
-http is the protocol. If your ad space uses SSL/TLS, use https instead.
-delivery_server_domain. The hostname of your OpenX delivery server
-/w. Indicates the web delivery medium
-/1.0. Indicates version 1.0 of the OpenX Supply API
-/arx or /arj. Indicates a request to serve structured XML delivery response (/arx) or a JSON delivery response (/arj)
-?. Separates the ad request from the ad request parameters
-auid. The ad unit ID
-&. Separates each parameter
-callback. Indicates the JavaScript function wrapper to return in the JSONP response
+* ```http``` is the protocol. If your ad space uses SSL/TLS, use https instead.
+* ```delivery_server_domain```. The hostname of your OpenX delivery server
+* ```/w```. Indicates the web delivery medium
+* ```/1.0```. Indicates version 1.0 of the OpenX Supply API
+* ```/arx``` or ```/arj```. Indicates a request to serve structured XML delivery response (/arx) or a JSON delivery response (/arj)
+* ```?```. Separates the ad request from the ad request parameters
+* ```auid```. The ad unit ID
+* ```&```. Separates each parameter
+* ```callback```. Indicates the JavaScript function wrapper to return in the JSONP response
 
 ### Ad unit group ad requests
+
 Request ads for multiple ad units in a single call, referenced by an ad unit group ID.
+
 XML ad unit group request
+
 The following request for an XML response will fulfill multiple ad units.
+```
 http://delivery_server_domain/w/1.0/arx?pgid=123
+```
 JSON ad unit group request
+
 The following request for an ad unit group will fulfill multiple ad units.
+```
 http://delivery_server_domain/w/1.0/arj?pgid=123
+```
 JSONP ad unit group request
+
 The following request for an ad unit group will fulfill multiple ad units.
+```
 http://delivery_server_domain/w/1.0/arj?pgid=123&callback=foo
+```
 Where:
-http is the protocol. If your ad space uses SSL/TLS, use https instead.
-delivery_server_domain is the hostname of your OpenX delivery server.
-/w indicates to the OpenX servers that this is the web delivery medium.
-/1.0 indicates that OpenX should use version 1.0 of the OpenX XML or JSON protocol.
-/arx or /arj. Indicates a request to return a structured XML or JSON delivery response
-?. Separates the ad request from its ad request parameters
-pgid. The ID of the ad unit group
-&. Separates parameters in the ad request
-callback. Indicates the JavaScript function wrapper to return in the JSONP response
+
+* ```http``` is the protocol. If your ad space uses SSL/TLS, use https instead.
+* ```delivery_server_domain``` is the hostname of your OpenX delivery server.
+* ```/w``` indicates to the OpenX servers that this is the web delivery medium.
+* ```/1.0``` indicates that OpenX should use version 1.0 of the OpenX XML or JSON protocol.
+* ```/arx``` or ```/arj```. Indicates a request to return a structured XML or JSON delivery response
+* ```?.``` Separates the ad request from its ad request parameters
+* ```pgid```. The ID of the ad unit group
+* ```&```. Separates parameters in the ad request
+* ```callback```. Indicates the JavaScript function wrapper to return in the JSONP response
 
 ### Multi-ad unit requests
+
 XML multi-ad unit request
+
 The following request will fulfill multiple ad units.
+```
 http://delivery_server_domain/w/1.0/arx?auid=1,2,3
+```
 JSON multi-ad unit request JSON ad request
+
 The following request will fulfill multiple ad units.
+```
 http://delivery_server_domain/w/1.0/arj?auid=1,2,3
+```
 Sample multi-ad unit request JSONP ad request
+
 The following request will fulfill multiple ad units.
+```
 http://delivery_server_domain/w/1.0/arj?auid=1,2,3&callback=foo
+```
 Where:
-http. Indicates the protocol. If your ad space uses SSL/TLS, use https instead.
-delivery_server_domain. The domain of your OpenX delivery server
-/w. Indicates to the OpenX servers that this is the web delivery medium.
-/1.0. Indicates version 1.0 of the OpenX XML or JSON protocol
-/arx or /arj. Indicates the action to perform (in this case a request to return a structured XML or JSON delivery response)
-?. Separates the ad request from its ad request parameters.
-auid. The ad unit ID
-&. Separates parameters in the ad request
-callback. Indicates the JavaScript function wrapper to return in the JSONP response
+
+* ```http```. Indicates the protocol. If your ad space uses SSL/TLS, use https instead.
+* ```delivery_server_domain```. The domain of your OpenX delivery server
+* ```/w```. Indicates to the OpenX servers that this is the web delivery medium.
+* ```/1.0```. Indicates version 1.0 of the OpenX XML or JSON protocol
+* ```/arx``` or ```/arj```. Indicates the action to perform (in this case a request to return a structured XML or JSON delivery response)
+* ```?```. Separates the ad request from its ad request parameters.
+* ```auid```. The ad unit ID
+* ```&```. Separates parameters in the ad request
+* ```callback```. Indicates the JavaScript function wrapper to return in the JSONP response
+
 Combination request for ad units and ad unit groups in an XML ad request
+
 You can also combine auids and pgids in a single ad request. The following request for multiple ad units and an ad unit group will fulfill multiple ad units in a single request.
+```
 http://delivery_server_domain/w/1.0/arx?auid=1,2,3&pgid=123
+```
 
 ### Structured response
+
 When OpenX receives an ad request for a structured response, it returns one of the supported response formats, which your custom application can interpret and render appropriately. It is a good idea to test a few ad requests to see what the response looks like. This way, you can review how OpenX represents its objects in its response, and make sure that your custom application configuration is able to handle the response.
+
 In the case of a request for a JSONP response, when OpenX receives the ad request, it returns the JSON structure, wrapped in the JavaScript function, which was set in the ad request's callback parameter. The response from OpenX is a call to the specified JavaScript function, using the JSON structure as its input.
+
 All structured responses contain the following elements for managing refresh:
-refresh_delay represents the number of seconds to wait between ad reloads
-refresh_max represents the maximum number of times to reload a new ad
+
+* refresh_delay - represents the number of seconds to wait between ad reloads
+* refresh_max - represents the maximum number of times to reload a new ad
+
 To use these fields, your client application must:
-Identify the refresh_delay and refresh_max fields in the XML or JSON response.
-Append rc=COUNT where COUNT is replaced with the iteration of the reload (e.g., first refresh has rc=1 and third has rc=3).
+
+* Identify the refresh_delay and refresh_max fields in the XML or JSON response.
+* Append rc=COUNT where COUNT is replaced with the iteration of the reload (e.g., first refresh has rc=1 and third has rc=3).
 For example:
+```
 max = response.refresh_max
 delay = response.refresh_delay
 for (i=1;i++;i<=refresh_max) {
@@ -11033,7 +11151,7 @@ for (i=1;i++;i<=refresh_max) {
   url = build_url() + "&rc=" + i
   fetch_ad(url)
 }
-
+```
 ## Video ad requests
 To serve a video ad to your ad space:
 1. Use the OpenX UI to create the following types of video ad units: Linear. Full-page interstitial video ads that display during video content in a video player as in-read or in-feed ad units.
@@ -11051,7 +11169,7 @@ Tip: For mobile apps, OpenX provides a mobile SDK for Android and iOS, which inc
 
 Video ad requests typically contain an ad request URL and various parameters.
 
-http://delivery_server_domain/v/1.0/av?auid=543776&cs=xyz&c.gender=m
+```http://delivery_server_domain/v/1.0/av?auid=543776&cs=xyz&c.gender=m```
 
 Where:
 
