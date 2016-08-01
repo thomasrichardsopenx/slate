@@ -19,7 +19,7 @@ search: true
 
 # Introduction
 
-OpenX provides a JSON-based API to communicate with the OpenX Platform and perform create, read, update, delete, and batch operations over HTTP. This allows you to develop and integrate applications. Any tasks that you can perform in the OpenX UI can be automated via calls to the OpenX Platform API.
+OpenX a JSON-based API to communicate with the OpenX Platform and perform create, read, update, delete, and batch operations over HTTP. This allows you to develop and integrate applications. Any tasks that you can perform in the OpenX UI can be automated via calls to the OpenX Platform API.
 
 This guide is intended for developers responsible for integrating their applications with OpenX. You should have a general understanding of OpenX ad serving objects and how they relate to one another, such as accounts, users, sites, ad units, orders, line items, and ads.
 
