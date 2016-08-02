@@ -12,7 +12,7 @@ toc_footers:
   - <a href='https://github.com/tripit/slate'>Documentation Powered by OpenX</a>
 
 includes:
-  - errors
+  - ad_request_api
 
 search: true
 ---
@@ -10953,26 +10953,27 @@ Sample XML response
     </ad>
 </ads>
 The XML response contains the following elements:
-ads. A container element for the list of selected ads
-ad. Details about a specific selected ad, including:
-adunitid. The ID for the ad unit where the selected ad will display
-adid. The unique ID for the selected ad
-refresh_delay. The number of seconds to wait between ad reloads
-refresh_max. The maximum number of times to reload a new ad. For example, if refresh_max=3, a user sees a maximum of four ads.
-type. The type of ad. Possible values include image, html, thirdparty, or flash.
-html. The HTML block for the selected ad, which can be written directly into a web controller
-creatives. A container element for the creative elements in the ad
-creative. Details about a specific creative for the selected ad, including:
-mime. The mime type for the creative. Possible values include image/gif, image/jpeg, image/png, application/x-shockwave-flash, or text/html.
-width. The width (in pixels) of the creative
-height. The height (in pixels) of the creative
-alt. Alternative text to use for the creative (where appropriate)
-target. The target window for displaying the creative (where appropriate)
-media. The URL for the creative asset
-tracking. A container element for the tracking beacons of the selected ad
-impression. The impression-tracking URL for the selected ad
-inview. The view-tracking URL for the selected ad
-click. The click-tracking URL for the selected ad
+
+* ads. A container element for the list of selected ads
+* ad. Details about a specific selected ad, including:
+* adunitid. The ID for the ad unit where the selected ad will display
+* adid. The unique ID for the selected ad
+* refresh_delay. The number of seconds to wait between ad reloads
+* refresh_max. The maximum number of times to reload a new ad. For example, if refresh_max=3, a user sees a maximum of four ads.
+* type. The type of ad. Possible values include image, html, thirdparty, or flash.
+* html. The HTML block for the selected ad, which can be written directly into a web controller
+* creatives. A container element for the creative elements in the ad
+* creative. Details about a specific creative for the selected ad, including:
+* mime. The mime type for the creative. Possible values include image/gif, image/jpeg, image/png, application/x-shockwave-flash, or text/html.
+* width. The width (in pixels) of the creative
+* height. The height (in pixels) of the creative
+* alt. Alternative text to use for the creative (where appropriate)
+* target. The target window for displaying the creative (where appropriate)
+* media. The URL for the creative asset
+* tracking. A container element for the tracking beacons of the selected ad
+* impression. The impression-tracking URL for the selected ad
+* inview. The view-tracking URL for the selected ad
+* click. The click-tracking URL for the selected ad
 
 ### Server-to-server ad calls
 
@@ -11161,14 +11162,15 @@ for (i=1;i++;i<=refresh_max) {
 ```
 ## Video ad requests
 To serve a video ad to your ad space:
-1. Use the OpenX UI to create the following types of video ad units: Linear. Full-page interstitial video ads that display during video content in a video player as in-read or in-feed ad units.
-2. Retrieve the ad request URL for a single ad unit (a standalone ad request). Alternatively, you can include an ad unit group, which requests companion ad placement for multiple ad units (referenced by the pgid parameter) in a single call; or, a multi-ad unit that requests ads for multiple ad units in a single call.
-3. (Optional) Set various ad request parameters in your video ad request URL.
-4. Configure your VAST-compliant video player to send the ad request URL to OpenX and receive its VAST 2.0 XML response.
-5. Implement the video ad requests in your ad space.
-6. When a user visits the ad space, the video player invokes an ad request for the ad unit referenced in the video ad request.
-7. OpenX receives the video ad request, performs ad selection, and returns a VAST 2.0-compliant XML response, which your VAST 2.0-compliant video player can interpret and render in the appropriate location.
-8. The video player renders the selected ad in the appropriate location. To count video impressions, configure your video player to perform client-side counting.
+
+* Use the OpenX UI to create the following types of video ad units: Linear. Full-page interstitial video ads that display during video content in a video player as in-read or in-feed ad units.
+* Retrieve the ad request URL for a single ad unit (a standalone ad request). Alternatively, you can include an ad unit group, which requests companion ad placement for multiple ad units (referenced by the pgid parameter) in a single call; or, a multi-ad unit that requests ads for multiple ad units in a single call.
+* (Optional) Set various ad request parameters in your video ad request URL.
+* Configure your VAST-compliant video player to send the ad request URL to OpenX and receive its VAST 2.0 XML response.
+* Implement the video ad requests in your ad space.
+* When a user visits the ad space, the video player invokes an ad request for the ad unit referenced in the video ad request.
+* OpenX receives the video ad request, performs ad selection, and returns a VAST 2.0-compliant XML response, which your VAST 2.0-compliant video player can interpret and render in the appropriate location.
+* The video player renders the selected ad in the appropriate location. To count video impressions, configure your video player to perform client-side counting.
 
 Tip: For mobile apps, OpenX provides a mobile SDK for Android and iOS, which includes a VAST-compatible player and various integration scenarios.
 
