@@ -11,9 +11,6 @@ toc_footers:
   - <a href='#'>Sign Up for a Developer Key</a>
   - <a href='https://github.com/tripit/slate'>Documentation Powered by OpenX</a>
 
-includes:
-  - ad_request_api
-
 search: true
 ---
 
@@ -4310,7 +4307,9 @@ The OpenX Platform API includes the following objects, which support CRUD operat
 * sitesection
 * user
 
-Tip: Objects are identified by both their object_name_id ("ID") and object_name_uid ("UID") fields. For more details, see About IDs and UIDs.
+<aside class="notice">
+Objects are identified by both their object_name_id ("ID") and object_name_uid ("UID") fields. For more details, see About IDs and UIDs.
+</aside>
 
 # Services
 
@@ -7192,7 +7191,7 @@ that fit the specified date range.",
 * ```GET /report/report_ID```. Read the specified report.
 * ```GET /report/revenue_impact_by_floors```. Return total revenue impact for the specified brand floors.
 
-Parameters
+### Parameters
 
 floor_uids. A comma-separated list of brand floor UIDs
 
@@ -10485,278 +10484,238 @@ OX.requestAd({"auid":"12345",
 "frameCreatives":"true"});
 
 #### setGateway
+
 This method sets the base URL of the ad gateway for all instances of the OX object in the current pageview.
+
 setGateway parameters
-Parameter	Description	Required?
-url	URL of the gateway communicating with the Ad Server	Yes
+
+Parameter | Description	| Required?
+-------- | ---------- | -------------
+url | URL of the gateway communicating with the Ad Server | Yes
+
 setGateway setting the domain of the delivery server
+
+```
 OX.setGateway("http://delivery_server_domain/w/1.0/");
+```
 
 #### setRefererURL
+
 Use this method to indicate the 'referer' URL of the page to the OpenX Ad Server. In most cases, the OpenX JavaScript tag library detects the 'referer' URL of the page from the HTTP headers. In some cases, it is not possible to detect the 'referer' correctly, due of various browser security restrictions. You can call setRefererURL directly in these cases as necessary to override the value detected by the OpenX tag library.
+
 setRefererURL parameters
-Parameter	Description	Required?
-url	Referring URL of the page	Yes
+
+Parameter | Description	| Required?
+--------- | ---------- | ---------
+url | Referring URL of the page	| Yes
+
 setRefererURL Example
+
+```
 OX.setRefererURL("http://www.example.com");
+```
 
 ## Mobile ad requests
+
 OpenX supports mobile ad serving in:
-Mobile apps. Integrate with OpenX using the following approaches:
-OpenX Mobile SDK.
-Mobile ad request examples
-Server-to-server ad requests
+
+* Mobile apps. Integrate with OpenX using the following approaches: OpenX Mobile SDK, Mobile ad request examples, Server-to-server ad. requests
+
 If you do not use the OpenX Mobile SDK, you must configure your app to interact with OpenX using the information contained in the ad request or by passing mobile parameters via JavaScript ad tags.
+
 Mobile web. Similar to ad serving on desktop webpages because you can use image, iframe, and JavaScript ad tags by retrieving the ad tags and then pasting them in the source code for your mobile website.
+
 After you set up your inventory components, you can retrieve the ad request URLs for your ad units through the Inventory tab or construct mobile ad requests.
 
 ### Mobile ad request parameters
+
 Each mobile ad request contains query string parameters, which are essentially key-value pairs that used to target ads to your ad space. Depending on the type of ad request, some of these parameters are required (such as auid) and others are optional (such as custom variables).
+
 You can include custom key-value pairs in your mobile ad requests. These custom variables may be based on elements such as webpage or app content, a user's registered location, or any other user-specific data. Typically, when you implement custom variables, you should add them to the end of your ad tag. This way, if the ad tag is truncated for any reason, the optional custom variables will be dropped instead of required parameters, such as the ad unit ID (auid).
+
 All mobile ad requests must contain either the auid parameter, which specifies one or more ad units that you want to serve ads for, or the pgid parameter, which references the ad unit group to serve ads for. You can include additional parameters in your OpenX Ad Server mobile ad requests, including custom variables, so that OpenX Ad Server can more effectively target ads to your ad space.
-Mobile ad request parameters
-Parameter	Description	Required?
-af	
-The comma-delimited list of API frameworks supported on the user's device, which can be one or more of the following:
-1 (VPAID 1.0)
-2 (VPAID 2.0)
-3 (MRAID 1.0)
-4 (ORMMA)
-5 (MRAID 2.0)
-For example: 1,2
-No
-age	
-Indicates the end-user's age, in years
-For example: 35
-No
-app.bundle	Indicates the bundle ID (package name) of the app	No
-app.name	Indicates the display name of the app	No
-auid	
-Ad unit ID, which indicates the unique ID for the ad unit where you want to serve an ad
-For example: For a single ad unit: auid=1234; for multiple ad units: auid=1234,4321,9876
-Yes
-c.keyvalue=	
-Custom variable, communicates additional information about the ad space, such as details of webpage content, ad space location, or user-specific information
-For example: c.gender=1
-For details, see custom variables in ad requests.
-No
-cnt	
-The user's two letter, lower case country code
-For example: cnt=us
-No
-crr	
-Mobile carrier, which is defined by the Mobile Country Code (MCC) and Mobile Network Code (MNC), using the format: <MCC>-<MNC>. (Refer to Wikipedia's list of mobile network carriers.)
-For example: crr=310-410
-No
-cty	
-Indicates the end-user's city location.
-For example: cty=Boston
-No
-did.adid	
-(Android only) Indicates Google advertising ID for the Android OS on the user's device.
-For example: did.adid=1be50157-d948-4c62-8814-06b71ac09c3c
-**
-did.adid.enabled	(Android only) Indicates the tracking parameter set on the end-user's Android device, which shows if the user's device has ad tracking on or off (true/false or 0/1).	**
-did.ai.md5	
-Indicates the MD5 hash of the Android ID for the end-user's mobile device. Although not required, it is recommended that you provide this parameter for ad serving within a mobile app.
-**
-did.ai.sha1	
-Indicates the SHA-1 hash of the Android ID for the end-user's mobile device. Although not required, it is recommended that you provide this parameter for ad serving within a mobile app.
-**
-did.ia	
-Indicates the identifier for advertising for Apple iOS6 (or higher) on the end-user's mobile device.
-For example: did.ia=43043FE3-6BA9-4515-8209-6E0AC6AE1ADF
-**
-did.iat	Indicates the IFA tracking parameter set on the end-user's iOS device, which shows if the user's device has ad tracking on or off (true/false or 1/0).	**
-did.ma.md5	
-Indicates the MD5 hash of the MAC (Media Access Control) address for the user's for the end-user's mobile device. Although not required, it is recommended that you provide this parameter for ad serving within an app.
-**
-did.ma.sha1	
-Indicates the sha1 hash of the MAC (Media Access Control) address for the end-user's mobile device. Although not required, it is recommended that you provide this parameter for ad serving within an app.
-**
-did.o1	
-Indicates the Open Device Identification Number (ODIN-1) for the end-user's mobile device. Although not required, it is recommended that you provide this parameter for ad serving within an app.
-For example: did.o1=e1b33694687ded5475f72f996cf025be3dd160fe
-**
-did.oi	
-Indicates the OpenUDID for the end-user's mobile device. Although not required, it is recommended that you provide this parameter for ad serving within an app.
-For example:
-34a265c3b73e4e (Android)
-7a5fab3d942494f7e31be4f4eec0e8156f53c6bf (iOS)
-**
-did.si	
-Indicates the SecureUDID for the end-user's mobile device. Although not required, it is recommended that you provide this parameter for ad serving within an app.
-For example: did.si=50647BB4-DA42-49B4-9A8F-541203150654
-**
-dma	
-For US locations, indicates the end-user's Designated Market Area.
-For example: dma=803
-No
-eth	
-Indicates the end-user's ethnicity, which can be one of the following:
-0 (African-American)
-1 (Asian)
-2 (Hispanic)
-3 (White)
-4 (Other)
-For example: eth=2
-No
-gen	
-Indicates the end-user's gender, which can be one of the following:
-M (male)
-F (female)
-O (other)
-For example: gen=F
-No
-inc	
-Indicates the end-user's annual household income, in US Dollars (no commas (,) or periods (.)).
-For example: inc=40000
-No
-ip	
-The IP address of the carrier gateway. If this is not present, then OpenX retrieves it from the request header.
-For example: ip=238.122.7.1
-No
-lat	
-Indicates the GPS latitude location, in decimal form, of the end-user.
-For example: lat=37.530676
-No
-lon	
-Indicates the GPS longitude location, in decimal form, of the end-user.
-For example: lon=-122.262447
-No
-lt
-Publishers should send 1,2 or 3 for the lt parameter (1 is preferred) with lat/lon. If lat/lon is passed with more than 5 decimal places instead of lt. The value is treated the same as lt=1.
-No
-mar	
-Indicates the end-user's marital status, which can be one of the following:
-S (single)
-M (married)
-D (divorced)
-For example: mar=M
-No
-net	
-Indicates the end-user's network connection type. For a wireless network, use net=wifi.
-No
-openrtb	Specifies a string with supply-side OpenRTB data to be passed to OpenX Ad Exchange buyers	No
-pgid	
-Ad unit group ID. Indicates the unique ID for the ad unit group that you want to serve ads for. (This parameter is required if you are requesting ads or a predefined ad unit group).
-For example: pgid=537064782
-No
-rc	Refresh count. Once your client initiates a refresh, this indicates the current index in the refresh cycle. This parameter is not initially set in the ad request; however your client application adds it, and then sets it with each refresh.	No
-rd	
-Refresh delay (in seconds) for refreshing an iframe
-This value must be an integer ≥ 1. If you explicitly pass this parameter in an ad tag, OpenX ignores any server-side refresh delay setting for this ad unit (as set when creating or editing the ad unit).
-No
-rm	
-Refresh max, ndicates the maximum number of refreshes for ads displayed through the ad request
-This value must be an integer ≥ 1. For example, setting this parameter to a value of 5 would result in the display of a total of 6 ads (which includes the initial display of the ad (non-refresh) and the 5 subsequent displays of the ad (refreshes). If you explicitly pass this parameter in an ad tag, OpenX Ad Server ignores any server-side refresh max setting for this ad unit, as set creating or editing the ad unit.
-No
-sp	Indicates the OpenX Mobile SDK platform (e.g., iOS or Android).	No
-stt	
-Indicates the end-user's state location.
-For example: stt=california
-No
-sv	Indicates the version of the OpenX Mobile SDK (e.g., 3.1.0).	No
-url	
-Indicates the mobile app store URL or the mobile website URL.
-The URL for mobile apps should not use an HTTPS URL; instead, use a corresponding HTTP URL. Non-app store mobile websites should use HTTPS URLs for secure sites.
-For Apple it is the App Store URL. For example: url=http://itunes.apple.com/us/app/talking-tom-cat/id377194688?mt=8
-For Android, it is the Google Play URL. For example: url=http://play.google.com/store/apps/details?id=com.outfit7.talkingtom&hl=en
-Yes*
-xid	
-Indicates the customer-provided user ID, if different from the Device ID.
-For example: xid=234hskhjfdkhjs
-No
-zip	
-Indicates the US ZIP or postal code for the end-user.
-For example: zip=93222
-No
+
+### Mobile ad request parameters
+
+Parameter | Description | Required?
+--------- | ---------- | ----------
+af | The comma-delimited list of API frameworks supported on the user's device, which can be one or more of the following: 1 (VPAID 1.0), 2 (VPAID 2.0), 3 (MRAID 1.0), 4 (ORMMA), 5 (MRAID 2.0). For example: 1,2. | No
+age | Indicates the end-user's age, in years. For example: 35. | No
+app.bundle | Indicates the bundle ID (package name) of the app | No
+app.name | Indicates the display name of the app | No
+auid | Ad unit ID, which indicates the unique ID for the ad unit where you want to serve an ad. For example: For a single ad unit: auid=1234; for multiple ad units: auid=1234,4321,9876. | Yes
+c.keyvalue= | Custom variable, communicates additional information about the ad space, such as details of webpage content, ad space location, or user-specific information. For example: c.gender=1. For details, see custom variables in ad requests. | No
+cnt | The user's two letter, lower case country code. For example: cnt=us. | No
+crr | Mobile carrier, which is defined by the Mobile Country Code (MCC) and Mobile Network Code (MNC), using the format: <MCC>-<MNC>. (Refer to Wikipedia's list of mobile network carriers.). For example: crr=310-410 | No
+cty | Indicates the end-user's city location. For example: cty=Boston | No
+did.adid | (Android only) Indicates Google advertising ID for the Android OS on the user's device. For example: did.adid=1be50157-d948-4c62-8814-06b71ac09c3c | **
+did.adid.enabled | (Android only) Indicates the tracking parameter set on the end-user's Android device, which shows if the user's device has ad tracking on or off (true/false or 0/1). | **
+did.ai.md5 | Indicates the MD5 hash of the Android ID for the end-user's mobile device. Although not required, it is recommended that you provide this parameter for ad serving within a mobile app. | **
+did.ai.sha1 | Indicates the SHA-1 hash of the Android ID for the end-user's mobile device. Although not required, it is recommended that you provide this parameter for ad serving within a mobile app. | **
+did.ia | Indicates the identifier for advertising for Apple iOS6 (or higher) on the end-user's mobile device. For example: did.ia=43043FE3-6BA9-4515-8209-6E0AC6AE1ADF | **
+did.iat	| Indicates the IFA tracking parameter set on the end-user's iOS device, which shows if the user's device has ad tracking on or off (true/false or 1/0). | **
+did.ma.md5 | Indicates the MD5 hash of the MAC (Media Access Control) address for the user's for the end-user's mobile device. Although not required, it is recommended that you provide this parameter for ad serving within an app. | **
+did.ma.sha1 | Indicates the sha1 hash of the MAC (Media Access Control) address for the end-user's mobile device. Although not required, it is recommended that you provide this parameter for ad serving within an app. | **
+did.o1 | Indicates the Open Device Identification Number (ODIN-1) for the end-user's mobile device. Although not required, it is recommended that you provide this parameter for ad serving within an app. For example: did.o1=e1b33694687ded5475f72f996cf025be3dd160fe | **
+did.oi | Indicates the OpenUDID for the end-user's mobile device. Although not required, it is recommended that you provide this parameter for ad serving within an app. For example:34a265c3b73e4e (Android), 7a5fab3d942494f7e31be4f4eec0e8156f53c6bf (iOS) | **
+did.si | Indicates the SecureUDID for the end-user's mobile device. Although not required, it is recommended that you provide this parameter for ad serving within an app. For example: did.si=50647BB4-DA42-49B4-9A8F-541203150654 | **
+dma | For US locations, indicates the end-user's Designated Market Area. For example: dma=803 | No
+eth | Indicates the end-user's ethnicity, which can be one of the following: 0 (African-American), 1 (Asian), 2 (Hispanic), 3 (White), 4 (Other). For example: eth=2 | No
+gen | Indicates the end-user's gender, which can be one of the following: M (male), F (female), O (other). For example: gen=F | No
+inc | Indicates the end-user's annual household income, in US Dollars (no commas (,) or periods (.)). For example: inc=40000 | No
+ip | The IP address of the carrier gateway. If this is not present, then OpenX retrieves it from the request header. For example: ip=238.122.7.1 | No
+lat | Indicates the GPS latitude location, in decimal form, of the end-user. For example: lat=37.530676 | No
+lon | Indicates the GPS longitude location, in decimal form, of the end-user. For example: lon=-122.262447 | No
+lt | Publishers should send 1,2 or 3 for the lt parameter (1 is preferred) with lat/lon. If lat/lon is passed with more than 5 decimal places instead of lt. The value is treated the same as lt=1. | No
+mar | Indicates the end-user's marital status, which can be one of the following: S (single), M (married), D (divorced). For example: mar=M | No
+net | Indicates the end-user's network connection type. For a wireless network, use net=wifi. | No
+openrtb	| Specifies a string with supply-side OpenRTB data to be passed to OpenX Ad Exchange buyers| No
+pgid | Ad unit group ID. Indicates the unique ID for the ad unit group that you want to serve ads for. (This parameter is required if you are requesting ads or a predefined ad unit group). For example: pgid=537064782 | No
+rc | Refresh count. Once your client initiates a refresh, this indicates the current index in the refresh cycle. This parameter is not initially set in the ad request; however your client application adds it, and then sets it with each refresh. | No
+rd | Refresh delay (in seconds) for refreshing an iframe. This value must be an integer ≥ 1. If you explicitly pass this parameter in an ad tag, OpenX ignores any server-side refresh delay setting for this ad unit (as set when creating or editing the ad unit). | No
+rm | Refresh max, ndicates the maximum number of refreshes for ads displayed through the ad request. This value must be an integer ≥ 1. For example, setting this parameter to a value of 5 would result in the display of a total of 6 ads (which includes the initial display of the ad (non-refresh) and the 5 subsequent displays of the ad (refreshes). If you explicitly pass this parameter in an ad tag, OpenX Ad Server ignores any server-side refresh max setting for this ad unit, as set creating or editing the ad unit. | No
+sp | Indicates the OpenX Mobile SDK platform (e.g., iOS or Android). | No
+stt | Indicates the end-user's state location. For example: stt=california | No
+sv | Indicates the version of the OpenX Mobile SDK (e.g., 3.1.0). | No
+url | Indicates the mobile app store URL or the mobile website URL. The URL for mobile apps should not use an HTTPS URL; instead, use a corresponding HTTP URL. Non-app store mobile websites should use HTTPS URLs for secure sites. For Apple it is the App Store URL. For example: url=http://itunes.apple.com/us/app/talking-tom-cat/id377194688?mt=8. For Android, it is the Google Play URL. For example: url=http://play.google.com/store/apps/details?id=com.outfit7.talkingtom&hl=en | Yes*
+xid | Indicates the customer-provided user ID, if different from the Device ID. For example: xid=234hskhjfdkhjs | No
+zip | Indicates the US ZIP or postal code for the end-user. For example: zip=93222 | No
+
 Parameters marked with an asterisk (*) in the Required? column must be present for OpenX Ad Exchange transactions.
+
 The double asterisk (**) in the Required? column indicates that at least one of the parameters must be present for OpenX Ad Exchange transactions.
-Tip:
+
+<aside class="notice">
 Only some of parameters are specific to mobile ad serving. For more details, see ad request parameters.
+</aside>
+
 OpenRTB ad request parameters allow you to pass OpenRTB data about your mobile inventory
+
 OpenX can help pass third-party mobile data via third-party ad request parameters.
 
 ### OpenRTB mobile app use case
+
 You can specify OpenRTB 2.3 field values to characterize your mobile app inventory and pass the values to OpenX Ad Exchange buyers.
+
 The following code samples illustrate how to express your app data as a JSON object, combine it with other ad request parameters, prepare it for percent encoding, and then include it in an ad request.
+
 To prepare OpenRTB values and include them in a mobile app ad request:
+
 Prepare a JSON array of the OpenRTB values you want to pass to buyers via the openrtb parameter.
+
 OpenRTB JSON:
+
+```
 {'app': {'bundle': 'com.example.wxapp',
          'cat': ['IAB15', 'IAB15-10'],
          'name': 'Example Inc',
          'storeurl': 'https://itunes.apple.com/id1234567890',
          'ver': '1.0.2'},
  'user': {'gender': 'M', 'yob': 1984}}
+```
+
 Where:
-app. Corresponds to OpenRTB's App object. Its value includes the following fields:
-bundle. The BidRequest.app.bundle field, which specifies the unique ID of the app's package (Android), bundle (iOS), or its AppStore ID
-cat. The BidRequest.app.cat field, which specifies a list of IAB content categories for the app
-name. The BidRequest.app.name field, which specifies the name of the app
-storeurl. The BidRequest.app.storeurl field, which specifies the app store URL for the app
-ver. The BidRequest.app.ver field, which specifies the version of the app
-user. Corresponds to OpenRTB's User object. Its value includes the following fields:
-gender. The BidRequest.user.gender field, where M indicates that the user is male
-yob. The BidRequest.user.yob field, which specifies the user's year of birth expressed as a four-digit number
+
+* app. Corresponds to OpenRTB's App object. Its value includes the following fields:
+* bundle. The BidRequest.app.bundle field, which specifies the unique ID of the app's package (Android), bundle (iOS), or its AppStore ID
+* cat. The BidRequest.app.cat field, which specifies a list of IAB content categories for the app
+* name. The BidRequest.app.name field, which specifies the name of the app
+* storeurl. The BidRequest.app.storeurl field, which specifies the app store URL for the app
+* ver. The BidRequest.app.ver field, which specifies the version of the app
+* user. Corresponds to OpenRTB's User object. Its value includes the following fields:
+* gender. The BidRequest.user.gender field, where M indicates that the user is male
+* yob. The BidRequest.user.yob field, which specifies the user's year of birth expressed as a four-digit number
+
 Limit the length of the final percent-encoded string to improve the performance of the request by converting the array to a string with minimal white space and no line breaks.
+
 OpenRTB JSON string:
+
+```
 {"app": {"storeurl": "https://itunes.apple.com/id1234567890", "ver": "1.0.2", "name": "Example Inc", "bundle": "com.example.wxapp", "cat": ["IAB15", "IAB15-10"]}, "user": {"gender": "M", "yob": 1984}}
+```
+
 Include the OpenRTB JSON string as the value of theopenrtb parameter along with other mobile ad request parameters. You should express your ad request parameters as key value pairs (KVPs), which you will then need to include in your percent-encoded string for inclusion in the ad request.
+
 Array of KVPs:
-  auid=1234567890
-  af=3,5
-  cnt=United States
-  crr=310-260
-  cty=LosAngeles
-  dd=2.0
-  did.adid=c5865179-ae0f-49a8-a7a6-02dff65b86f9
-  did.adid.enabled=true
-  lat=34.1496718
-  lon=-118.1331111
-  ltsrc=gps
-  net=wifi
-  openrtb={"app": {"storeurl": "https://itunes.apple.com/id1234567890", "ver": "1.0.2", "name": "Example Inc", "bundle": "com.example.wxapp", "cat": ["IAB15", "IAB15-10"]}, "user": {"gender": "M", "yob": 1984}}
-  sp=Android
-  stt:California
-  sv:3.0
-  zip:91101
+
+* auid=1234567890
+* af=3,5
+* cnt=United States
+* crr=310-260
+* cty=LosAngeles
+* dd=2.0
+* did.adid=c5865179-ae0f-49a8-a7a6-02dff65b86f9
+* did.adid.enabled=true
+* lat=34.1496718
+* lon=-118.1331111
+* ltsrc=gps
+* net=wifi
+* openrtb={"app": {"storeurl": "https://itunes.apple.com/id1234567890", "ver": "1.0.2", "name": "Example Inc", "bundle": "com.example.wxapp", "cat": ["IAB15", "IAB15-10"]}, "user": {"gender": "M", "yob": 1984}}
+* sp=Android
+* stt:California
+* sv:3.0
+* zip:91101
+
 Generate a percent-encoded string of all ad request parameters to be included in the ad tag that you will include in your mobile app.
+
 Percent-encoded string of ad request parameters:
+
+```
 auid=1234567890&sp=Android&af=3%2C5&sv=3.0&cnt=United+States&zip=91101&lon=-118.1331111&net=wifi&did.adid.enabled=true&dd=2.0&ltsrc=gps&lat=34.1496718&crr=310-260&openrtb=%7B%22app%22%3A+%7B%22storeurl%22%3A+%22https%3A%2F%2Fitunes.apple.com%2Fid1234567890%22%2C+%22ver%22%3A+%221.0.2%22%2C+%22name%22%3A+%22Example+Inc%22%2C+%22bundle%22%3A+%22com.example.wxapp%22%2C+%22cat%22%3A+%5B%22IAB15%22%2C+%22IAB15-10%22%5D%7D%2C+%22user%22%3A+%7B%22gender%22%3A+%22M%22%2C+%22yob%22%3A+1984%7D%7D&cty=LosAngeles&stt=California&did.adid=c5865179-ae0f-49a8-a7a6-02dff65b86f9
+```
+
 Include the percent-encoded string of ad request parameters in an ad request.
+
 Sample mobile ad request:
+
+```
 http://delivery_server_domain/ma/1.0/acj?auid=1234567890&sp=Android&af=3%2C5&sv=3.0&cnt=United+States&zip=91101&lon=-118.1331111&net=wifi&did.adid.enabled=true&dd=2.0&ltsrc=gps&lat=34.1496718&crr=310-260&openrtb=%7B%22app%22%3A+%7B%22storeurl%22%3A+%22https%3A%2F%2Fitunes.apple.com%2Fid1234567890%22%2C+%22ver%22%3A+%221.0.2%22%2C+%22name%22%3A+%22Example+Inc%22%2C+%22bundle%22%3A+%22com.example.wxapp%22%2C+%22cat%22%3A+%5B%22IAB15%22%2C+%22IAB15-10%22%5D%7D%2C+%22user%22%3A+%7B%22gender%22%3A+%22M%22%2C+%22yob%22%3A+1984%7D%7D&cty=LosAngeles&stt=California&did.adid=c5865179-ae0f-49a8-a7a6-02dff65b86f9
+```
+
 Where:
-http is the protocol. If your ad space uses SSL/TLS, use https instead.
-delivery_server_domain. The hostname of your OpenX delivery server
-/ma. Indicates the mobile app delivery medium
-/1.0. Indicates version 1.0 of the OpenX Supply API
-/acj. Asynchronous chain JSON, an asynchronous ad request to serve a structured JSON delivery response which supports chaining
-?. Separates the ad request from the ad request parameters
-auid. (Required) The ad unit ID
-&. Separates each parameter, which are described in the
-openrtb=. Indicates the OpenRTB values
-Tip: Some OpenRTB fields cannot be passed from publishers to OpenX Ad Exchange.
+
+* http is the protocol. If your ad space uses SSL/TLS, use https instead.
+* delivery_server_domain. The hostname of your OpenX delivery server
+* /ma. Indicates the mobile app delivery medium
+* /1.0. Indicates version 1.0 of the OpenX Supply API
+* /acj. Asynchronous chain JSON, an asynchronous ad request to serve a structured JSON delivery response which supports chaining
+* ?. Separates the ad request from the ad request parameters
+* auid. (Required) The ad unit ID
+* &. Separates each parameter, which are described in the
+* openrtb=. Indicates the OpenRTB values
+
+<aside class="notice">
+Some OpenRTB fields cannot be passed from publishers to OpenX Ad Exchange.
+</aside>
+
 Do not include such fields because they will be ignored and will only increase the length of your request.
 
 ### Passing mobile parameters via JavaScript ad tags
+
 Some ad servers do not provide macros for passing certain information, such as device and location data. OpenX can help you monetize if you pass the following types of information from your app to an OpenX JavaScript tag via your ad server's SDK:
-Advertising ID
-App bundle ID
-App name
-App store URL
-Device ID
-Location (latitude and longitude)
-For example, you can pass parameters from custom apps by Android and iOS devices using the MoPub JavaScript tag integrations.
+
+* Advertising ID
+* App bundle ID
+* App name
+* App store URL
+* Device ID
+* Location (latitude and longitude)
+* For example, you can pass parameters from custom apps by Android and iOS devices using the MoPub JavaScript tag integrations.
 
 #### MoPub integration
-Tip: This topic assumes that you have an OpenX Ad Exchange for Publishers account and a MoPub account.
+
+<aside class="notice">
+This topic assumes that you have an OpenX Ad Exchange for Publishers account and a MoPub account.
 You can create OpenX JavaScript ad tags to integrate with MoPub and pass various parameters from custom apps on Android and iOS devices.
+</aside>
+
 You can include MoPub macros in OpenX ad tags to automatically capture user-specific parameters. However, you need to manually define inventory-specific parameters.
-Sample JavaScript ad tag with MoPub macros
+
+#### Sample JavaScript ad tag with MoPub macros
+
 The following sample tag used with MoPub integrations shows a variety of manually-defined parameters and MoPub macros.
+
+```
 <!-- Begin OpenX Tag -->
 <script type="text/javascript" src="http://delivery_server_domain/ma/1.0/jstag"></script>
 <script type="text/javascript">
@@ -10787,57 +10746,93 @@ OX.frameCreatives(false);
 OX.requestAd(ad);
 })();
 </script>
+```
+
 Where:
-src="http://delivery_server_domain/ma/1.0/jstag. A request by the mobile app (/ma) to fetch the OpenX JavaScript tag library
-auid. (Required) The OpenX ad unit ID of the ad to be retrieved
-appName. The display name of the mobile app
-appBundle. The bundle (or "package") name of an app
-appStoreURL. (Required) The app store URL for the app
-coords. The GPS latitude and longitude of the end user, which are mapped to the %%LATITUDE%% and %%LONGITUDE%% MoPub macros
-did = '%eudid!'. A MoPub ID macro used to combine the IDFA, SHA1 Hashed Android ID, or Android Advertising ID
-fallback. A fallback used to send the request back to MoPub if OpenX does not fill the request
-OX.frameCreatives. A call to the frameCreatives method to determine the default framing behavior for ads (false = disabled)
-OX.requestAd. A call to the requestAd method that invokes an ad request
+
+* src="http://delivery_server_domain/ma/1.0/jstag. A request by the mobile app (/ma) to fetch the OpenX JavaScript tag library
+* auid. (Required) The OpenX ad unit ID of the ad to be retrieved
+* appName. The display name of the mobile app
+* appBundle. The bundle (or "package") name of an app
+* appStoreURL. (Required) The app store URL for the app
+* coords. The GPS latitude and longitude of the end user, which are mapped to the %%LATITUDE%% and %%LONGITUDE%% MoPub macros
+* did = '%eudid!'. A MoPub ID macro used to combine the IDFA, SHA1 Hashed Android ID, or Android Advertising ID
+* fallback. A fallback used to send the request back to MoPub if OpenX does not fill the request
+* OX.frameCreatives. A call to the frameCreatives method to determine the default framing behavior for ads (false = disabled)
+* OX.requestAd. A call to the requestAd method that invokes an ad request
+
 Once you have constructed the tag based on your needs, you can paste it into the HTML Body field of the MoPub UI, which is in the following location:
+
 Order > Line Item > Creative
 
 ### Mobile ad request examples
+
 You can use mobile ad requests to send an ad request URL and OpenX will send a structured delivery response in one of the following formats:
-HTML (/arh). Returns a block of HTML for a single ad unit containing the proper impression- and click- tracking elements
-JSON (/arj). Returns a JSON response for a single ad unit, an ad unit group, or multiple ad units in a single call
-XML (/arx). Returns an XML response for a single ad unit, an ad unit group, or multiple ad units in a single call
+
+* HTML (/arh). Returns a block of HTML for a single ad unit containing the proper impression- and click- tracking elements
+* JSON (/arj). Returns a JSON response for a single ad unit, an ad unit group, or multiple ad units in a single call
+* XML (/arx). Returns an XML response for a single ad unit, an ad unit group, or multiple ad units in a single call
+
 To render ads appropriately in your mobile app or site, you must configure your app to interpret the response.
+
 If no matching ads are available for a particular ad request, OpenX returns an empty response. You should test a few ad requests to review how OpenX represents objects in its responses and make sure that your app is configured handle them.
+
 Each mobile ad request contains an ad request URL, which references the ad unit to deliver an ad for and various parameters. For example:
+
 Sample HTML mobile ad request
+
+```
 http://delivery_server_domain/ma/1.0/arh?auid=6
+```
+
 Sample JSON mobile ad request
+
+```
 http://delivery_server_domain/ma/1.0/arj?auid=6
+```
+
 Sample XML mobile ad request
+
+```
 http://delivery_server_domain/ma/1.0/arx?auid=6
+```
+
 Where:
-http. The protocol. If your app or mobile site uses SSL, use https.
-delivery_server_domain. The hostname of your OpenX delivery server
-/ma. Indicates the mobile app delivery medium. Alternatively: /mw indicates mobile web delivery.
-/1.0. Indicates that OpenX should use version 1.0 of the OpenX HTML, XML, or JSON protocol.
-/arh, /arx or /arj. Indicates the action to perform, such as a request to serve an HTML (/arh), XML (/arx), or JSON (/arj) delivery response.
-?. Separates the ad request from the ad request parameters.
-auid. The ad unit ID of the ad to be delivered. For a multi-ad unit request, include a comma-separated list of ad unit IDs. For an ad unit group request, include the pgid parameter with the ad unit group ID.
-&. Separates each parameter.
-HTTP header forwarding
+
+* http. The protocol. If your app or mobile site uses SSL, use https.
+* delivery_server_domain. The hostname of your OpenX delivery server
+* /ma. Indicates the mobile app delivery medium. Alternatively: /mw indicates mobile web delivery.
+* /1.0. Indicates that OpenX should use version 1.0 of the OpenX HTML, XML, or JSON protocol.
+* /arh, /arx or /arj. Indicates the action to perform, such as a request to serve an HTML (/arh), XML (/arx), or JSON (/arj) delivery response.
+* ?. Separates the ad request from the ad request parameters.
+* auid. The ad unit ID of the ad to be delivered. For a multi-ad unit request, include a comma-separated list of ad unit IDs. For an ad unit group request, include the pgid parameter with the ad unit group ID.
+* &. Separates each parameter.
+
+#### HTTP header forwarding
+
 To proxy ad or tracking request not sent directly from a mobile device to OpenX, one of the following HTTP headers must be forwarded to OpenX with the request:
-Accept-Language
-Host
-Referer
-User-Agent
-X-Forwarded-For
-Impression counting
-To implement a client-side impression counting mechanism, your app must make a call to OpenX via an impression confirmation beacon, which is embedded in pre-formatted responses. If your app does the final formatting, you must ensure proper handling of the beacon. Work with your OpenX account manager to ensure proper integration.
-Managing refresh
+
+* Accept-Language
+* Host
+* Referer
+* User-Agent
+* X-Forwarded-For
+* Impression counting
+
+To implement a client-side impression counting mechanism, your app must make a call to OpenX via an impression confirmation beacon, which is embedded in pre-formatted responses. If your app does the final formatting, you must ensure proper handling of the beacon. 
+
+Work with your OpenX account manager to ensure proper integration.
+
+#### Managing refresh
+
 To use the refresh_delay and refresh_max fields to manage refresh, your client application must:
-Identify the refresh_delay and refresh_max fields in the XML or JSON response.
-Append rc=COUNT, where COUNT is replaced with the iteration of the reload (e.g., first refresh has rc=1 and third has rc=3).
+
+* Identify the refresh_delay and refresh_max fields in the XML or JSON response.
+* Append rc=COUNT, where COUNT is replaced with the iteration of the reload (e.g., first refresh has rc=1 and third has rc=3).
+
 For example:
+
+```
 max = response.refresh_max
 delay = response.refresh_delay
 for (i=1;i++;i<=refresh_max) {
@@ -10845,10 +10840,13 @@ for (i=1;i++;i<=refresh_max) {
   url = build_url() + "&rc=" + i
   fetch_ad(url)
 }
+```
 
 #### HTML response
+
 A mobile /arh call returns a block of HTML code, ready to display in the mobile app, which contains the final ad creative, appropriate impression counting beacons, and proper click-tracking elements.
-Sample HTML response
+
+```
 <a href='http://delivery_server_domain/ma/1.0/rc?
 ai=5f5c9dcf-c895-7eae-99a9-b932d596b8fa&ts=0c2lkPTE5MDIzfGF1aWQ9Mjg2MTZ8YWlkPTMxNj
 E0fHB1Yj0zODgyMXxsaWQ9MzM1ODl8dD01fHJpZD1lNGRlZWEyMi00OTIzLTQwYjMtODgzYS02MzNiNGRj
@@ -10864,10 +10862,12 @@ ai=5f5c9dcf-c895-7eae-99a9-b932d596b8fa&ts=0c2lkPTE5MDIzfGF1aWQ9Mjg2MTZ8YWlkPTMx
 E0fHB1Yj0zODgyMXxsaWQ9MzM1ODl8dD01fHJpZD1lNGRlZWEyMi00OTIzLTQwYjMtODgzYS02MzNiNGRj
 YzU0MmV8b2lkPTIwMTI2fGJtPUJVWUlORy5IT1VTRXxwPTI1MDB8cGM9VVNEfGFjPVVTRHxwbT1QUklDS
 U5HLkNQTXxydD0xMzE1OTM3MDQxfHByPTI1MDB8YWR2PTM4ODIy&cb=70585065'/></div>
+```
 
 #### JSON response
 A mobile /arj call returns a response similar to the following example:
-Sample JSON response
+
+```
 {"ads":
  { "version": 1,
  "count": 1,
@@ -10909,11 +10909,14 @@ QTXxydD0xMzE1OTM3MDQxfHByPTI1MDB8YWR2PTM4ODIy"
      ]
    } 
 }
+```
+
 The JSON response contains the same information as the XML response.
 
 #### XML response
 A mobile /arx call returns a response similar to the following example:
-Sample XML response
+
+```
  encoding="UTF-8"?>
 <ads version="1.0" count="1">
     <ad adunit="6"  adid="6" refresh_max="5" refresh_delay="5" type="image">
@@ -10952,6 +10955,8 @@ Sample XML response
         </creatives>
     </ad>
 </ads>
+```
+
 The XML response contains the following elements:
 
 * ads. A container element for the list of selected ads
@@ -10983,18 +10988,21 @@ For example, if you have an Ad Marvel account, you can make server-to-server ad 
 
 To help solve special integration issues, OpenX supports various types server-to-server implementations through ad requests.
 
-Important: Proxied ad requests do not comply with some IAB specifications. Work with your OpenX account manager to ensure a complete and proper integration via server-to-server ad calls.
+<aside class="warning">
+Proxied ad requests do not comply with some IAB specifications. Work with your OpenX account manager to ensure a complete and proper integration via server-to-server ad calls.
+</aside>
 
 To ensure that ad serving features (such as frequency capping and targeting) work properly, follow these guidelines when making server-to-server ad calls:
 
 * User IDs. If you are using typical web ad requests, OpenX uses the ```OX_u``` cookie, which contains a unique user ID. Ideally, you proxy this cookie from the client to the Ad Server. This requires:
 
-Extraction of the Set-Cookie header that OpenX sends to pass the cookie to the client
-Retrieval of the cookie sent by the client to your servers
-Forwarding the cookie to OpenX Ad Server
-Alternatively, you can use the xid parameter.
+* Extraction of the Set-Cookie header that OpenX sends to pass the cookie to the client
+* Retrieval of the cookie sent by the client to your servers
+* Forwarding the cookie to OpenX Ad Server
+* Alternatively, you can use the xid parameter.
 
 HTTP headers. OpenX uses the following HTTP headers, which should be forwarded from the client or set up to reflect realistic values in your server:
+
 * Accept-Language
 * Host
 * Referer
@@ -11029,28 +11037,36 @@ To configure your custom application:
 * Configure your custom application with the appropriate ad unit or ad unit group IDs.
 * Implement the appropriate logic in your application to parse the structured response from OpenX, and then render the ads to the end user.
 
-Note: These ad requests use a client-side impression counting mechanism. Your custom application should be configured to handle this operation. Work with your OpenX account manager to ensure a complete and proper integration.
+<aside class="notice">
+These ad requests use a client-side impression counting mechanism. Your custom application should be configured to handle this operation. Work with your OpenX account manager to ensure a complete and proper integration.
+</aside>
 
 ### Standalone ad requests
 
 The following example shows an ad request for an XML response, which will fulfill a single ad unit.
 
 Standalone request XML ad request
+
 ```
 http://delivery_server_domain/w/1.0/arx?auid=6
 ```
+
 The following example shows a request for a standalone JSON response, which will fulfill a single ad unit.
 
 Standalone request JSON ad request
+
 ```
 http://delivery_server_domain/w/1.0/arj?auid=6
 ```
+
 The following example shows a request for a standalone JSONP response, which will fulfill a single ad unit.
 
 Standalone request JSONP ad request
+
 ```
 http://delivery_server_domain/w/1.0/arj?auid=6&callback=foo
 ```
+
 Where:
 * ```http``` is the protocol. If your ad space uses SSL/TLS, use https instead.
 * ```delivery_server_domain```. The hostname of your OpenX delivery server
@@ -11069,21 +11085,27 @@ Request ads for multiple ad units in a single call, referenced by an ad unit gro
 XML ad unit group request
 
 The following request for an XML response will fulfill multiple ad units.
+
 ```
 http://delivery_server_domain/w/1.0/arx?pgid=123
 ```
+
 JSON ad unit group request
 
 The following request for an ad unit group will fulfill multiple ad units.
+
 ```
 http://delivery_server_domain/w/1.0/arj?pgid=123
 ```
+
 JSONP ad unit group request
 
 The following request for an ad unit group will fulfill multiple ad units.
+
 ```
 http://delivery_server_domain/w/1.0/arj?pgid=123&callback=foo
 ```
+
 Where:
 
 * ```http``` is the protocol. If your ad space uses SSL/TLS, use https instead.
@@ -11098,24 +11120,28 @@ Where:
 
 ### Multi-ad unit requests
 
-XML multi-ad unit request
-
 The following request will fulfill multiple ad units.
+
 ```
 http://delivery_server_domain/w/1.0/arx?auid=1,2,3
 ```
+
 JSON multi-ad unit request JSON ad request
 
 The following request will fulfill multiple ad units.
+
 ```
 http://delivery_server_domain/w/1.0/arj?auid=1,2,3
 ```
+
 Sample multi-ad unit request JSONP ad request
 
 The following request will fulfill multiple ad units.
+
 ```
 http://delivery_server_domain/w/1.0/arj?auid=1,2,3&callback=foo
 ```
+
 Where:
 
 * ```http```. Indicates the protocol. If your ad space uses SSL/TLS, use https instead.
@@ -11130,7 +11156,8 @@ Where:
 
 Combination request for ad units and ad unit groups in an XML ad request
 
-You can also combine auids and pgids in a single ad request. The following request for multiple ad units and an ad unit group will fulfill multiple ad units in a single request.
+You can also combine ```auids``` and ```pgids``` in a single ad request. The following request for multiple ad units and an ad unit group will fulfill multiple ad units in a single request.
+
 ```
 http://delivery_server_domain/w/1.0/arx?auid=1,2,3&pgid=123
 ```
@@ -11161,6 +11188,7 @@ for (i=1;i++;i<=refresh_max) {
 }
 ```
 ## Video ad requests
+
 To serve a video ad to your ad space:
 
 * Use the OpenX UI to create the following types of video ad units: Linear. Full-page interstitial video ads that display during video content in a video player as in-read or in-feed ad units.
@@ -11178,7 +11206,9 @@ Tip: For mobile apps, OpenX provides a mobile SDK for Android and iOS, which inc
 
 Video ad requests typically contain an ad request URL and various parameters.
 
+```
 http://delivery_server_domain/v/1.0/av?auid=543776&cs=xyz&c.gender=m
+```
 
 Where:
 
@@ -11193,7 +11223,7 @@ Where:
 * c.gender. a custom variable for the user's gender.
 
 This request returns a response similar to the following example:
-
+```
 <?xml version="1.0" encoding="UTF-8"?>
 <VAST version="2.0">
 <Ad id="543776">
@@ -11276,7 +11306,7 @@ This request returns a response similar to the following example:
 </InLine>
 </Ad>
 </VAST>
-
+```
 
 The response contains the following elements:
 
