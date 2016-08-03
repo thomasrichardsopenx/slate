@@ -8341,14 +8341,14 @@ An ad tag is a small piece of code that defines the ad space where you want to d
 
 The OpenX Ad Request API supports the following types of ad requests:
 
-* Email. An image-only email ad request that supports server-side tracking.
-* iframe. HTML iframe tags (<iframe>) used to request an ad (within a separate HTML document) for a specified ad unit.
-* Image. HTML anchor (<a>) and image (<img>) tags used to request ads for a specified ad unit.
-* JavaScript. JavaScript used to request ads for individual ad units, multi-ad units, and ad unit groups.
-* Mobile. Returns a structured delivery response used to serve ads in your mobile app or site.
-* Server-to-server. A custom implementation where you proxy ad requests from the client to a third-party system, which then makes calls to OpenX.
-* Structured response. Returns a response format used for integration with a custom application. You must configure your application to build the ad request URL, make the call, and parse the response.
-* Video. Send a video ad request to OpenX through your video player and receive a VAST 2.0 XML response for video-based ad inventory. You must configure your video player to communicate the contents of the video ad request URL.
+Email. An image-only email ad request that supports server-side tracking.
+iframe. HTML iframe tags (<iframe>) used to request an ad (within a separate HTML document) for a specified ad unit.
+Image. HTML anchor (<a>) and image (<img>) tags used to request ads for a specified ad unit.
+JavaScript. JavaScript used to request ads for individual ad units, multi-ad units, and ad unit groups.
+Mobile. Returns a structured delivery response used to serve ads in your mobile app or site.
+Server-to-server. A custom implementation where you proxy ad requests from the client to a third-party system, which then makes calls to OpenX.
+Structured response. Returns a response format used for integration with a custom application. You must configure your application to build the ad request URL, make the call, and parse the response.
+Video. Send a video ad request to OpenX through your video player and receive a VAST 2.0 XML response for video-based ad inventory. You must configure your video player to communicate the contents of the video ad request URL.
 
 Depending on your ad space, you can implement more than one type of ad tag. For example, if you want to display three ad units on a webpage, you could implement an image tag, an iframe tag, and a JavaScript tag.
 
@@ -8362,8 +8362,9 @@ These topics assume that you are a software developer with an understanding of a
 
 OpenX uses parameter values (also known as "query args") during ad selection to target the most appropriate ads to your ad space. Depending on the type of ad request, OpenX may do one of the following:
 
-* Ignore parameters that are not applicable to the type of ad request. For example, the VMaxd video ad request parameter is ignored if included in an image ad request.
-* Return an error if one or more parameters are not valid for the ad request.
+Ignore parameters that are not applicable to the type of ad request. For example, the VMaxd video ad request parameter is ignored if included in an image ad request.
+
+Return an error if one or more parameters are not valid for the ad request.
 
 You can set parameters for your ad requests by including key-value pairs: key=value For example, auid=1234 specifies the ad unit ID, which is required in all standalone ad requests.
 
@@ -8779,7 +8780,8 @@ Field name | Data type | Description
 ---------- | --------- | -----------
 cat | array (string) | The list of IAB content categories for the publisher. For details, see Table 5.1 (Content Categories) of the OpenRTB API specification
 
-### BidRequest.app.content OR BidRequest.site.content
+### ```BidRequest.app.content``` OR ```BidRequest.site.content```
+
 
 The Content object describes the type of content of the App or Site in which the ad will be displayed. For more details about the Content object, refer to section 3.2.9 of the OpenRTB specification.
 
@@ -8803,7 +8805,7 @@ url | string | The URL where the content is located.
 userating | string | User rating of the content.
 videoquality | integer | The video quality classification. For details, see Table 5.11 of the OpenRTB API specification.
 
-### BidRequest.device
+### ```BidRequest.device```
 
 Each BidRequest object may contain a ```Device``` object, which provides details about the end-user's computing environment. The Device object can reference the Geo object.
 
@@ -8987,28 +8989,36 @@ Ampersand (&). Separates each parameter
 Ad request parameters (optional). Provide additional information to OpenX Ad Server. For example, you may want to include the xid parameter to assign your own unique ID for each user to which you send the email message. You can also include custom variables in your email ad tags, such as message content or version.
 
 iFrame ad tags
-An <iframe> ad tag represents an inline frame within your webpage allowing you to position ads on the window without impacting the rest of the page layout.
-When a user browses to a webpage where you have implemented OpenX iframe ad tags:
-The browser invokes an ad request for the ad unit referenced in the URL for the src attribute of the HTML iframe tag.
-OpenX receives the request, performs ad selection, and returns an HTML document with the embedded ad content.
-The browser renders the ad in the appropriate ad space.
+
+An <iframe> ad tag represents an inline frame within your webpage allowing you to position ads on the window without impacting the rest of the page layout. When a user browses to a webpage where you have implemented OpenX iframe ad tags:
+* The browser invokes an ad request for the ad unit referenced in the URL for the src attribute of the HTML iframe tag.
+* OpenX receives the request, performs ad selection, and returns an HTML document with the embedded ad content.
+* The browser renders the ad in the appropriate ad space.
+
 If the user's browser does not support iframes, it can use an image tag instead. For iframe ad tags that you generate through the OpenX UI, an optional image tag fallback mechanism is provided by default. You can place include other tag types between the iframe tags (<iframe>fallback tag here</iframe>) and they will be ignored if the iframe is supported by the user's browser.
-Iframe ad tags employ a client-side counting mechanism: they log an impression after the ad is rendered by the browser.
-Iframe tags have the following advantages:
-Auto-refresh via ad request parameters
-Fallback tags can be included in case the user's browser does not support iframes.
-Parallel execution, which minimizes page-load times
+
+Iframe ad tags employ a client-side counting mechanism: they log an impression after the ad is rendered by the browser. Iframe tags have the following advantages:
+* Auto-refresh via ad request parameters
+* Fallback tags can be included in case the user's browser does not support iframes.
+* Parallel execution, which minimizes page-load times
+
 You can hide source page information from downstream ad servers, such as the page and referring URLs.
 Content styles are not influenced by the parent page CSS, so the ad in the iframe does not have to match the style of the rest of the page.
+
 Limitations associated with iframe tags include:
-Each iframe tag is a standalone request for a single ad unit—they do not support ad unit group or multi-ad unit requests. To fulfill multiple ad units on the same webpage, you can implement an iframe tag for each ad unit you want to serve.
-Multiple ad units on a page using iframe tags cannot communicate with each other.
-Iframe tags are not compatible with most contextual-analysis networks.
-To display ads that expand outside the dimensions of an iframe window, you must implement an iframe-buster.
+
+* Each iframe tag is a standalone request for a single ad unit—they do not support ad unit group or multi-ad unit requests. To fulfill multiple ad units on the same webpage, you can implement an iframe tag for each ad unit you want to serve.
+* Multiple ad units on a page using iframe tags cannot communicate with each other.
+* Iframe tags are not compatible with most contextual-analysis networks.
+* To display ads that expand outside the dimensions of an iframe window, you must implement an iframe-buster.
 
 ### iFrame ad tag structure
+
 An iframe ad tag contains HTML tags and various parameters.
+
 Sample iframe ad tag
+
+```
 <iframe id='a62ae7d3' name='a62ae7d3'
 src='http://delivery_server_domain/w/1.0/afr?auid=
 8635&cb=INSERT_RANDOM_NUMBER_HERE&rd=5&rm=3"
@@ -9027,32 +9037,44 @@ Ad request URL. Defines the iframe element, references the ad unit ID, and inclu
 src='http://delivery_server_domain/w/1.0/afr?auid=8635&cb=INSERT_RANDOM_NUMBER_HERE&rd=5&rm=3'
 frameborder='0' scrolling='no' width='728'
 height='90'>
+```
+
 Where:
-http is the protocol. If your ad space uses SSL/TLS, specify https instead.
-delivery_server_domain. The hostname of the OpenX delivery server
-/w. Indicates the web delivery medium
-/1.0. Indicates version 1.0 of the OpenX iframe tag protocol
-/afr. Indicates the request to serve an ad through an iframe ad tag
-The . Separates the ad request from the ad tag parameters
-auid. The ad unit ID
-&. Separates each additional ad request parameter.
-cb. Specifies a cachebusting setting
-rd. Enables auto-refresh for the ad tag
-rm. The maximum number of refreshes
-Fallback mechanism. If the browser does not support iframes, OpenX uses an image ad tag to fulfill the request:
-<a href='http://delivery_server_domain/w/1.0/rc?cs=acd22faf&
-cb=INSERT_RANDOM_NUMBER_HERE' target='_blank'>
-<img src='http://delivery_server_domain/w/1.0/ai?auid=8635&
-cs=acd22faf&cb=INSERT_RANDOM_NUMBER_HERE' border='0' alt='' /></a>
+
+* http is the protocol. If your ad space uses SSL/TLS, specify https instead.
+* delivery_server_domain. The hostname of the OpenX delivery server
+* /w. Indicates the web delivery medium
+* /1.0. Indicates version 1.0 of the OpenX iframe tag protocol
+* /afr. Indicates the request to serve an ad through an iframe ad tag
+* The . Separates the ad request from the ad tag parameters
+* auid. The ad unit ID
+* &. Separates each additional ad request parameter.
+* cb. Specifies a cachebusting setting
+* rd. Enables auto-refresh for the ad tag
+* rm. The maximum number of refreshes
+* Fallback mechanism. If the browser does not support iframes, OpenX uses an image ad tag to fulfill the request:
+* <a href='http://delivery_server_domain/w/1.0/rc?cs=acd22faf&
+* cb=INSERT_RANDOM_NUMBER_HERE' target='_blank'>
+* <img src='http://delivery_server_domain/w/1.0/ai?auid=8635&
+* cs=acd22faf&cb=INSERT_RANDOM_NUMBER_HERE' border='0' alt='' /></a>
+
 The parameter values that you select for the ad request URL and its fallback tags ultimately determine what ads are displayed for the ad unit.
+
 You can also include custom variables in your iframe ad tags. For example, the URL for an iframe tag with custom variables for the user's gender, age, and keywords might look like the following:
+
+```
 http://d.example.com/w/1.0/ai?
 auid=1234&cs=xyz&c.gender=m&c.age=40&c.keyword=coupons
+```
+
 To implement iframe ad tags:
-Generate your iframe ad tag via the OpenX UI.
-Copy the iframe ad tag.
-Paste the ad tag in the website source code between the HTML body tags where you want the ad to display.
+* Generate your iframe ad tag via the OpenX UI.
+* Copy the iframe ad tag.
+* Paste the ad tag in the website source code between the HTML body tags where you want the ad to display.
+
 Sample iframe ad tag implementation
+
+```
 <html>
 <head></head>
 
@@ -9082,7 +9104,9 @@ Some other content here.
 
 </body>
 </html>
-Replace the value of the cb parameter with a random number (preferably a dynamically auto-generated number from your CMS) for cachebusting purposes.
+```
+
+Replace the value of the ```cb``` parameter with a random number (preferably a dynamically auto-generated number from your CMS) for cachebusting purposes.
 
 ## JavaScript ad tags
 
@@ -10748,6 +10772,7 @@ U5HLkNQTXxydD0xMzE1OTM3MDQxfHByPTI1MDB8YWR2PTM4ODIy&cb=70585065'/></div>
 ```
 
 #### JSON response
+
 A mobile /arj call returns a response similar to the following example:
 
 ```
