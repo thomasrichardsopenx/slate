@@ -8012,8 +8012,8 @@ Sub-Step 1.2 - When OpenX receives the request, it verifies the request using it
 
 The client application sends a ```POST``` request for a request token. The first step requests a request token using the parameters listed below.
 
-Parameter |	Description |
---------- |    ------------ |
+Parameter | Description |
+--------- | ------------ 
 oauth_realm |	The realm value is a string, generally assigned by the origin server. The realm parameter allows the protected resources on a server to be partitioned. For example, oauth realm="http://server.example.com/". |
 oauth_consumer_key | The Consumer Key, supplied to you by OpenX. |
 oauth_signature_method | The signature method the Consumer used to sign the request. |
@@ -8038,10 +8038,10 @@ Substep 2.3 - The Service Provider redirects the User to the URL specified by th
 Sub-step 2.1 Consumer directs the User to Service Provider (OpenX)
 The Consumer (your app) redirects the User to the Service Provider by constructing an HTTP GET request to the Service Provider's User Authorization URL with the following parameters:
 
-Parameter | 	Description |
---------- |    ------------ |
-oauth_token | The unauthorized request token obtained in the previous step. |
-oauth_callback | The Consumer should specify a URL the Service Provider will use to redirect the User back to the Consumer when Obtaining User Authorization is complete. |
+Parameter | Description |
+--------- | ------------
+oauth_token | The unauthorized request token obtained in the previous step.
+oauth_callback | The Consumer should specify a URL the Service Provider will use to redirect the User back to the Consumer when Obtaining User Authorization is complete.
 
 Sub-step 2.2 The Service Provider obtains the User's user name and password.
 
@@ -8051,10 +8051,10 @@ Sub-step 2.3 The Service Provider redirects the User back to the Consumer site.
 
 After the User authenticates with the Service Provider and grants permission for Consumer access, the Service Provider notifies the Consumer that the Request Token has been authorized by doing the following: The Service Provider constructs an HTTP ```GET``` request URL using the provided ```oauth_callback```, and redirects the User's web browser back to that URL with the following parameters:
 
-Parameter | 	Description |
---------- |     ----------- |
-oauth_token | The Request Token the User authorized or denied. |
-oauth_verifier | The verification code. |
+Parameter | Description |
+--------- | -----------
+oauth_token | The Request Token the User authorized or denied.
+oauth_verifier | The verification code.
 
 Step 3 - Request an access token
 
@@ -8069,16 +8069,16 @@ Substep 3.1 - The Consumer (Your application) requests an access token.
 
 The Request Token and Token Secret are exchanged for an Access Token and Token Secret. To request an Access Token, the Consumer makes an HTTP request to the Service Provider's Access Token URL. The Service Provider documentation specifies the HTTP method for this request, an HTTP ```POST``` is recommended. The request MUST be signed per Signing Requests, and contains the following parameters:
 
-Parameter |	Description |
---------- |     ----------- |
-oauth_consumer_key | The Consumer Key, supplied to you by OpenX. |
-oauth_token | The Request Token obtained previously. |
-oauth_signature_method | The signature method the Consumer used to sign the request. |
-oauth_signature	| The signature is created using the signature process which encodes the Consumer Secret and Token Secret into a verifiable value which is included with the request. |
-oauth_timestamp	| The timestamp. See previous description. |
-oauth_nonce | The Consumer must generate a Nonce value that is unique for all requests with the timestamp. See previous description. |
-oauth_version |	Optional. If present, value must be 1.0. Service Providers must assume the protocol version to be 1.0 if this parameter is not present. Service Providers' response to non-1.0 value is left undefined. |
-oauth_callback | For browser-based authentication, use this parameter to specify to which URL the User will be re-directed. For programmatic authentication, use oob (out of band). |
+Parameter | Description
+--------- | -----------
+oauth_consumer_key | The Consumer Key, supplied to you by OpenX. 
+oauth_token | The Request Token obtained previously.
+oauth_signature_method | The signature method the Consumer used to sign the request.
+oauth_signature	| The signature is created using the signature process which encodes the Consumer Secret and Token Secret into a verifiable value which is included with the request.
+oauth_timestamp	| The timestamp. See previous description.
+oauth_nonce | The Consumer must generate a Nonce value that is unique for all requests with the timestamp. See previous description.
+oauth_version |	Optional. If present, value must be 1.0. Service Providers must assume the protocol version to be 1.0 if this parameter is not present. Service Providers' response to non-1.0 value is left undefined.
+oauth_callback | For browser-based authentication, use this parameter to specify to which URL the User will be re-directed. For programmatic authentication, use oob (out of band).
 
 No additional Service Provider specific parameters are allowed when requesting an Access Token to ensure all Token related information is present prior to seeking User approval.
 
@@ -8086,10 +8086,10 @@ Sub-step 3.2 - Service Provider Grants an Access Token (Response)
 
 The Service Provider generates an Access Token and Token Secret and returns them in the HTTP response body. Your application must store the Access Token and Token Secret and use them when signing Protected Resources requests. The response contains the following parameters:
 
-Parameter |	Description |
---------- |     ----------- |
-oauth_token | The Access Token. |
-oauth_token_secret | The Token Secret. |
+Parameter | Description
+--------- | -----------
+oauth_token | The Access Token.
+oauth_token_secret | The Token Secret.
 
 Step 4 - Use the access token to access protected resources
 
@@ -8124,10 +8124,11 @@ Step 2 - Authorize the User
 
 Authorize the request token by sending an HTTP ```POST``` request to https://sso.openx.com/login/process with the following parameters:
 
-Parameter | Description |
-Email | The User's email address |
-Password | The User's password |
-oauth_token | The OAuth request token |
+Parameter | Description
+---------- | -----------
+Email | The User's email address.
+Password | The User's password.
+oauth_token | The OAuth request token.
 
 Sub-steps
 For programmatic authentication, the client application must pass in the request token (oauth_token) and the User's email and password to https://sso.openx.com/login/process (NOT https://sso.openx.com/login/login).
@@ -8335,6 +8336,7 @@ If you are using the API to add/edit a comment, the following objects can have c
 Refer to the Working With Comments section for more detailed information on using this feature.
 
 ### Ad Request API
+
 An ad tag is a small piece of code that defines the ad space where you want to display ads. When you place ad tags in your inventory, they send ad requests to OpenX, which sends delivery responses to serve ads to end users. Each ad tag includes parameters describing the inventory that advertising campaigns can target. You can customize ad requests to support your particular implementation and target certain types of ads.
 
 The OpenX Ad Request API supports the following types of ad requests:
@@ -8352,7 +8354,9 @@ Depending on your ad space, you can implement more than one type of ad tag. For 
 
 For individual ad units ("standalone") or ad unit group requests, you can typically generate ad tags through the OpenX UI. Use JavaScript ad tags for multi-ad unit requests as well as standalone and ad unit group requests.
 
-Note: These topics assume that you are a software developer with an understanding of ad serving and that you know how to configure your ad space to make calls to external services.
+<aside class="notice">
+These topics assume that you are a software developer with an understanding of ad serving and that you know how to configure your ad space to make calls to external services.
+</aside>
 
 ### Ad request parameters
 
@@ -8367,66 +8371,42 @@ The following table describes the parameters that OpenX supports in its ad reque
 
 Note: The OpenX JavaScript Tag Library does not support all of the following parameters. For information about what parameters each method supports, see the corresponding reference page for the specific method.
 
-Parameter |	Description |
---------- |    ------------ |
-auid |	(Required) Ad unit ID, indicates the unique ID for the ad unit where you want to serve an ad. |
-aus |	Ad unit sizes, indicates a comma-delimited list of available ad sizes, such as aus=728x90,970x90. To use this parameter, you must include additional ad unit sizes when you create your ad unit. For details, see flexible ad units. |
-c.key=value |	Custom variable, communicates additional information about the ad space, such as details of webpage content, ad space location, or user-specific information. |
-callback |	Indicates the JavaScript function call with which to wrap the JSON structure using JSON with padding (JSONP) standards
-Required only for JSONP responses to /arj (JSONP) and /avj (video JSONP) requests. |
-cb |	Cache busting, a dynamically-generated random number assigned to the request to avoid browser caching. If you generate an HTML ad tag in the UI, OpenX includes the cb parameter in the ad tag as follows: cb=INSERT_RANDOM_NUMBER_HERE. When implementing image and iFrame ad tags for HTML ad requests, replace the INSERT_RANDOM_NUMBER_HERE value with a random number, such as a timestamp or a number automatically generated by your CMS. If a user requests the same page again, the browser will invoke a new ad request rather than serving an ad from the cache. |
-ch |	Character encoding, indicates the character set for the current webpage. |
-cs |	Client state, indicates a unique ID for the ad unit and user to communicate between the click URL and the ad. This parameter is required for image ad tags and ignored for all other types of ad requests. This parameter only accepts values which use the following characters: a-z, A-Z, 0-9, _ (underscore), or - (hyphen). |
-lt | Publishers should send 1, 2, or 3 for the lt parameter (1 is preferred) with lat/lon. If lat/lon is passed with 5 or more decimal places instead of lt. this value is treated the same as lt=1. |
-ltsrc deprecated. | Indicates the source of the user’s geographic location details. If the ltsrc parameter has any value, the latitude and longitude is considered to have been derived from the device's GPS location. Otherwise, the latitude and longitude was derived from an IP address. [deprecated] |
-mimetype | The mimetype of the mobile video ad unit, which can be any of the following:
-* Android: video/3gp, video/mp4
-* iOS: video/3gp, video/mov, video/mp4, video/mpv
-This parameter is required by mobile video ad requests and is ignored by other types of ad requests. |
-o | Indicates a random number assigned to the request that helps scope the response from the server. This ensures that multiple server responses do not collide. This is useful if you are writing your own synchronous JavaScript ad tags and do not use the OpenX JavaScript tag library. For example, if you are building your own tag library, sending OpenX the required inputs, and parsing its output. This parameter is optional for JavaScript ad tags, mobile video ad requests, and video ad requests. It is ignored by other types of ad requests. |
-openrtb	| Specifies a string with supply-side OpenRTB data to be passed to OpenX Ad Exchange buyers. |
-pgid | Page ID, indicates the unique ID for the predefined ad unit group. This parameter is optional for JavaScript ad tags, mobile video ad requests, and video ad requests. Note: Do not specify this parameter for iFrame or image ad requests, because it will cause an error. |
-plg | Plugins, indicates any plugins enabled in the user's browser, such as:
-* pdf. Adobe Acrobat Reader
-* qt. QuickTime
-* rp. Real Media Player
-* shk. Adobe Shockwave
-* sl. Silverlight
-* swf. Flash
-* wmp. Windows Media Player |
-r, r0, r1, or r2 | Redirect, indicates the click redirect URL:
-* r is a single-escaped URL. For example: http%3A%2F%2Fwww.clickredirectURL.com%3Fsome%3D1%26others%3D2F
-* r0 is an unescaped URL. For example: http://www.clickredirectURL.com?some=1&others=2 
-* r1 is a single-escaped URL (same as r).
-* r2 is a double-escaped URL. For example: http%253A%252F%252Fwww.clickredirectURL.com%253Fsome%253D1%2526others%253D2. Note: Any of these redirect parameters must be the last parameter in an ad request URL or click URL string. |
+Parameter | Description
+--------- | ------------
+auid (Required) | Ad unit ID, indicates the unique ID for the ad unit where you want to serve an ad.
+aus | Ad unit sizes, indicates a comma-delimited list of available ad sizes, such as aus=728x90,970x90. To use this parameter, you must include additional ad unit sizes when you create your ad unit. For details, see flexible ad units.
+c.key=value | Custom variable, communicates additional information about the ad space, such as details of webpage content, ad space location, or user-specific information.
+callback |Indicates the JavaScript function call with which to wrap the JSON structure using JSON with padding (JSONP) standards
+Required only for JSONP responses to /arj (JSONP) and /avj (video JSONP) requests.
+cb | Cache busting, a dynamically-generated random number assigned to the request to avoid browser caching. If you generate an HTML ad tag in the UI, OpenX includes the cb parameter in the ad tag as follows: cb=INSERT_RANDOM_NUMBER_HERE. When implementing image and iFrame ad tags for HTML ad requests, replace the INSERT_RANDOM_NUMBER_HERE value with a random number, such as a timestamp or a number automatically generated by your CMS. If a user requests the same page again, the browser will invoke a new ad request rather than serving an ad from the cache.
+ch | Character encoding, indicates the character set for the current webpage.
+cs | Client state, indicates a unique ID for the ad unit and user to communicate between the click URL and the ad. This parameter is required for image ad tags and ignored for all other types of ad requests. This parameter only accepts values which use the following characters: a-z, A-Z, 0-9, _ (underscore), or - (hyphen).
+lt | Publishers should send 1, 2, or 3 for the lt parameter (1 is preferred) with lat/lon. If lat/lon is passed with 5 or more decimal places instead of lt. this value is treated the same as lt=1.
+ltsrc deprecated. | Indicates the source of the user’s geographic location details. If the ltsrc parameter has any value, the latitude and longitude is considered to have been derived from the device's GPS location. Otherwise, the latitude and longitude was derived from an IP address. [deprecated].
+mimetype | The mimetype of the mobile video ad unit, which can be any of the following: Android: video/3gp, video/mp4, iOS: video/3gp, video/mov, video/mp4, video/mpv. This parameter is required by mobile video ad requests and is ignored by other types of ad requests.
+o | Indicates a random number assigned to the request that helps scope the response from the server. This ensures that multiple server responses do not collide. This is useful if you are writing your own synchronous JavaScript ad tags and do not use the OpenX JavaScript tag library. For example, if you are building your own tag library, sending OpenX the required inputs, and parsing its output. This parameter is optional for JavaScript ad tags, mobile video ad requests, and video ad requests. It is ignored by other types of ad requests.
+openrtb	| Specifies a string with supply-side OpenRTB data to be passed to OpenX Ad Exchange buyers.
+pgid | Page ID, indicates the unique ID for the predefined ad unit group. This parameter is optional for JavaScript ad tags, mobile video ad requests, and video ad requests. Note: Do not specify this parameter for iFrame or image ad requests, because it will cause an error.
+plg | Plugins, indicates any plugins enabled in the user's browser, such as: pdf. Adobe Acrobat Reader, qt. QuickTime, rp. Real Media Player, shk. Adobe Shockwave, sl. Silverlight, swf. Flash, wmp. Windows Media Player |
+r, r0, r1, or r2 | Redirect, indicates the click redirect URL: r is a single-escaped URL. For example: http%3A%2F%2Fwww.clickredirectURL.com%3Fsome%3D1%26others%3D2F, r0 is an unescaped URL. For example: http://www.clickredirectURL.com?some=1&others=2 , r1 is a single-escaped URL (same as r)., r2 is a double-escaped URL. For example: http%253A%252F%252Fwww.clickredirectURL.com%253Fsome%253D1%2526others%253D2. Note: Any of these redirect parameters must be the last parameter in an ad request URL or click URL string.
 rc | Refresh count, indicates the current number of refreshes for ads served through the ad tag, as counted by OpenX
-This parameter is not initially set in the ad tag. For image, iFrame, JavaScript, and video ad requests, OpenX adds it and then automatically sets it with each refresh. See also: structured response. For custom implementations, your client application adds it and then sets it with each refresh. |
-rd | Refresh delay (in seconds) for refreshing an iFrame. This value must be an integer ≥ 1. If you explicitly pass this parameter in an ad tag, OpenX ignores any server-side refresh delay setting for this ad unit (as set when creating or editing the ad unit or its container site). |
-ref | Referrer, indicates the URL that directed the user to the current webpage. Setting this parameter overrides any referrer information passed in the HTTP headers. |
-res | Resolution, indicates the screen resolution of the user's browser (screen width x height x color depth). |
+This parameter is not initially set in the ad tag. For image, iFrame, JavaScript, and video ad requests, OpenX adds it and then automatically sets it with each refresh. See also: structured response. For custom implementations, your client application adds it and then sets it with each refresh.
+rd | Refresh delay (in seconds) for refreshing an iFrame. This value must be an integer ≥ 1. If you explicitly pass this parameter in an ad tag, OpenX ignores any server-side refresh delay setting for this ad unit (as set when creating or editing the ad unit or its container site).
+ref | Referrer, indicates the URL that directed the user to the current webpage. Setting this parameter overrides any referrer information passed in the HTTP headers.
+res | Resolution, indicates the screen resolution of the user's browser (screen width x height x color depth).
 rm | Refresh max, indicates the maximum number of refreshes for ads displayed through the ad tag. This must be a positive integer. For example, setting this parameter to a value of 5 would result in the display of a total of 6 ads (which includes the initial display of the ad (non-refresh) and the 5 subsequent displays of the ad (refreshes). If you explicitly pass this parameter in an ad tag, OpenX ignores any server-side refresh max setting for this ad unit (as set when creating or editing the ad unit or its container site).
-This optional parameter only applies to iFrame tags, JavaScript tags, and structured ad responses. |
-tfcd | Query argument that enables Child's Online Privacy Protection Act (COPPA) regulations.
-Possible values: 0 and 1.
-* 0=COPPA regulations not enabled.
-* 1=COPPA regulations enabled.
-Refer to OpenRTB 2.3, section 7.1 for more detailed information on COPPA compliance and regulations. |
-tg | Click target, indicates the browser window target when a user clicks an ad on the webpage
-This can be one of the following:
-* _blank. New window
-* _parent Parent window
-* _self. Current window
-* _top. Top window
-Note: This parameter is only used for image and flash creatives that display in iFrame and JavaScript ad tags. |
-tid | Topic ID, indicates the content topic for the webpage. |
-tz | Timezone, indicates the time zone of the user's web browser. |
-VBw | Video bandwidth, indicates the maximum bandwidth for the video ad, in bits per second. Use this parameter as an override for the ad unit setting. |
-VHt | Video height, indicates the expected height dimension of the video ad, in pixels. Use this as an override for the ad unit setting. |
-VMaxd | Video maximum duration, indicates the maximum length of the video ad, in seconds. Use this as an override for the ad unit. setting. This parameter is required for mobile video ad requests. |
-VPl | Video player, indicates the abbreviation for the VAST 2.0-compliant video player that you are using to display the ad, which can be WMV, FLV, or RA. Use this as an override for the ad unit setting. |
+This optional parameter only applies to iFrame tags, JavaScript tags, and structured ad responses.
+tfcd | Query argument that enables Child's Online Privacy Protection Act (COPPA) regulations. Possible values: 0 and 1: 0=COPPA regulations not enabled, 1=COPPA regulations enabled. Refer to OpenRTB 2.3, section 7.1 for more detailed information on COPPA compliance and regulations. |
+tg | Click target, indicates the browser window target when a user clicks an ad on the webpage. This can be one of the following: _blank. New window, _parent Parent window, _self. Current window, _top. Top window. Note: This parameter is only used for image and flash creatives that display in iFrame and JavaScript ad tags.
+tid | Topic ID, indicates the content topic for the webpage.
+tz | Timezone, indicates the time zone of the user's web browser.
+VBw | Video bandwidth, indicates the maximum bandwidth for the video ad, in bits per second. Use this parameter as an override for the ad unit setting.
+VHt | Video height, indicates the expected height dimension of the video ad, in pixels. Use this as an override for the ad unit setting.
+VMaxd | Video maximum duration, indicates the maximum length of the video ad, in seconds. Use this as an override for the ad unit. setting. This parameter is required for mobile video ad requests.
+VPl | Video player, indicates the abbreviation for the VAST 2.0-compliant video player that you are using to display the ad, which can be WMV, FLV, or RA. Use this as an override for the ad unit setting.
 Vstrm | Video streaming protocol, indicates the streaming protocol to use for the video ad. Use this as an override for the ad unit setting.
-VWd | Video width, indicates the expected width dimension for the video ad, in pixels. Use this as an override for the ad unit setting. |
-xid | User ID, indicates the customer-provided user ID. |
+VWd | Video width, indicates the expected width dimension for the video ad, in pixels. Use this as an override for the ad unit setting.
+xid | User ID, indicates the customer-provided user ID.
 
 The following types of ad request have their own parameters:
 
@@ -8438,7 +8418,9 @@ Refer to the topics for each type of ad request for more information about how t
 
 If you are performing HTML ad requests with image, iFrame, or JavaScript ad tags, you may be able to specify various HTML attributes that are specific to the tag type that you are using. For example, for an image ad tag, this may include the border attribute. This guide does not go into detail about how to use common HTML attributes. For more information, refer to www.w3schools.com.
 
-Note: In cases where a web browser is used to make an ad request, the browser may truncate the an ad request if the resulting URL exceeds its character limits. These limits vary by browser, but consider this by setting required parameters first and then incorporating optional parameters in your tags.
+<aside class="notice">
+In cases where a web browser is used to make an ad request, the browser may truncate the an ad request if the resulting URL exceeds its character limits. These limits vary by browser, but consider this by setting required parameters first and then incorporating optional parameters in your tags.
+</aside>
 
 ### Custom variables in ad requests
 
@@ -8461,6 +8443,7 @@ The openrtb ad request parameter supports a percent-encoded string generated fro
 Sample openrtb parameter included in an ad request:
 
 The following ad request shows how you can include various ad request parameters—including the openrtb parameter, which specifies a percent-encoded string.
+
 ```
 http://delivery_server_domain/w/1.0/acj?
 o=7889550390&callback=OX_7889550390&auid=537627288&res=320x568x32&plg=qt%2Cpm&ch=UTF-8&tz=420&ws=320x50&sd=1&openrtb=%7B%22cur%22%3A%20%5B%22USD%22%5D%2C%20%22site%22%3A
@@ -8496,6 +8479,7 @@ Where:
 #### Sample JSON object including OpenRTB values
 
 The following JSON object shows the structure of the OpenRTB data before removing unnecessary white space and before percent encoding.
+
 ```
 {'at': 1,
  'cur': ['USD'],
@@ -8525,11 +8509,14 @@ Where:
 * site. Corresponds to the BidRequest.site field, which specifies a Site object array, which in turn specifies the Publisher object.
 * user. Corresponds to the BidRequest.user field, which specifies a User object including their unique ID.
 
-Note: This field is not passed from publishers to OpenX Ad Exchange. Do not include it because it will be ignored and it will only increase the length of your request.
+<aside class="notice">
+This field is not passed from publishers to OpenX Ad Exchange. Do not include it because it will be ignored and it will only increase the length of your request.
+</aside>
 
 To improve performance, remove all unneeded white space and line breaks from your JSON object before generating a percent-encoded version of it as shown in the following example.
 
 JSON string prepared for percent-encoding:
+
 ```
 {"cur": ["USD"], "site": {"publisher": {"domain": "example.com", "cat": ["IAB3-1"], "id": "8953", "name": "example.com"}, "domain": 
 "www.example.com", "page": "http://www.example.com/1234.html ", "id": "102855", "cat": ["IAB3-1"]}, "imp": [{"banner": {"h": 250, 
@@ -8549,58 +8536,39 @@ OpenX uses the following fields because many buyers target them:
 
 In addition, the following fields are recommended because they provide the most value to buyers.
 
-Object name |	Field name |	Data type |	Description |
------------ |   ---------- |   ---------- |    ------------ |
-BidRequest.app | bundle | string | The unique ID of the app's package (Android), bundle (iOS), or its AppStore ID. For example: "com.demo.openx" or "123456789" |
-BidRequest.app | cat | array (string) | The list of IAB content categories for the app, as defined in table 5.1 (Content Categories) of the OpenRTB API specification |
-BidRequest.app | keywords | string | A comma-separated list of keywords describing the app. |
-BidRequest.app | name | string	The name of the app. |
-BidRequest.app | storeurl | string | The app store URL for this app. |
-BidRequest.app.content | keywords | string | A comma-separated list of keywords describing the app's content. |
-BidRequest.device | carrier | string | The mobile carrier for the user's device as derived from the IP address and expressed by the mobile country code (MCC) and mobile network code (MCC-MNC). For example: "310-410." Ad Exchange buyers will expect an MCC-MNC code, so sending the name of the carrier may not be parsed correctly by the buyer's system. |
-BidRequest.device |  connectiontype | integer | Indicates the detected data connection type for the user’s device as defined in table 5.18 (Connection Type) of the OpenRTB specification. |
-BidRequest.device | devicetype | integer | Indicates the detected device category for the user’s device as defined in table 5.17 (Device Type) of the OpenRTB specification. Note: OpenX OpenRTB uses a devicetype value of 1001 to indicate text (SMS). |
-BidRequest.device | didsha1 | string | The SHA-1 hash identifier for the user’s device, such as the UDID for an iOS device. For example: 2b6f0cc904d137be2e1730235f5664094b831186. |
-BidRequest.device | dpidmd5 | string | The MD5 hash of the Android ID for the end-user's mobile device. |
-BidRequest.device | dpidsha1 | string | The SHA-1 hash of the Android ID for the end-user's mobile device. |
-BidRequest.device | ifa | string | ID for advertisers (also referred to as "IDFA"). This is the ID sanctioned for advertiser use in the clear (not hashed). |
-BidRequest.device | lmt | integer | If the user’s mobile device is set for private browsing, the LMT (limit tracking) flag is passed.
-* 0 = false
-* 1 = true (the user does not want to be tracked.). |
-BidRequest.device | macmd5 | string | The MD5 hash of the device's MAC address. |
-BidRequest.device | macsha1 | string | The SHA-1 hash of the device's MAC address. |
-BidRequest.device.geo | lat | float | The user’s latitude. For example: 33.684. |
-BidRequest.device.geo | lon | float | The user’s longitude. For example: -117.793. | 
-BidRequest.device.geo | type | integer | Indicates the source of the user’s geographic location details, as defined in table 5.16 (Location Type) of the OpenRTB API specification. For example, this field can indicate whether the lat or lon is derived from the device's GPS location or an IP address. |
-BidRequest.imp | displaymanager | string | The name of the mediation partner or other third party responsible for rendering the ad. |
+Object name | Field name | Data type | Description
+----------- |  ---------- | ---------- | -----------
+BidRequest.app | bundle | string | The unique ID of the app's package (Android), bundle (iOS), or its AppStore ID. For example: "com.demo.openx" or "123456789".
+BidRequest.app | cat | array (string) | The list of IAB content categories for the app, as defined in table 5.1 (Content Categories) of the OpenRTB API specification.
+BidRequest.app | keywords | string | A comma-separated list of keywords describing the app.
+BidRequest.app | name | string	The name of the app.
+BidRequest.app | storeurl | string | The app store URL for this app.
+BidRequest.app.content | keywords | string | A comma-separated list of keywords describing the app's content.
+BidRequest.device | carrier | string | The mobile carrier for the user's device as derived from the IP address and expressed by the mobile country code (MCC) and mobile network code (MCC-MNC). For example: "310-410." Ad Exchange buyers will expect an MCC-MNC code, so sending the name of the carrier may not be parsed correctly by the buyer's system.
+BidRequest.device |  connectiontype | integer | Indicates the detected data connection type for the user’s device as defined in table 5.18 (Connection Type) of the OpenRTB specification.
+BidRequest.device | devicetype | integer | Indicates the detected device category for the user’s device as defined in table 5.17 (Device Type) of the OpenRTB specification. Note: OpenX OpenRTB uses a devicetype value of 1001 to indicate text (SMS).
+BidRequest.device | didsha1 | string | The SHA-1 hash identifier for the user’s device, such as the UDID for an iOS device. For example: 2b6f0cc904d137be2e1730235f5664094b831186.
+BidRequest.device | dpidmd5 | string | The MD5 hash of the Android ID for the end-user's mobile device.
+BidRequest.device | dpidsha1 | string | The SHA-1 hash of the Android ID for the end-user's mobile device.
+BidRequest.device | ifa | string | ID for advertisers (also referred to as "IDFA"). This is the ID sanctioned for advertiser use in the clear (not hashed).
+BidRequest.device | lmt | integer | If the user’s mobile device is set for private browsing, the LMT (limit tracking) flag is passed. 0 = false, 1 = true (the user does not want to be tracked.).
+BidRequest.device | macmd5 | string | The MD5 hash of the device's MAC address.
+BidRequest.device | macsha1 | string | The SHA-1 hash of the device's MAC address.
+BidRequest.device.geo | lat | float | The user’s latitude. For example: 33.684.
+BidRequest.device.geo | lon | float | The user’s longitude. For example: -117.793.
+BidRequest.device.geo | type | integer | Indicates the source of the user’s geographic location details, as defined in table 5.16 (Location Type) of the OpenRTB API specification. For example, this field can indicate whether the lat or lon is derived from the device's GPS location or an IP address.
+BidRequest.imp | displaymanager | string | The name of the mediation partner or other third party responsible for rendering the ad.
 BidRequest.imp.banner | api | array (integer)	
-One of the supported API standards or frameworks:
-* 1 - VPAID 1.0
-* 2 - VPAID 2.0
-* 3 - MRAID 1.0
-* 4 - ORMMA
-* 5 - MRAID 2.0
-For example: "1, 2"
-For details, see table 5.6 (API Frameworks) of the OpenRTB API specification. |
-BidRequest.imp.native | api | array (integer)	
-One of the supported API standards or frameworks:
-* 1 - VPAID 1.0
-* 2 - VPAID 2.0
-* 3 - MRAID 1.0
-* 4 - ORMMA
-* 5 - MRAID 2.0 |
-BidRequest.regs | coppa | integer | Indicates whether the request is subject to Children’s Online Privacy Protection Act (COPPA) regulations
-* 0 = false
-* 1 = true (the request is subject to COPPA). |
-BidRequest.regs.ext | sb568 | integer | Indicates whether the request is subject to California’s SB-568 regulations
-* 0 = false
-* 1 = true (the request is subject to SB-568). |
-BidRequest.site | keywords | string | A comma-separated list of keywords describing the site. |
-BidRequest.site.content | keywords | string | A comma-separated list of keywords describing the site's content. |
-BidRequest.user	| keywords | string | A comma-separated list of keywords describing the user's interests. |
-BidRequest.user.geo | lat | float | The user’s latitude. For example: 33.684. |
-BidRequest.user.geo | lon | float | The user’s longitude. For example: -117.793. |
-BidRequest.user.geo | type | integer | Indicates the source of the user’s geographic location details, as defined in table 5.16 (Location Type) of the OpenRTB API specification. For example, this field can indicate whether the lat or lon is derived from the device's GPS location or an IP address. |
+One of the supported API standards or frameworks: 1 - VPAID 1.0, 2 - VPAID 2.0, 3 - MRAID 1.0, 4 - ORMMA, 5 - MRAID 2.0. For example: "1, 2." For details, see table 5.6 (API Frameworks) of the OpenRTB API specification.
+BidRequest.imp.native | api | array (integer). One of the supported API standards or frameworks: 1 - VPAID 1.0, 2 - VPAID 2.0, 3 - MRAID 1.0, 4 - ORMMA, 5 - MRAID 2.0 |
+BidRequest.regs | coppa | integer | Indicates whether the request is subject to Children’s Online Privacy Protection Act (COPPA) regulations. 0 = false, 1 = true (the request is subject to COPPA).
+BidRequest.regs.ext | sb568 | integer | Indicates whether the request is subject to California’s SB-568 regulations. 0 = false, 1 = true (the request is subject to SB-568).
+BidRequest.site | keywords | string | A comma-separated list of keywords describing the site.
+BidRequest.site.content | keywords | string | A comma-separated list of keywords describing the site's content.
+BidRequest.user	| keywords | string | A comma-separated list of keywords describing the user's interests.
+BidRequest.user.geo | lat | float | The user’s latitude. For example: 33.684.
+BidRequest.user.geo | lon | float | The user’s longitude. For example: -117.793.
+BidRequest.user.geo | type | integer | Indicates the source of the user’s geographic location details, as defined in table 5.16 (Location Type) of the OpenRTB API specification. For example, this field can indicate whether the lat or lon is derived from the device's GPS location or an IP address.
 
 ### OpenRTB fields not passed by publisher
 
@@ -8609,8 +8577,8 @@ You can pass as many supported OpenRTB fields as you find useful to characterize
 * Some values are already known to OpenX via the publisher’s data
 * Some values are only relevant to Ad Exchange
 
-Object | Field name | Data type | Description |
------- | ---------- | --------- | ----------- |
+Object | Field name | Data type | Description
+------ | ---------- | --------- | -----------
 BidRequest | allimps |integer | Indicates whether the impressions offered represent all of the impressions available for the ad space context, such as all impressions on the webpage or all pre-, mid-, and post-roll video impressions
 Values include:
 * 0. No or unknown (the default)
@@ -11009,7 +10977,9 @@ HTTP headers. OpenX uses the following HTTP headers, which should be forwarded f
 * User-Agent
 * X-Forwarded-For
 
-Important: The User-Agent header is critical for validating requests against known spiders and bots. You must forward the exact client user agent string or ensure that any custom user agent is pre-pended with "Mozilla Compatible".
+<aside class="warning">
+The User-Agent header is critical for validating requests against known spiders and bots. You must forward the exact client user agent string or ensure that any custom user agent is pre-pended with "Mozilla Compatible".
+</aside>
 
 Query arguments. In addition to required ad request parameters, we suggest you provide additional information in your server-to-server ad requests. For example, the tz (timezone) parameter is recommended.
 
@@ -11045,7 +11015,7 @@ These ad requests use a client-side impression counting mechanism. Your custom a
 
 The following example shows an ad request for an XML response, which will fulfill a single ad unit.
 
-Standalone request XML ad request
+#### Standalone request XML ad request
 
 ```
 http://delivery_server_domain/w/1.0/arx?auid=6
@@ -11053,7 +11023,7 @@ http://delivery_server_domain/w/1.0/arx?auid=6
 
 The following example shows a request for a standalone JSON response, which will fulfill a single ad unit.
 
-Standalone request JSON ad request
+#### Standalone request JSON ad request
 
 ```
 http://delivery_server_domain/w/1.0/arj?auid=6
@@ -11061,7 +11031,7 @@ http://delivery_server_domain/w/1.0/arj?auid=6
 
 The following example shows a request for a standalone JSONP response, which will fulfill a single ad unit.
 
-Standalone request JSONP ad request
+#### Standalone request JSONP ad request
 
 ```
 http://delivery_server_domain/w/1.0/arj?auid=6&callback=foo
@@ -11082,7 +11052,7 @@ Where:
 
 Request ads for multiple ad units in a single call, referenced by an ad unit group ID.
 
-XML ad unit group request
+#### XML ad unit group request
 
 The following request for an XML response will fulfill multiple ad units.
 
@@ -11090,7 +11060,7 @@ The following request for an XML response will fulfill multiple ad units.
 http://delivery_server_domain/w/1.0/arx?pgid=123
 ```
 
-JSON ad unit group request
+#### JSON ad unit group request
 
 The following request for an ad unit group will fulfill multiple ad units.
 
@@ -11098,7 +11068,7 @@ The following request for an ad unit group will fulfill multiple ad units.
 http://delivery_server_domain/w/1.0/arj?pgid=123
 ```
 
-JSONP ad unit group request
+#### JSONP ad unit group request
 
 The following request for an ad unit group will fulfill multiple ad units.
 
@@ -11126,7 +11096,7 @@ The following request will fulfill multiple ad units.
 http://delivery_server_domain/w/1.0/arx?auid=1,2,3
 ```
 
-JSON multi-ad unit request JSON ad request
+#### JSON multi-ad unit request JSON ad request
 
 The following request will fulfill multiple ad units.
 
@@ -11134,7 +11104,7 @@ The following request will fulfill multiple ad units.
 http://delivery_server_domain/w/1.0/arj?auid=1,2,3
 ```
 
-Sample multi-ad unit request JSONP ad request
+#### Sample multi-ad unit request JSONP ad request
 
 The following request will fulfill multiple ad units.
 
@@ -11177,7 +11147,9 @@ To use these fields, your client application must:
 
 * Identify the refresh_delay and refresh_max fields in the XML or JSON response.
 * Append rc=COUNT where COUNT is replaced with the iteration of the reload (e.g., first refresh has rc=1 and third has rc=3).
+
 For example:
+
 ```
 max = response.refresh_max
 delay = response.refresh_delay
@@ -11187,6 +11159,7 @@ for (i=1;i++;i<=refresh_max) {
   fetch_ad(url)
 }
 ```
+
 ## Video ad requests
 
 To serve a video ad to your ad space:
@@ -11200,7 +11173,9 @@ To serve a video ad to your ad space:
 * OpenX receives the video ad request, performs ad selection, and returns a VAST 2.0-compliant XML response, which your VAST 2.0-compliant video player can interpret and render in the appropriate location.
 * The video player renders the selected ad in the appropriate location. To count video impressions, configure your video player to perform client-side counting.
 
-Tip: For mobile apps, OpenX provides a mobile SDK for Android and iOS, which includes a VAST-compatible player and various integration scenarios.
+<aside class="notice">
+For mobile apps, OpenX provides a mobile SDK for Android and iOS, which includes a VAST-compatible player and various integration scenarios.
+</aside>
 
 ### Standalone video ad request example
 
@@ -11317,7 +11292,7 @@ The response contains the following elements:
 * v. Indicates a video delivery medium
 * ri. Record impression
 
-.... Indicates that the URI can be longer and include many optional ad request parameters
+Indicates that the URI can be longer and include many optional ad request parameters
 * Creatives. A container element that includes details about creatives for the selected ad
 * Tracking. A container element for the click- and impression-tracking beacons for the selected ad
 * rv. Record video events
