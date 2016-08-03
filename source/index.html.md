@@ -8805,161 +8805,68 @@ videoquality | integer | The video quality classification. For details, see Tabl
 
 ### BidRequest.device
 
-Each BidRequest object may contain a Device object, which provides details about the end-user's computing environment.
-The Device object can reference the Geo object.
-Device fields that can be passed by publishers
-Field name	Data type	Description
-carrier
-(recommended)
-string	
-The mobile carrier for the user's device as derived from the IP address and expressed by the mobile country code (MCC) and mobile network code (MCC-MNC)
-For example: "310-410"
-Ad Exchange buyers will expect an MCC-MNC code, so sending the name of the carrier may not be parsed correctly by the buyer's system.
-connectiontype
-(recommended)
-integer	
-Indicates the detected data connection type for the user’s device as defined in table 5.18 (Connection Type) of the OpenRTB specification
-devicetype
-(recommended)
-integer	
-Indicates the detected device category for the user’s device as defined in table 5.17 (Device Type) of the OpenRTB specification
-Note: OpenX OpenRTB uses a devicetype value of 1001 to indicate text (SMS).
-didsha1
-(recommended)
-string	
-The SHA-1 hash identifier for the user’s device, such as the UDID for an iOS device
-For example: 2b6f0cc904d137be2e1730235f5664094b831186
-dnt	integer	
-Do not track flag
-If the user’s web browser is set for private browsing, a dnt value of 1 is passed. If dnt has a value of 0, the browser is not set for private browsing.
-dpidmd5
-(recommended)
-string	
-The MD5 hash of the Android ID for the end-user's mobile device
-dpidsha1
-(recommended)
-string	
-The SHA-1 hash of the Android ID for the end-user's mobile device
-flashver
-string	
-The version of Flash supported by the device's browser
-geo	Geo object	
-An object containing properties that describe the geographic location of the user as derived from the device
-h
-integer	
-The height of the device's screen in pixels
-hwv
-string	
-The hardware version of the device
-ifa
-(recommended)
-string	
-ID for advertisers (also referred to as "IDFA")
-This is the ID sanctioned for advertiser use in the clear (not hashed).
-ip	string	
-The ipv4 address closest to the user’s device
-For example: "238.122.7.1"
-ipv6
-string	
-The ipv6 address closest to the user’s device
-js
-integer	
-Indicates whether the device supports JavaScript (1) or not (0)
-language	string	
-The two letter code (ISO 639-1) for the user’s preferred browsing language on their device
-For example: "en"
-lmt
-(recommended)
-integer	
-If the user’s mobile device is set for private browsing, the LMT (limit tracking) flag is passed.
-0 = false
-1 = true (the user does not want to be tracked.)
-macmd5
-(recommended)
-string	
-The MD5 hash of the device's MAC address
-macsha1
-(recommended)
-string	
-The SHA-1 hash of the device's MAC address
-make	string	
-The make for the user’s device
-For example: "Apple"
-model	string	
-The model for the user’s device
-For example: "iPhone"
-os	string	
-The operating system for the user’s device
-osv	string	
-The version number for the user’s operating system
-ppi
-integer	
-The size of the device's screen expressed in pixels per inch
-pxratio
-float	
-The ratio of device pixels to device-independent pixels
-ua	string	
-The HTTP user agent, which typically indicates the user’s browser
-For example: "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_2; en-us)"
-w
-integer	
-The width of the device's screen in pixels
-BidRequest.device.geo OR BidRequest.user.geo
-The Geo object provides details about the user's current location (in relation to the Device object) or their primary location (via the User object).
-Geo fields that can be passed by publishers
-Field name	Data type	Description
-city	string	
-The city where the user is located (United Nations Code for Trade and Transport Locations)
-For example: "los angeles"
-country	string	
-The country where the user is located expressed as an ISO 3166-1 alpha-3 code
-For example: "USA"
-lat
-(recommended)
-float	
-The user’s latitude
-For example: 33.684
-lon
-(recommended)
-float	
-The user’s longitude
-For example: -117.793
-metro
-string	
-Indicates the Google metro code, which are similar to DMA codes
-region
-string	
-Indicates the region code per ISO-3166-2 or the two-character state code in the U.S.
-For example: "CA"
-type
-(recommended)
-integer	
-Indicates the source of the user’s geographic location details, as defined in table 5.16 (Location Type) of the OpenRTB API specification. For example, this field can indicate whether the lat or lon is derived from the device's GPS location or an IP address.
-utcoffset
-integer	
-Indicates the device time as a positive or negative offset, in minutes, from UTC
-zip	string	
-The user's postal code location
-Values are not restricted to the U.S.
-For example: "92602"
-BidRequest.user
-Each BidRequest object can contain a User object, which provides details about the end-user.
-The User object can reference the user's Geo via their Device.
+Each BidRequest object may contain a ```Device``` object, which provides details about the end-user's computing environment. The Device object can reference the Geo object.
+
+Field name | Data type | Description
+-------- | ----------- | -------------
+carrier (recommended) | string | The mobile carrier for the user's device as derived from the IP address and expressed by the mobile country code (MCC) and mobile network code (MCC-MNC). For example: "310-410" Ad Exchange buyers will expect an MCC-MNC code, so sending the name of the carrier may not be parsed correctly by the buyer's system.
+connectiontype (recommended) | integer | Indicates the detected data connection type for the user’s device as defined in table 5.18 (Connection Type) of the OpenRTB specification.
+devicetype (recommended) | integer | Indicates the detected device category for the user’s device as defined in table 5.17 (Device Type) of the OpenRTB specification. Note: OpenX OpenRTB uses a devicetype value of 1001 to indicate text (SMS).
+didsha1 (recommended) | string | The SHA-1 hash identifier for the user’s device, such as the UDID for an iOS device. For example: 2b6f0cc904d137be2e1730235f5664094b831186.
+dnt | integer | Do not track flag. If the user’s web browser is set for private browsing, a dnt value of 1 is passed. If dnt has a value of 0, the browser is not set for private browsing.
+dpidmd5 (recommended) | string | The MD5 hash of the Android ID for the end-user's mobile device.
+dpidsha1 (recommended) | string	| The SHA-1 hash of the Android ID for the end-user's mobile device.
+flashver | string | The version of Flash supported by the device's browser.
+geo | Geo object | An object containing properties that describe the geographic location of the user as derived from the device.
+h | integer | The height of the device's screen in pixels.
+hwv | string | The hardware version of the device.
+ifa (recommended) | string | ID for advertisers (also referred to as "IDFA"). This is the ID sanctioned for advertiser use in the clear (not hashed).
+ip | string | The ipv4 address closest to the user’s device. For example: "238.122.7.1"
+ipv6 | string | The ipv6 address closest to the user’s device.
+js | integer | Indicates whether the device supports JavaScript (1) or not (0).
+language | string | The two letter code (ISO 639-1) for the user’s preferred browsing language on their device. For example: "en."
+lmt (recommended) | integer | If the user’s mobile device is set for private browsing, the LMT (limit tracking) flag is passed. 0 = false, 1 = true (the user does not want to be tracked.)
+macmd5 (recommended) | string | The MD5 hash of the device's MAC address.
+macsha1 (recommended) | string | The SHA-1 hash of the device's MAC address.
+make | string | The make for the user’s device. For example: "Apple"
+model | string | The model for the user’s device. For example: "iPhone."
+os | string | The operating system for the user’s device.
+osv | string | The version number for the user’s operating system.
+ppi | integer | The size of the device's screen expressed in pixels per inch.
+pxratio | float | The ratio of device pixels to device-independent pixels.
+ua | string | The HTTP user agent, which typically indicates the user’s browser. For example: "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_2; en-us)"
+w | integer | The width of the device's screen in pixels.
+
+### ```BidRequest.device.geo``` OR ```BidRequest.user.geo```
+
+The ```Geo``` object provides details about the user's current location (in relation to the Device object) or their primary location (via the User object).
+
+```Geo``` fields that can be passed by publishers
+
+Field name | Data type | Description
+--------- | ---------- | ------------
+city | string | The city where the user is located (United Nations Code for Trade and Transport Locations). For example: "los angeles"
+country	| string | The country where the user is located expressed as an ISO 3166-1 alpha-3 code. For example: "USA"
+lat (recommended) | float | The user’s latitude. For example: 33.684
+lon (recommended) | float | The user’s longitude. For example: -117.793
+metro | string | Indicates the Google metro code, which are similar to DMA codes.
+region | string | Indicates the region code per ISO-3166-2 or the two-character state code in the U.S. For example: "CA"
+type (recommended) | integer | Indicates the source of the user’s geographic location details, as defined in table 5.16 (Location Type) of the OpenRTB API specification. For example, this field can indicate whether the lat or lon is derived from the device's GPS location or an IP address.
+utcoffset | integer | Indicates the device time as a positive or negative offset, in minutes, from UTC.
+zip | string | The user's postal code location. Values are not restricted to the U.S. For example: "92602"
+
+### ```BidRequest.user```
+
+Each BidRequest object can contain a User object, which provides details about the end-user. The User object can reference the user's Geo via their Device.
+
 User fields that can be passed by publishers
-Field name	Data type	Description
-data
-array (Data object)	
-An array of Data objects to provide details about the user
-gender
-string	
-The end-user's gender (M, F, or O)
-geo
-Geo object	
-An object containing properties that describe the user's primary location, which is not necessarily their current location
-keywords
-(recommended)
-string	
-A comma-separated list of keywords describing the user's interests
+
+Field name | Data type | Description
+--------- | --------- | -------------
+data | array (Data object) | An array of Data objects to provide details about the user.
+gender | string	| The end-user's gender (M, F, or O).
+geo | Geo object | An object containing properties that describe the user's primary location, which is not necessarily their current location.
+keywords (recommended) | string	| A comma-separated list of keywords describing the user's interests.
 yob
 integer	
 The end-user's four digit year of birth
@@ -9178,7 +9085,9 @@ Some other content here.
 Replace the value of the cb parameter with a random number (preferably a dynamically auto-generated number from your CMS) for cachebusting purposes.
 
 ## JavaScript ad tags
+
 You can add JavaScript tags (<script>) to an HTML ad request to:
+
 Define ad units.
 Select and queue appropriate ads for the ad units.
 Display the selected ads in the appropriate ad space.
@@ -9194,9 +9103,11 @@ OpenX JavaScript tag library. Supports customized ad requests and simplifies how
 The jstag file provides the following JavaScript methods:
 Instance methods. Set distinct configuration or ad request parameters for a given instantiation of an OX object.
 Static methods. Set global configuration values and manage global data sets in the OpenX JavaScript tag library.
+
 Note: The OpenX JavaScript Tag Library does not support all ad request parameters. For information about what parameters each method supports, see the corresponding reference page for the specific method.
+
 You can implement the following types of JavaScript tags:
-Standalone. Request a single ad inline. OpenX supports three formats for standalone JavaScript ad tags:
+* Standalone. Request a single ad inline. OpenX supports three formats for standalone JavaScript ad tags:
 Generated in the UI. Works in standard and third-party trafficking implementations. Stores ad request details in an OX_ads global array and uses OX_ads.push to add a new ad unit to the ad request queue. Use this method if you are sending the ad tag to a third-party to traffic in another ad server or for ad tags wrapped in a document.write() call.
 Static method format. Uses the requestAd method to invoke an ad request and show the selected ad.
 Instance method format. Uses OX instance methods to set up tag attributes, invoke the ad request, and display the appropriate ad.
@@ -9204,14 +9115,18 @@ Ad unit group. Request ads for multiple ad units referenced in a single call by 
 Multi-ad unit. Requests ads for multiple ad units in a single call and facilitate coordination between ad units (e.g., competitive exclusion).
 
 ### Implementing standalone ad tags
+
 Regardless of the standalone ad tag implementation that you use (that is, using static methods, using instance methods, or for tags running on another server), the way that you include the ad tag in your website source code is the same.
+
 To implement a standalone ad tag:
+
 Generate your ad tag in the OpenX UI, via the OpenX API, or manually using the information in this help section.
 Copy the ad tag.
 Paste the ad tag in your website source code. You need to paste your ad tag between the HTML body tags, where you want the ad to display.
+
 The JavaScript request structure must:
-Include the method and required parameters
-Contain only one method (send a separate request for each operation you want to perform)
+* include the method and required parameters
+contain only one method (send a separate request for each operation you want to perform)
 Include the full case-sensitive method name using the following pattern: OBJECT_NAME.method_name.
 For example, to request an ad for an ad unit, call the addAdUnit method using the following format: OX_random_string.addAdUnit(auid)
 (Optional) OpenX provides a parameter for JavaScript tags to avoid potential namespace collisions.
@@ -9901,84 +9816,146 @@ Yes
 setAnchorTarget Example
 OX_string.setAnchorTarget("_blank");
 
-#### setAPIFrameworks
-Set the API frameworks supported by a mobile app, such as MRAID 2.0. This method supports an array of parameters representing the supported API frameworks.
-If you use this method, you must specify at least one of its supported parameters.
-setAPIFrameworks parameters
-Parameter	Description	Required?
-1	VPAID 1.0 (video player-ad interface definitions)	No
-2	VPAID 2.0	No
-3	MRAID 1.0 (mobile rich-media ad interface definitions)	No
-4	ORMMA (open rich media mobile advertising)	No
-5	MRAID 2.0	No
-Setting the API frameworks supported by a mobile app
+#### ```setAPIFrameworks```
+
+Set the API frameworks supported by a mobile app, such as MRAID 2.0. This method supports an array of parameters representing the supported API frameworks. If you use this method, you must specify at least one of its supported parameters.
+
+``setAPIFrameworks``` parameters
+
+Parameter | Description | Required?
+1 | VPAID 1.0 (video player-ad interface definitions) | No
+2 | VPAID 2.0 | No
+3 | MRAID 1.0 (mobile rich-media ad interface definitions) | No
+4 | ORMMA (open rich media mobile advertising) | No
+5 | MRAID 2.0 | No
+
+##### Setting the API frameworks supported by a mobile app
+
+```
 OX_string.setAPIFrameworks([3,5]);
 af parameter
+```
+
 Alternatively, you can use the following standalone JavaScript ad tag to set the af (API frameworks) parameter:
+
+```
 OX.requestAd({
     "auid":"12345",
     "af":[3,5]
 });
+```
 
-#### setAppBundleID
+#### ```setAppBundleID```
+
 Set the bundle ("package") ID of the mobile app in which the tag is running.
-setAppBundleID parameters
-Parameter	Description	Required?
-appBundleID	The ID of the app's bundle	Yes
+
+```setAppBundleID``` parameters
+
+Parameter | Description	| Required?
+--------- | ------------ | ---------------
+appBundleID | The ID of the app's bundle | Yes
+
 Setting the bundle ID of the mobile app
+
+```
 OX_12345.setBundleID("com.openx.openxdemo");
-requestAd appBundle parameter
+```
+
+```requestAd appBundle``` parameter
+
 Alternatively, you can use the following standalone JavaScript ad tag to set the appBundle parameter:
+
+```
 OX.requestAd({
     "auid":"12345",
     "appBundle":"com.openx.openxdemo"
 });
+```
 
-#### setAppName
+#### ```setAppName```
+
 Set the name of the mobile app in which the tag is running.
-setAppName parameters
-Parameter	Description	Required?
-appName	The name of the mobile app	Yes
+
+```setAppName``` parameters
+
+Parameter | Description	| Required?
+-------- | ----------- | --------------
+appName | The name of the mobile app | Yes
+
 Setting the name of a mobile app
+
+```
 OX_string.setAppName("OpenX Demo");
 requestAd setting appName parameter
+```
+
 Alternatively, you can use the following standalone JavaScript ad tag to set the appName parameter:
+
+```
 OX.requestAd({
     "auid":"12345",
     "appName":"OpenX Demo"
 });
+```
 
-#### setAppStoreURL
-et the app store URL from which the mobile app can be downloaded.
-setAppStoreURL parameters
-Parameter	Description	Required?
-appStoreURL	The app store URL for the app	No
+#### ```setAppStoreURL```
+
+Get the app store URL from which the mobile app can be downloaded.
+
+```setAppStoreURL``` parameters
+
+Parameter | Description	| Required?
+--------- | ---------- | ---------------
+appStoreURL | The app store URL for the app | No
+
 Setting the app store URL for a mobile app
+
+```
 OX_string.setAppStoreURL("http://itunes.apple.com/us/app/bee-leader/id580743157?mt=8");
 requestAd setting appStoreURL parameter
-Alternatively, you can use the following standalone JavaScript ad tag to set the appStoreURL parameter:
+```
+
+Alternatively, you can use the following standalone JavaScript ad tag to set the ```appStoreURL``` parameter:
+
+```
 OX.requestAd({
     "auid":"12345",
     "appStoreURL":"http://itunes.apple.com/us/app/bee-leader/id580743157?mt=8"
 });
+```
 
-#### setClickRedirectURL
-Use this method to set the click redirect URL for an ad request. This method sets the r parameter of the ad request (which represents the click redirect URL).
-setClickRedirectURL Example
+#### ```setClickRedirectURL```
+
+Use this method to set the click redirect URL for an ad request. This method sets the ```r``` parameter of the ad request (which represents the click redirect URL).
+
+```setClickRedirectURL``` Example
+
+```
 OX_string.setClickRedirectURL();
+```
 
-#### setCoords
+#### ```setCoords```
+
 Set the geolocation for the ad request. This method is useful for mobile web or mobile apps, where the publisher may have access to accurate GPS location data.
-setCoords parameters
-Parameter	Description	Required?
-coords	A geolocation coordinates object, which provides latitude, longitude, and (optionally) other properties	No
+
+Parameter | Description	| Required?
+-------- | ----------- | --------------
+coords | A geolocation coordinates object, which provides latitude, longitude, and (optionally) other properties | No
+
 Setting the geolocation for the ad request
+
+```
 OX_string.setCoords({
 	"latitude":"34.1496085",
 	"longitude":"-118.1330328"
 });
+```
+
 Standalone JavaScript ad tag
+
 Alternatively, you can use the following standalone JavaScript ad tag to set the coords (API frameworks) parameter:
+
+```
 OX.requestAd({
     "auid":"12345",
     "coords":{
@@ -9986,30 +9963,41 @@ OX.requestAd({
         "longitude":"-118.1330328"
     }
 });
+```
 
-#### setGateway
-Use this method to set the base URL of the delivery gateway to use for this ad request.
-The OpenX JavaScript tag library will append the appropriate strings to this URL that are necessary to call the gateway. Typically, you do not have to call this method because the ad tags generated by the system will provide this configuration.
-setGateway parameters
-Parameter	Description	Required?
-url	Base URL for the OpenX web ad gateway (delivery server)	Yes
-setGateway Example
+#### ```setGateway```
+
+Use this method to set the base URL of the delivery gateway to use for this ad request. The OpenX JavaScript tag library will append the appropriate strings to this URL that are necessary to call the gateway. Typically, you do not have to call this method because the ad tags generated by the system will provide this configuration.
+
+Parameter | Description	| Required?
+--------- | ------------ | -----------
+url | Base URL for the OpenX web ad gateway (delivery server) | Yes
+
+```setGateway``` Example
+
+```
 OX_string.setGateway("http://delivery_server_domain/w/1.0/");
-Where:
-string is a random string.
-http. The protocol. If your ad space uses SSL/TLS, use https instead.
-delivery_server_domain. The hostname of your OpenX delivery server
-/w. Indicates the web delivery medium
-/1.0. Indicates version 1.0 of the OpenX JavaScript tag protocol
+```
 
-#### setOpenRTBParameters
-This method specifies OpenRTB-compliant data passed to Ad Exchange buyers via the ad request.
-Depending on your use case, you can specify the data in a JavaScript object literal or as a JSON string.
-You must pass this method before the fetchAds and load methods.
-setOpenRTB Parameters
-Parameters	Description	Required?
-openrtb	An object literal or JSON string representing an OpenRTB bid request	Yes
-Example: setOpenRTBParameter object literal
+Where:
+
+* string is a random string.
+* http. The protocol. If your ad space uses SSL/TLS, use https instead.
+* delivery_server_domain. The hostname of your OpenX delivery server
+* /w. Indicates the web delivery medium
+* /1.0. Indicates version 1.0 of the OpenX JavaScript tag protocol
+
+#### ```setOpenRTBParameters```
+
+This method specifies OpenRTB-compliant data passed to Ad Exchange buyers via the ad request. Depending on your use case, you can specify the data in a JavaScript object literal or as a JSON string. You must pass this method before the ```fetchAds``` and ```load``` methods.
+
+Parameters | Description | Required?
+--------- | ------------- | -------------
+openrtb	| An object literal or JSON string representing an OpenRTB bid request | Yes
+
+Example: ```setOpenRTBParameter``` object literal
+
+```
 OX_string.setOpenRTBParameters({
     auid: "12345",
     openrtb: {
@@ -10025,23 +10013,35 @@ OX_string.setOpenRTBParameters({
         }
     }
 });
+```
+
 Where:
-string. A random string of your chosing
-auid. The ad unit ID for the ad to be displayed
-openrtb. Indicates OpenRTB parameters
-imp. Corresponds to the OpenRTB Imp object
-banner. Corresponds to the OpenRTB Banner object
-{ w: 320, h: 50 }. Specifies the width and height of the ad unit in pixels
-app. Corresponds to the OpenRTB App object
-ver: "1.0". The version string of the mobile app
-paid: 0. The App object's paid field, where 0 means the app is free and 1 means the app is a paid version
-keywords: "games". The App object's keywords field, which provides a comma-delimited list of keywords for the app
-Example: setOpenRTBParameters JSON string
+
+* string. A random string of your chosing
+* auid. The ad unit ID for the ad to be displayed
+* openrtb. Indicates OpenRTB parameters
+* imp. Corresponds to the OpenRTB Imp object
+* banner. Corresponds to the OpenRTB Banner object
+* { w: 320, h: 50 }. Specifies the width and height of the ad unit in pixels
+* app. Corresponds to the OpenRTB App object
+* ver: "1.0". The version string of the mobile app
+* paid: 0. The App object's paid field, where 0 means the app is free and 1 means the app is a paid version
+* keywords: "games". The App object's keywords field, which provides a comma-delimited list of keywords for the app
+
+Example: ```setOpenRTBParameters``` JSON string
+
 This string corresponds to the object literal above.
+
+```
 OX_12345.setOpenRTBParameters('{"auid":"12345","openrtb":{"imp":[{"banner":{"w":320,"h":50}}],"app":
 {"ver":"1.0","paid":0,"keywords":"games"}}}');
+```
+
 Example: OpenRTB parameters in a standalone tag
+
 Alternatively, you can use the requestAd method to send OpenRTB parameters to Ad Exchange buyers.
+
+```
 Object literal:
 OX.requestAd({
     auid: "12345",
@@ -10063,66 +10063,104 @@ OX.requestAd({
     auid: "12345",
     openrtb: '{"auid":"12345","openrtb":{"imp":[{"banner":{"w":320,"h":50}}],"app":{"ver":"1.0","paid":0,"keywords":"games"}}}'
 });
+```
 
-#### setRefererURL
-Use this method to indicate the referring URL of the page (HTTP referrer) to the Ad Server if it is not normally detectable using JavaScript. In most cases, the OpenX JavaScript tag library detects the referring URL. However, you can call setRefererURL directly as necessary or use it as an override.
-setRefererURL parameters
-Parameter	Description	Required?
-url	The referring URL of the page	Yes
+#### ```setRefererURL```
+
+Use this method to indicate the referring URL of the page (HTTP referrer) to the Ad Server if it is not normally detectable using JavaScript. In most cases, the OpenX JavaScript tag library detects the referring URL. However, you can call ```setRefererURL``` directly as necessary or use it as an override.
+
+Parameter | Description	| Required?
+---------- | ---------- | --------------
+url | The referring URL of the page | Yes
+
+```
 setRefererURL Example
+```
+```
 OX_string.setRefererURL("http://www.example.com?q=abc");
+```
 
-#### setRefreshDelay
+#### ```setRefreshDelay```
+
 Set the interval (in seconds) at which to refresh ads.
+
 This value must be an integer ≥ 1. If you explicitly pass this parameter in an ad tag, OpenX ignores any server-side refresh delay setting for this ad unit, as set when creating or editing the ad unit or its container site. This affects all ad units associated with the instance.
-setRefreshDelay parameters
-Parameter	Description	Required?
-rd	The refresh delay, in seconds (integer ≥ 1).	Yes
-setRefreshDelay Example
+
+Parameter | Description	| Required?
+--------- | ----------- | -------------
+rd | The refresh delay, in seconds (integer ≥ 1). | Yes
+
+```setRefreshDelay Example```
+
+```
 OX_string.setRefreshDelay(60);
+```
 
-#### setRefreshMax
+#### ```setRefreshMax```
+
 Use this method to set the maximum number of refreshes for ads displayed through the ad tag. This must be a positive integer. For example, setting this parameter to a value of 5 results in the display of a total of 6 ads, including the initial display (non-refresh) and 5 subsequent displays (refreshes).
+
 If you explicitly pass this parameter in an ad tag, OpenX ignores any server-side refresh max setting for this ad unit, as set when creating or editing the ad unit or its container site. This affects all ad units associated with the instance.
-setRefreshMax parameters
-Parameter	Description	Required?
-rm	The maximum number of refreshes (integer ≥ 1)	Yes
-setRefreshMax Example
+
+Parameter | Description	| Required?
+-------- | ----------- | --------------
+rm | The maximum number of refreshes (integer ≥ 1) | Yes
+
+```setRefreshMax``` Example
+
+```
 OX_string.setRefreshMax(5)
+```
 
-#### setUserID
+#### ```setUserID```
+
 Use this method to set a specific user ID for the request. This method should only be used after reviewing an ID management strategy with your account manager.
-setUserID parameters
-Parameter	Description	Required?
-xid	
-The user ID to set in the request
-Yes
-setUserID Example
-OX_string.setUserID("ABC");
 
-#### showAdUnit
-Use this method to show the ads returned to the fetchAds method.
-If you place an anchor tag in the correct location in your webpage and call showAdUnit, the ad rendering is initiated using document.write() to write the ad content into the browser document object model (DOM).
-You must call this method after fetchAds. Otherwise, it will not work.
-showAdUnit parameters
-Parameter	Description	Required?
-auid	The ad unit ID for the ad to be displayed	Yes
-showAdUnit Example
+Parameter | Description	| Required?
+-------- | ------------ | -------------
+xid | The user ID to set in the request | Yes
+
+setUserID Example
+
+```
+OX_string.setUserID("ABC");
+```
+
+#### ```showAdUnit```
+
+Use this method to show the ads returned to the ```fetchAds``` method.
+
+If you place an anchor tag in the correct location in your webpage and call ```showAdUnit```, the ad rendering is initiated using ```document.write()``` to write the ad content into the browser document object model (DOM).
+
+You must call this method after ```fetchAds```. Otherwise, it will not work.
+
+Parameter | Description	| Required?
+auid | The ad unit ID for the ad to be displayed | Yes
+
+##### ```showAdUnit``` Example
+
+```
 OX_string.showAdUnit("12345");
+```
 
 ### OX static methods
+
 There is one global OX object per page. Use OX static methods to set global configuration values or to manage global data sets in the OpenX JavaScript tag library.
-Tip: The responses for these OX static methods are all void operations.
-OX static methods
-Method name	Description	Recommended placement in HTML source	Order
-addVariable	Specify a key-value pair to add to all ad requests for the current page view.	Header	Before requestAd
-frameCreatives	Determine if creatives returned by that instance are framed (true). If not set, use the default provided by the OX object instance.	Body	Before requestAd
-load	Asynchronously request an ad for the ad unit and display it in the appropriate ad space.	Body	Before recordAction
-recordAction	Track conversions.	Body	N/A
-recordSegments	Assign users to or remove them from audience segments.	Body	N/A
-requestAd	Invoke a single ad request without the setup and use of an OX object. It fetches the ad for the ad unit and displays it in the appropriate ad space.	Body	Before recordAction
-setGateway	Set the base URL for the ad gateway for all instances of an ad tag in the given document.	Header	Before requestAd
-setRefererURL	Indicates the referring URL for the current page view.	Header	Before requestAd
+
+<aside class="notice">
+The responses for these OX static methods are all void operations.
+</aside>
+
+Method name | Description | Recommended placement in HTML source | Order
+--------- | ------------- | ------------- | ---------------
+addVariable | Specify a key-value pair to add to all ad requests for the current page view. | Header | Before requestAd
+frameCreatives | Determine if creatives returned by that instance are framed (true). If not set, use the default provided by the OX object instance. | Body	| Before requestAd
+load | Asynchronously request an ad for the ad unit and display it in the appropriate ad space.	| Body | Before recordAction
+recordAction | Track conversions. | Body | N/A
+recordSegments	| Assign users to or remove them from audience segments. | Body	| N/A
+requestAd | Invoke a single ad request without the setup and use of an OX object. It fetches the ad for the ad unit and displays it in the appropriate ad space. | Body | Before recordAction
+setGateway | Set the base URL for the ad gateway for all instances of an ad tag in the given document. | Header	| Before requestAd
+setRefererURL | Indicates the referring URL for the current page view. | Header	| Before requestAd
 
 #### ```addVariable```
 
@@ -10144,10 +10182,11 @@ OX.addVariable("gender","male");
 
 Where:
 
-gender. A custom key
-male. A custom value
-addVariable in a standalone tag
-A standalone JavaScript ad tag with the addVariable method might look like the following:
+* gender. A custom key
+* male. A custom value
+* addVariable in a standalone tag
+* A standalone JavaScript ad tag with the addVariable method might look like the following:
+```
 <script type="text/javascript"
 src="http://delivery_server_domain/w/1.0/jstag">
 </script>
@@ -10157,13 +10196,16 @@ OX.addVariable("gender","male");
 OX.addVariable("age","40");
 OX.requestAd({"auid":"8"});
 </script>
+```
+
 Where:
-src="http://delivery_server_domain/w/1.0/jstag. A request to fetch the OpenX JavaScript tag library
-gender. A custom key
-male. A custom value
-age. Another custom key
-40. Another custom value
-OX.requestAd({"auid":"auid"});. The requestAd method, which must be passed after addVariable
+
+* src="http://delivery_server_domain/w/1.0/jstag. A request to fetch the OpenX JavaScript tag library
+* gender. A custom key
+* male. A custom value
+* age. Another custom key
+* 40. Another custom value
+* OX.requestAd({"auid":"auid"});. The requestAd method, which must be passed after addVariable
 
 #### ```frameCreatives```
 
