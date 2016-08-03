@@ -8369,7 +8369,9 @@ You can set parameters for your ad requests by including key-value pairs: key=va
 
 The following table describes the parameters that OpenX supports in its ad requests. Depending on the type of ad request that you are using, some of the parameters are required, while others are optional. Unless described as required, all parameters are optional (if applicable to the type of ad request) or ignored (when not applicable).
 
-Note: The OpenX JavaScript Tag Library does not support all of the following parameters. For information about what parameters each method supports, see the corresponding reference page for the specific method.
+<aside class="notice">
+The OpenX JavaScript Tag Library does not support all of the following parameters. For information about what parameters each method supports, see the corresponding reference page for the specific method.
+</aside>
 
 Parameter | Description
 --------- | ------------
@@ -8387,7 +8389,7 @@ mimetype | The mimetype of the mobile video ad unit, which can be any of the fol
 o | Indicates a random number assigned to the request that helps scope the response from the server. This ensures that multiple server responses do not collide. This is useful if you are writing your own synchronous JavaScript ad tags and do not use the OpenX JavaScript tag library. For example, if you are building your own tag library, sending OpenX the required inputs, and parsing its output. This parameter is optional for JavaScript ad tags, mobile video ad requests, and video ad requests. It is ignored by other types of ad requests.
 openrtb	| Specifies a string with supply-side OpenRTB data to be passed to OpenX Ad Exchange buyers.
 pgid | Page ID, indicates the unique ID for the predefined ad unit group. This parameter is optional for JavaScript ad tags, mobile video ad requests, and video ad requests. Note: Do not specify this parameter for iFrame or image ad requests, because it will cause an error.
-plg | Plugins, indicates any plugins enabled in the user's browser, such as: pdf. Adobe Acrobat Reader, qt. QuickTime, rp. Real Media Player, shk. Adobe Shockwave, sl. Silverlight, swf. Flash, wmp. Windows Media Player |
+plg | Plugins, indicates any plugins enabled in the user's browser, such as: pdf. Adobe Acrobat Reader, qt. QuickTime, rp. Real Media Player, shk. Adobe Shockwave, sl. Silverlight, swf. Flash, wmp. Windows Media Player
 r, r0, r1, or r2 | Redirect, indicates the click redirect URL: r is a single-escaped URL. For example: http%3A%2F%2Fwww.clickredirectURL.com%3Fsome%3D1%26others%3D2F, r0 is an unescaped URL. For example: http://www.clickredirectURL.com?some=1&others=2 , r1 is a single-escaped URL (same as r)., r2 is a double-escaped URL. For example: http%253A%252F%252Fwww.clickredirectURL.com%253Fsome%253D1%2526others%253D2. Note: Any of these redirect parameters must be the last parameter in an ad request URL or click URL string.
 rc | Refresh count, indicates the current number of refreshes for ads served through the ad tag, as counted by OpenX
 This parameter is not initially set in the ad tag. For image, iFrame, JavaScript, and video ad requests, OpenX adds it and then automatically sets it with each refresh. See also: structured response. For custom implementations, your client application adds it and then sets it with each refresh.
@@ -8396,7 +8398,7 @@ ref | Referrer, indicates the URL that directed the user to the current webpage.
 res | Resolution, indicates the screen resolution of the user's browser (screen width x height x color depth).
 rm | Refresh max, indicates the maximum number of refreshes for ads displayed through the ad tag. This must be a positive integer. For example, setting this parameter to a value of 5 would result in the display of a total of 6 ads (which includes the initial display of the ad (non-refresh) and the 5 subsequent displays of the ad (refreshes). If you explicitly pass this parameter in an ad tag, OpenX ignores any server-side refresh max setting for this ad unit (as set when creating or editing the ad unit or its container site).
 This optional parameter only applies to iFrame tags, JavaScript tags, and structured ad responses.
-tfcd | Query argument that enables Child's Online Privacy Protection Act (COPPA) regulations. Possible values: 0 and 1: 0=COPPA regulations not enabled, 1=COPPA regulations enabled. Refer to OpenRTB 2.3, section 7.1 for more detailed information on COPPA compliance and regulations. |
+tfcd | Query argument that enables Child's Online Privacy Protection Act (COPPA) regulations. Possible values: 0 and 1: 0=COPPA regulations not enabled, 1=COPPA regulations enabled. Refer to OpenRTB 2.3, section 7.1 for more detailed information on COPPA compliance and regulations.
 tg | Click target, indicates the browser window target when a user clicks an ad on the webpage. This can be one of the following: _blank. New window, _parent Parent window, _self. Current window, _top. Top window. Note: This parameter is only used for image and flash creatives that display in iFrame and JavaScript ad tags.
 tid | Topic ID, indicates the content topic for the webpage.
 tz | Timezone, indicates the time zone of the user's web browser.
@@ -8466,6 +8468,7 @@ o=7889550390&callback=OX_7889550390&auid=537627288&res=320x568x32&plg=qt%2Cpm&ch
 ```
 
 Where:
+
 * http is the protocol. If your ad space uses SSL/TLS, use https instead.
 * delivery_server_domain. The hostname of your OpenX delivery server
 * /w. Indicates the web delivery medium
@@ -8501,6 +8504,7 @@ The following JSON object shows the structure of the OpenRTB data before removin
 ```
 
 Where:
+
 * at. Corresponds to OpenRTB's BidRequest.at field, which specifies an auction type of 1 (first price). Note: This field is not passed from publishers to OpenX Ad Exchange. Do not include it because it will be ignored and it will only increase the length of your request.
 * cur. Corresponds to the BidRequest.cur field, which specifies that the currency is in U.S. dollars.
 * device. Corresponds to the BidRequest.device field, which specifies a Device object array.
@@ -8560,7 +8564,7 @@ BidRequest.device.geo | type | integer | Indicates the source of the user’s ge
 BidRequest.imp | displaymanager | string | The name of the mediation partner or other third party responsible for rendering the ad.
 BidRequest.imp.banner | api | array (integer)	
 One of the supported API standards or frameworks: 1 - VPAID 1.0, 2 - VPAID 2.0, 3 - MRAID 1.0, 4 - ORMMA, 5 - MRAID 2.0. For example: "1, 2." For details, see table 5.6 (API Frameworks) of the OpenRTB API specification.
-BidRequest.imp.native | api | array (integer). One of the supported API standards or frameworks: 1 - VPAID 1.0, 2 - VPAID 2.0, 3 - MRAID 1.0, 4 - ORMMA, 5 - MRAID 2.0 |
+BidRequest.imp.native | api | array (integer). One of the supported API standards or frameworks: 1 - VPAID 1.0, 2 - VPAID 2.0, 3 - MRAID 1.0, 4 - ORMMA, 5 - MRAID 2.0
 BidRequest.regs | coppa | integer | Indicates whether the request is subject to Children’s Online Privacy Protection Act (COPPA) regulations. 0 = false, 1 = true (the request is subject to COPPA).
 BidRequest.regs.ext | sb568 | integer | Indicates whether the request is subject to California’s SB-568 regulations. 0 = false, 1 = true (the request is subject to SB-568).
 BidRequest.site | keywords | string | A comma-separated list of keywords describing the site.
@@ -8579,115 +8583,83 @@ You can pass as many supported OpenRTB fields as you find useful to characterize
 
 Object | Field name | Data type | Description
 ------ | ---------- | --------- | -----------
-BidRequest | allimps |integer | Indicates whether the impressions offered represent all of the impressions available for the ad space context, such as all impressions on the webpage or all pre-, mid-, and post-roll video impressions
-Values include:
-* 0. No or unknown (the default)
-* 1. Yes, all of the impressions are available for the ad space.
-OpenX does not currently support the allimps field because only one impression is supported per bid request, so this value will be ignored. |
-BidRequest | at | integer | Auction type, which can be one of the following:
-* 1. First price
-* 2. Second price (the default) |
-BidRequest | cur | Array (string) | The allowed currencies for bids expressed as ISO-4217 values. OpenX does not support the BidRequest.cur field because Ad Exchange does not support multiple currencies, so this field is ignored. |
-BidRequest | ext | Extensions object | 	(Deprecated) An object used to provide custom fields related to the BidRequest object. |
-BidRequest | id | string | A unique ID for the request, which OpenX Ad Exchange uses to identify the auction. For example: 888b4a7a-d259-11e0-9912-000c29b0c11a. |
-BidRequest | tmax | integer | The maximum interval, in milliseconds, to submit a bid and avoid a timeout. |
-BidRequest | wseat | Array (string) | Whitelist of buyer seats allowed to bid on the impression, expressed as seat IDs. OpenX does not currently support the wseat field, so it is ignored. |
-BidRequest.app | domain | string | The app's domain, such as example.domain.com. |
-BidRequest.app | ext | Extensions object | (Deprecated) An object used to provide custom fields related to the App object. |
-BidRequest.app | id | string | The ID for the app associated with the inventory purchase. |
-BidRequest.content | contentrating | string | A content rating, such as a Motion Picture Association of America (MPAA) value. |
-BidRequest.content | ext | Extensions object | An object used to provide custom fields related to the Content object. |
-BidRequest.content | id	| string | A unique identifier for the content. |
-BidRequest.content | qagmediarating | integer | A quality assurance guidelines (QAG) rating. |
-BidRequest.content.producer | ext | Extensions object | An object used to provide custom fields related to the Producer object. |
-BidRequest.device | ext | Extensions object | (Deprecated) An object that provides custom fields related to the Device object. |
-BidRequest.device.geo | ext | Extensions object | (Deprecated) An object that provides custom fields related to the Geo object. |
-BidRequest.imp | bidfloorcur | string | The currency of the bid floor expressed as ISO-4217 values. |
-BidRequest.imp | ext | Extensions object | (Deprecated) An object that provides custom fields related to the Imp object. |
-BidRequest.imp | id | string | A unique ID for the request, which Ad Exchange uses to identify the auction. |
-BidRequest.imp | iframebuster | Array (string) | A list of iFrame busters. |
-BidRequest.imp.banner | ext | Extensions object | (Deprecated) An object that provides custom fields related to the Banner object. |
-BidRequest.imp.banner | h | integer | The height of the ad unit, in pixels, in which the ad of the winning bidder will display, such as 250. |
-BidRequest.imp.banner | id | string | The unique ID of the banner. |
-BidRequest.imp.banner | pos | integer | Indicates whether the impression is above the fold. |
-BidRequest.imp.banner | w | integer | The width of the ad unit, in pixels, in which the ad of the winning bidder will display, such as 300. |
-BidRequest.imp | pmp | Pmp object | An object that provides custom fields for any private marketplace deals in place for the impression. |
-BidRequest.imp.pmp | deals | Array (Deal objects) | Array of Deal objects that specify the deals for this impression. |
-BidRequest.imp.pmp | ext | Extensions object | (Deprecated) An object that provides custom fields related to the PMP object. |
-BidRequest.imp.pmp | private_auction | integer | Indicates a private auction where:
-* 0 = All bids are accepted.
-* 1 = Bids are restricted to the specified seats and terms. |
-BidRequest.imp.pmp.deal | at | integer | Auction type override, which can be one of the following:
-* 1. First price
-* 2. Second price
-* 3. The value of the BidRequest.imp.pmp.deal.bidfloor field is the agreed upon deal price. |
-BidRequest.imp.pmp.deal | bidfloor | float | The minimum bid for the impression in CPM. The default value is 0. |
-BidRequest.imp.pmp.deal | bidfloorcur | string | The bid floor's currency expressed as an ISO-4217 value. The default value is USD. |
-BidRequest.imp.pmp.deal | ext | Extensions object | (Deprecated) An object that provides custom fields related to the Deal object. |
-BidRequest.imp.pmp.deal | id | string | The deal ID. |
-BidRequest.imp.pmp.deal	| wadomain | Array (string) | Whitelist of advertiser domains allowed to bid on the deal. |
-BidRequest.imp.pmp.deal	| wseat | Array (string) | Whitelist of buyer seats allowed to bid on the deal, expressed as seat IDs. |
-BidRequest.imp.publisher | domain | string | The top-level domain of the publisher, such as example.com. |
-BidRequest.imp.publisher | id | string | The publisher ID. |
-BidRequest.imp.publisher | name | string | The name of the publisher. |
-BidRequest.imp.regs | coppa | integer | Indicates whether the request is subject to Children’s Online Privacy Protection Act (COPPA) regulations.
-* 0 = false
-* 1 = true (the request is subject to COPPA) |
-BidRequest.imp.regs | ext | Extensions object | An object that provides custom fields related to the Regs object. |
-BidRequest.imp.video | companionad | Array (Banner) | An array of Banner objects if companion ads are available. |
-BidRequest.imp.video | companiontype | Array (integer) | An array of supported VAST companion ad types if companionad specifies companion Banner objects. |
-BidRequest.imp.video | ext | Extensions object | (Deprecated) An object that provides custom fields related to the Video object. |
-BidRequest.imp.video | h | integer | Height of the player (in pixels). |
-BidRequest.imp.video | pos | integer | Indicates whether the impression is above the fold. |
-BidRequest.imp.video | protocol | integer | Video bid response protocol. OpenX supports a value of 5, which indicates a VAST 2.0 wrapper. |
-BidRequest.imp.video | sequence | integer | The sequence used for coordinated delivery of multiple creatives if the bid request offers multiple impressions. |
-BidRequest.imp.video | w | integer | Width of the player (in pixels). |
-BidRequest.publisher | domain | string | The publisher's top-level domain (e.g., example.com). |
-BidRequest.publisher | id | string | The exchange-specific publisher ID. |
-BidRequest.publisher | name | string | The name of the publisher. |
-BidRequest.site | cat | Array (string) | The list of IAB content categories for the site as defined in Table 5.1 of the OpenRTB API specification. |
-BidRequest.site | domain | string | The site domain (e.g., example.com), which maps to the domain of the bid request URL. |
-BidRequest.site | ext | Extensions object | (Deprecated) An object that provides custom fields related to the Site object. |
-BidRequest.site | id | string | The ID for the site associated with this inventory purchase. |
-BidRequest.site | name | string | The name of the site. |
+BidRequest | allimps |integer | Indicates whether the impressions offered represent all of the impressions available for the ad space context, such as all impressions on the webpage or all pre-, mid-, and post-roll video impressions. Values include: 0. No or unknown (the default), 1. Yes, all of the impressions are available for the ad space. OpenX does not currently support the allimps field because only one impression is supported per bid request, so this value will be ignored.
+BidRequest | at | integer | Auction type, which can be one of the following: 1. First price, 2. Second price (the default).
+BidRequest | cur | Array (string) | The allowed currencies for bids expressed as ISO-4217 values. OpenX does not support the BidRequest.cur field because Ad Exchange does not support multiple currencies, so this field is ignored.
+BidRequest | ext | Extensions object | 	(Deprecated) An object used to provide custom fields related to the BidRequest object.
+BidRequest | id | string | A unique ID for the request, which OpenX Ad Exchange uses to identify the auction. For example: 888b4a7a-d259-11e0-9912-000c29b0c11a.
+BidRequest | tmax | integer | The maximum interval, in milliseconds, to submit a bid and avoid a timeout.
+BidRequest | wseat | Array (string) | Whitelist of buyer seats allowed to bid on the impression, expressed as seat IDs. OpenX does not currently support the wseat field, so it is ignored.
+BidRequest.app | domain | string | The app's domain, such as example.domain.com.
+BidRequest.app | ext | Extensions object | (Deprecated) An object used to provide custom fields related to the App object.
+BidRequest.app | id | string | The ID for the app associated with the inventory purchase.
+BidRequest.content | contentrating | string | A content rating, such as a Motion Picture Association of America (MPAA) value.
+BidRequest.content | ext | Extensions object | An object used to provide custom fields related to the Content object.
+BidRequest.content | id	| string | A unique identifier for the content.
+BidRequest.content | qagmediarating | integer | A quality assurance guidelines (QAG) rating.
+BidRequest.content.producer | ext | Extensions object | An object used to provide custom fields related to the Producer object.
+BidRequest.device | ext | Extensions object | (Deprecated) An object that provides custom fields related to the Device object.
+BidRequest.device.geo | ext | Extensions object | (Deprecated) An object that provides custom fields related to the Geo object.
+BidRequest.imp | bidfloorcur | string | The currency of the bid floor expressed as ISO-4217 values.
+BidRequest.imp | ext | Extensions object | (Deprecated) An object that provides custom fields related to the Imp object.
+BidRequest.imp | id | string | A unique ID for the request, which Ad Exchange uses to identify the auction.
+BidRequest.imp | iframebuster | Array (string) | A list of iFrame busters.
+BidRequest.imp.banner | ext | Extensions object | (Deprecated) An object that provides custom fields related to the Banner object.
+BidRequest.imp.banner | h | integer | The height of the ad unit, in pixels, in which the ad of the winning bidder will display, such as 250.
+BidRequest.imp.banner | id | string | The unique ID of the banner.
+BidRequest.imp.banner | pos | integer | Indicates whether the impression is above the fold.
+BidRequest.imp.banner | w | integer | The width of the ad unit, in pixels, in which the ad of the winning bidder will display, such as 300.
+BidRequest.imp | pmp | Pmp object | An object that provides custom fields for any private marketplace deals in place for the impression.
+BidRequest.imp.pmp | deals | Array (Deal objects) | Array of Deal objects that specify the deals for this impression.
+BidRequest.imp.pmp | ext | Extensions object | (Deprecated) An object that provides custom fields related to the PMP object.
+BidRequest.imp.pmp | private_auction | integer | Indicates a private auction where: 0 = All bids are accepted, 1 = Bids are restricted to the specified seats and terms.
+BidRequest.imp.pmp.deal | at | integer | Auction type override, which can be one of the following: 1. First price, 2. Second price, 3. The value of the BidRequest.imp.pmp.deal.bidfloor field is the agreed upon deal price.
+BidRequest.imp.pmp.deal | bidfloor | float | The minimum bid for the impression in CPM. The default value is 0.
+BidRequest.imp.pmp.deal | bidfloorcur | string | The bid floor's currency expressed as an ISO-4217 value. The default value is USD.
+BidRequest.imp.pmp.deal | ext | Extensions object | (Deprecated) An object that provides custom fields related to the Deal object.
+BidRequest.imp.pmp.deal | id | string | The deal ID.
+BidRequest.imp.pmp.deal	| wadomain | Array (string) | Whitelist of advertiser domains allowed to bid on the deal.
+BidRequest.imp.pmp.deal	| wseat | Array (string) | Whitelist of buyer seats allowed to bid on the deal, expressed as seat IDs.
+BidRequest.imp.publisher | domain | string | The top-level domain of the publisher, such as example.com.
+BidRequest.imp.publisher | id | string | The publisher ID.
+BidRequest.imp.publisher | name | string | The name of the publisher.
+BidRequest.imp.regs | coppa | integer | Indicates whether the request is subject to Children’s Online Privacy Protection Act (COPPA) regulations. 0 = false,  = true (the request is subject to COPPA).
+BidRequest.imp.regs | ext | Extensions object | An object that provides custom fields related to the Regs object.
+BidRequest.imp.video | companionad | Array (Banner) | An array of Banner objects if companion ads are available.
+BidRequest.imp.video | companiontype | Array (integer) | An array of supported VAST companion ad types if companionad specifies companion Banner objects.
+BidRequest.imp.video | ext | Extensions object | (Deprecated) An object that provides custom fields related to the Video object.
+BidRequest.imp.video | h | integer | Height of the player (in pixels).
+BidRequest.imp.video | pos | integer | Indicates whether the impression is above the fold.
+BidRequest.imp.video | protocol | integer | Video bid response protocol. OpenX supports a value of 5, which indicates a VAST 2.0 wrapper.
+BidRequest.imp.video | sequence | integer | The sequence used for coordinated delivery of multiple creatives if the bid request offers multiple impressions.
+BidRequest.imp.video | w | integer | Width of the player (in pixels).
+BidRequest.publisher | domain | string | The publisher's top-level domain (e.g., example.com).
+BidRequest.publisher | id | string | The exchange-specific publisher ID.
+BidRequest.publisher | name | string | The name of the publisher.
+BidRequest.site | cat | Array (string) | The list of IAB content categories for the site as defined in Table 5.1 of the OpenRTB API specification.
+BidRequest.site | domain | string | The site domain (e.g., example.com), which maps to the domain of the bid request URL.
+BidRequest.site | ext | Extensions object | (Deprecated) An object that provides custom fields related to the Site object.
+BidRequest.site | id | string | The ID for the site associated with this inventory purchase.
+BidRequest.site | name | string | The name of the site.
 BidRequest.user | buyerid | string | A unique, bidder-specific ID for the user viewing the impression.
-BidRequest.user | customdata | string | Custom, bidder-specific data that the bidder had stored in the exchange (≤ 200 bytes). Generally, this includes a bidder's user ID. |
-BidRequest.user | ext | Extensions object | (Deprecated) An object that provides custom fields related to the User object. |
-BidRequest.user | id | string | The ID of the user. |
-BidRequest.user.data.segment | ext | Extensions object | An object that provides custom fields related to the Segment object. |
+BidRequest.user | customdata | string | Custom, bidder-specific data that the bidder had stored in the exchange (≤ 200 bytes). Generally, this includes a bidder's user ID.
+BidRequest.user | ext | Extensions object | (Deprecated) An object that provides custom fields related to the User object.
+BidRequest.user | id | string | The ID of the user.
+BidRequest.user.data.segment | ext | Extensions object | An object that provides custom fields related to the Segment object.
 
 ### OpenRTB fields passed by publisher
 
 You can pass as many supported OpenRTB values as you find useful to characterize your inventory except for those that cannot be passed by publishers. However, passing too many fields can negatively impact the performance of the ad request, so only add fields that will help buyers to target your inventory.
 
 BidRequest fields that can be passed by publishers
-Field name	Data type	Description
-app	App object	
-An object containing properties that describe the app where the ad will display if the bid request is for an impression within a mobile app
-A bid request can only have an App OR a Site object.
-badv	array (string)	
-Blocked advertiser, the list of top-level advertiser domains (e.g., blockeddomain.com) blocked for this publisher as derived from the click URL
-bcat	array (string)	
-Blocked categories, the list of advertiser categories blocked for this publisher in the ad request
-For the list of categories, see table 5.1 (Content Categories) of the OpenRTB API specification.
-The following fields also support the IAB categories:
-BidRequest.app.cat
-BidRequest.app.content.cat
-BidRequest.app.content.producer.cat
-BidRequest.app.pagecat
-BidRequest.app.publisher.cat
-BidRequest.app.sectioncat
-BidRequest.site.cat
-BidRequest.site.content.cat
-BidRequest.site.content.producer.cat
-BidRequest.site.pagecat
-BidRequest.site.publisher.cat
-BidRequest.site.sectioncat
-For example: "bcat": [ "IAB15", "IAB15-10" ]
-device	Device object	
-An object containing properties that describe the device through which the impression is viewed, such as on a specific type of mobile phone
-imp	array (Imp object)	
-An object containing properties that describe the ad impression for which OpenX Ad Server is soliciting bids
+
+Field name | Data type | Description
+--------- | -------- | -----------
+app | App object | An object containing properties that describe the app where the ad will display if the bid request is for an impression within a mobile app. A bid request can only have an App OR a Site object.
+badv | array (string) | Blocked advertiser, the list of top-level advertiser domains (e.g., blockeddomain.com) blocked for this publisher as derived from the click URL.
+bcat | array (string) | Blocked categories, the list of advertiser categories blocked for this publisher in the ad request. For the list of categories, see table 5.1 (Content Categories) of the OpenRTB API specification. The following fields also support the IAB categories: BidRequest.app.cat, BidRequest.app.content.cat, BidRequest.app.content.producer.cat, BidRequest.app.pagecat, BidRequest.app.publisher.cat, BidRequest.app.sectioncat, BidRequest.site.cat, BidRequest.site.content.cat, BidRequest.site.content.producer.cat, BidRequest.site.pagecat, BidRequest.site.publisher.cat, BidRequest.site.sectioncat. For example: "bcat": [ "IAB15", "IAB15-10" ]
+device | Device object | An object containing properties that describe the device through which the impression is viewed, such as on a specific type of mobile phone.
+imp | array (Imp object) | An object containing properties that describe the ad impression for which OpenX Ad Server is soliciting bids
 OpenX supports only one impression per bid request, which is expressed as an array with a single Imp object. This is because OpenX handles each ad unit as a separate ad request.
 regs	Regs object	
 An object containing properties that describe any regulations applicable to the request
@@ -10280,15 +10252,26 @@ requestAd	Invoke a single ad request without the setup and use of an OX object. 
 setGateway	Set the base URL for the ad gateway for all instances of an ad tag in the given document.	Header	Before requestAd
 setRefererURL	Indicates the referring URL for the current page view.	Header	Before requestAd
 
-#### addVariable
+#### ```addVariable```
+
 This method allows you to set a custom key-value pair (KVP) for all instances of the OX object. This way, you can set up a single, global KVP within a given pageview.
-You must pass this method before the requestAd method.
-addVariable parameters
-Parameters	Description	Required?
-key,value	The custom variable.	Yes
-addVariable Example
+
+You must pass this method before the ```requestAd``` method.
+
+```addVariable``` parameters
+
+Parameters | Description | Required?
+--------- | ----------- | ------------
+key,value | The custom variable. | Yes
+
+```addVariable``` Example
+
+```
 OX.addVariable("gender","male");
+```
+
 Where:
+
 gender. A custom key
 male. A custom value
 addVariable in a standalone tag
@@ -10310,35 +10293,48 @@ age. Another custom key
 40. Another custom value
 OX.requestAd({"auid":"auid"});. The requestAd method, which must be passed after addVariable
 
-#### frameCreatives
-This method determines the default framing behavior for ads loaded in the current page.
-You can override this behavior for specific instances or requests. The default value is false (disabled).
-These settings are overridden by features that add iframes automatically, such as auto-refresh.
-frameCreatives Example
-OX.frameCreatives(false);
+#### ```frameCreatives```
 
-#### load
-The load method:
-Makes a single ad request and does not require setup and use of an OX object instance
-Accepts a JSON object of parameters to pass to the ad gateway
-Calls the gateway for an ad
-Writes it to the DOM using document.write()
-load parameters
-Parameter	Description	Required?
-auid	Ad unit ID for the ad to be displayed	Yes
-fallback	The fallback ad to serve for the ad space when OpenX has no ad to serve for an ad request	No
-frameCreatives	Determines if fetched creatives are framed or not (true/false)	No
-imp_beacon	The third-party impression beacon to use when OpenX serves an actual ad	No
-r	Click redirect URL	No
-rd	The refresh delay, or primary trigger for refreshing an iframe, expressed in seconds (an integer ≥ 1). This overrides any server-side refresh delay setting for this ad unit or its container site.	No
-ref	Referring URL	No
-rm	The maximum number of refreshes for ads displayed through the ad tag, expressed as a positive integer. For example, a value of 5 results in the display of 6 ads, including the initial display (non-refresh) and 5 subsequent displays (refreshes). This overrides any server-side refresh max setting for this ad unit or its container site.	No
-slot_id	ID of the element to render in	No
-tg	The window target for anchors	No
-tid	ID for content topic of the current page	No
-url	Page URL	No
-userid	Customer-provided user ID	No
-load Example
+This method determines the default framing behavior for ads loaded in the current page. You can override this behavior for specific instances or requests. The default value is false (disabled).
+
+These settings are overridden by features that add iframes automatically, such as auto-refresh.
+
+```frameCreatives``` Example
+
+```
+OX.frameCreatives(false);
+```
+
+#### ```load```
+
+The ```load``` method:
+
+* Makes a single ad request and does not require setup and use of an OX object instance
+* Accepts a JSON object of parameters to pass to the ad gateway
+* Calls the gateway for an ad
+* Writes it to the DOM using document.write()
+
+```load``` parameters
+
+Parameter | Description	| Required?
+--------- | ----------- | -----------
+auid | Ad unit ID for the ad to be displayed | Yes
+fallback | The fallback ad to serve for the ad space when OpenX has no ad to serve for an ad request | No
+frameCreatives | Determines if fetched creatives are framed or not (true/false)	| No
+imp_beacon | The third-party impression beacon to use when OpenX serves an actual ad | No
+r | Click redirect URL | No
+rd | The refresh delay, or primary trigger for refreshing an iframe, expressed in seconds (an integer ≥ 1). This overrides any server-side refresh delay setting for this ad unit or its container site. | No
+ref | Referring URL | No
+rm | The maximum number of refreshes for ads displayed through the ad tag, expressed as a positive integer. For example, a value of 5 results in the display of 6 ads, including the initial display (non-refresh) and 5 subsequent displays (refreshes). This overrides any server-side refresh max setting for this ad unit or its container site. | No
+slot_id	| ID of the element to render in | No
+tg | The window target for anchors | No
+tid | ID for content topic of the current page | No
+url | Page URL | No
+userid | Customer-provided user ID | No
+
+```load``` Example
+
+```
 OX.load({"auid":"1"});
 load example with multiple parameters:
   OX.load({"auid":"12345",
@@ -10349,96 +10345,103 @@ load example with multiple parameters:
     "imp_beacon":"<iframe src='myplace.com'></iframe>",
     "fallback":"<iframe src=/test/ads/468x60-unicef.gif></iframe>",
     "frameCreatives":"true"});
+```
 
-#### recordAction
+#### ```recordAction```
+
 This method is reserved for use by JavaScript-based conversion tags.
-The recordAction method accepts a JSON array to pass to the gateway for tracking conversions.
-recordAction parameters
-Parameter	Description	Required?
-auid	Ad unit ID of the ad to be displayed	Yes
-cvid	Conversion ID to use for this event	Yes
-r	Click redirect URL	No
-ref	Referring URL	No
-tg	The window target for anchors	No
-tid	Content topic ID of the current page	No
-url	Page URL	No
-userid	User ID to set in the request	No
-recordAction Example
-OX.recordAction({"cvid":"123"});
 
-recordSegments
+The ```recordAction``` method accepts a JSON array to pass to the gateway for tracking conversions.
+
+#### ````recordAction``` parameters
+
+Parameter | Description	| Required?
+--------- | ----------- | -----------
+auid | Ad unit ID of the ad to be displayed | Yes
+cvid | Conversion ID to use for this event | Yes
+r | Click redirect URL | No
+ref | Referring URL | No
+tg | The window target for anchors | No
+tid | Content topic ID of the current page | No
+url | Page URL | No
+userid	| User ID to set in the request	| No
+
+```recordAction``` Example
+
+```
+OX.recordAction({"cvid":"123"});
+```
+
+### ```recordSegments```
+
 Assign a user to an audience segment (using the add parameter), remove a user from an audience segment (using the del parameter), or both.
+
 This method accepts a JSON array, which can pass multiple segment IDs.
-recordSegments parameters
-Parameter	Description	Required?
-add	The ID for the audience segment to add the user to.	Yes
-channel	Tracks the source of the audience segmentation calls (maximum of 16 UTF-8 characters)	No
-del	The ID for the audience segment to remove the user from.	Yes
-expires	Automatically disables the segmentation beacon after the specified date, using the format: YYYY-MM-DD	No
-userid	The user ID to set in the request.	No
-Using recordSegments to add the user to a segment
+
+```recordSegments``` parameters
+
+Parameter | Description	| Required?
+--------- | ---------- | ----------
+add | The ID for the audience segment to add the user to. | Yes
+channel	| Tracks the source of the audience segmentation calls (maximum of 16 UTF-8 characters)	| No
+del | The ID for the audience segment to remove the user from. | Yes
+expires	| Automatically disables the segmentation beacon after the specified date, using the format: YYYY-MM-DD	| No
+userid	| The user ID to set in the request. | No
+
+Using ```recordSegments``` to add the user to a segment
+
+```
 OX.recordSegments({"add":"1","channel":"homepage"});
 Using recordSegments to remove the user from a segment:
 OX.recordSegments({"del":"6"});
 Using recordSegments to simultaneously add users to and remove users from a segment:
 OX.recordSegments({"add":"1,5,7", "del":"4,6,8"});
+```
 
-#### requestAd
+#### ```requestAd```
+
 This method:
-Makes a single ad request and does not require setup and use of an OX object instance.
-Accepts a JSON object of parameters to pass to the ad gateway.
-Requires the auid parameter. Its other parameters are optional.
-Immediately calls the gateway for an ad.
-Writes it to the DOM using document.write().
-requestAd parameters
-Parameter	Description
-af	
-The comma-delimited list of API frameworks supported on the user's mobile device, which can be one or more of the following:
-1 (VPAID 1.0)
-2 (VPAID 2.0)
-3 (MRAID 1.0)
-4 (ORMMA)
-5 (MRAID 2.0)
-appBundle	The bundle ("package") ID of a mobile app
-appName	The name of a mobile app
-appStoreURL	The app store URL for the app
-auid	(Required) Ad unit ID of the ad to be displayed
-aumf	Ad unit's market floor
-aungf	Ad unit's non-guaranteed floor price
-coords	A geolocation coordinates object, which provides latitude, longitude, and (optionally) other properties
-deviceIDs	
-A unique device identifier (UDID) object, which can include any of the following:
-type. The type of device ID, which supports the following strings:
-adid. Google advertising ID
-ai.md5. An MD5 hash of the Android ID
-ai.sha1. An SHA-1 hash of the Android ID
-ia. Apple IDFA or IFA
-ma.md5. An MD5 hash of the media access control (MAC) address
-ma.sha1. An SHA-1 hash of the MAC address
-o1. Open device identification number (ODIN-1)
-oi. Open UDID
-si. A secure UDID
-id.
-tracking. (Only applicable for adid and ia device types) A Boolean value indicating whether ad tracking is enabled on the device
-fallback	The fallback ad to serve for the ad space when OpenX has no ad to serve for an ad request
-frameCreatives	Determines if fetched creatives are framed (true/false)
-gw	Gateway URL (delivery server) to use for this request
-imp_beacon	The third-party impression beacon to use when OpenX serves an actual ad
-md	Market disabled (disable OpenX Ad Exchange) for this ad request if set to true.
-ns	Disable audience segmentation for this ad request if set to true.
-openrtb	
-An object literal or JSON string representing an OpenRTB bid request
-For more details, see setOpenRTBParameters
-r	The click redirect URL
-rd	Refresh delay or primary trigger for refreshing an iframe expressed in seconds (an integer ≥ 1). This overrides any server-side refresh delay setting for this ad unit or its container site.
-ref	Referring URL
-rm	Maximum number of refreshes for ads displayed through the ad tag, expressed as a positive integer. For example, a value of 5 results in the display of 6 ads, including the initial display (non-refresh) and 5 subsequent displays (refreshes). This overrides any server-side refresh max setting for this ad unit or its container site.
-tg	Target window in which to open clicked ads
-tid	Content topic ID for the ad request
-url	Page URL
-userid	Customer-provided user ID
-vars	Custom key value pairs (KVPs) used to provide additional information about your ad space
-requestAd Example
+
+* Makes a single ad request and does not require setup and use of an OX object instance.
+* Accepts a JSON object of parameters to pass to the ad gateway.
+* Requires the ```auid``` parameter. Its other parameters are optional.
+* Immediately calls the gateway for an ad.
+* Writes it to the DOM using document.write().
+
+```requestAd``` parameters
+
+Parameter | Description
+--------- | -----------
+af | The comma-delimited list of API frameworks supported on the user's mobile device, which can be one or more of the following: 1 (VPAID 1.0), 2 (VPAID 2.0), 3 (MRAID 1.0), 4 (ORMMA), 5 (MRAID 2.0)
+appBundle | The bundle ("package") ID of a mobile app.
+appName	| The name of a mobile app.
+appStoreURL | The app store URL for the app.
+auid (Required) | Ad unit ID of the ad to be displayed.
+aumf | Ad unit's market floor.
+aungf | Ad unit's non-guaranteed floor price.
+coords | A geolocation coordinates object, which provides latitude, longitude, and (optionally) other properties.
+deviceIDs | A unique device identifier (UDID) object, which can include any of the following: type. The type of device ID, which supports the following strings: adid. Google advertising ID, ai.md5. An MD5 hash of the Android ID, ai.sha1. An SHA-1 hash of the Android ID, ia. Apple IDFA or IFA, ma.md5. An MD5 hash of the media access control (MAC) address, ma.sha1. An SHA-1 hash of the MAC address, o1. Open device identification number (ODIN-1), oi. Open UDID, si. A secure UDID.
+id. | tracking. (Only applicable for adid and ia device types) A Boolean value indicating whether ad tracking is enabled on the device.
+fallback | The fallback ad to serve for the ad space when OpenX has no ad to serve for an ad request.
+frameCreatives | Determines if fetched creatives are framed (true/false).
+gw | Gateway URL (delivery server) to use for this request.
+imp_beacon | The third-party impression beacon to use when OpenX serves an actual ad
+md | Market disabled (disable OpenX Ad Exchange) for this ad request if set to true.
+ns | Disable audience segmentation for this ad request if set to true.
+openrtb	| An object literal or JSON string representing an OpenRTB bid request. For more details, see ```setOpenRTBParameters```.
+r | The click redirect URL.
+rd | Refresh delay or primary trigger for refreshing an iframe expressed in seconds (an integer ≥ 1). This overrides any server-side refresh delay setting for this ad unit or its container site.
+ref | Referring URL.
+rm | Maximum number of refreshes for ads displayed through the ad tag, expressed as a positive integer. For example, a value of 5 results in the display of 6 ads, including the initial display (non-refresh) and 5 subsequent displays (refreshes). This overrides any server-side refresh max setting for this ad unit or its container site.
+tg | Target window in which to open clicked ads.
+tid | Content topic ID for the ad request.
+url | Page URL.
+userid	| Customer-provided user ID.
+vars | Custom key value pairs (KVPs) used to provide additional information about your ad space.
+
+```requestAd``` Example
+
+```
 OX.requestAd({"auid":"1"});
 requestAd example with multiple parameters:
 OX.requestAd({"auid":"12345",
@@ -10450,34 +10453,35 @@ OX.requestAd({"auid":"12345",
 "fallback":"<iframe src=/test/ads/468x60-unicef.gif></iframe>",
 "vars":{"key1":"value1","key2":"value2"},
 "frameCreatives":"true"});
+```
 
-#### setGateway
+#### ```setGateway```
 
 This method sets the base URL of the ad gateway for all instances of the OX object in the current pageview.
 
-setGateway parameters
+```setGateway``` parameters
 
 Parameter | Description	| Required?
 -------- | ---------- | -------------
 url | URL of the gateway communicating with the Ad Server | Yes
 
-setGateway setting the domain of the delivery server
+```setGateway``` setting the domain of the delivery server
 
 ```
 OX.setGateway("http://delivery_server_domain/w/1.0/");
 ```
 
-#### setRefererURL
+#### ```setRefererURL```
 
 Use this method to indicate the 'referer' URL of the page to the OpenX Ad Server. In most cases, the OpenX JavaScript tag library detects the 'referer' URL of the page from the HTTP headers. In some cases, it is not possible to detect the 'referer' correctly, due of various browser security restrictions. You can call setRefererURL directly in these cases as necessary to override the value detected by the OpenX tag library.
 
-setRefererURL parameters
+```setRefererURL``` parameters
 
 Parameter | Description	| Required?
 --------- | ---------- | ---------
 url | Referring URL of the page	| Yes
 
-setRefererURL Example
+```setRefererURL``` Example
 
 ```
 OX.setRefererURL("http://www.example.com");
@@ -10487,13 +10491,10 @@ OX.setRefererURL("http://www.example.com");
 
 OpenX supports mobile ad serving in:
 
-* Mobile apps. Integrate with OpenX using the following approaches: OpenX Mobile SDK, Mobile ad request examples, Server-to-server ad. requests
-
-If you do not use the OpenX Mobile SDK, you must configure your app to interact with OpenX using the information contained in the ad request or by passing mobile parameters via JavaScript ad tags.
-
-Mobile web. Similar to ad serving on desktop webpages because you can use image, iframe, and JavaScript ad tags by retrieving the ad tags and then pasting them in the source code for your mobile website.
-
-After you set up your inventory components, you can retrieve the ad request URLs for your ad units through the Inventory tab or construct mobile ad requests.
+* Mobile apps. Integrate with OpenX using the following approaches: OpenX Mobile SDK, Mobile ad request examples, Server-to-server ad. requests.
+* If you do not use the OpenX Mobile SDK, you must configure your app to interact with OpenX using the information contained in the ad request or by passing mobile parameters via JavaScript ad tags.
+* Mobile web. Similar to ad serving on desktop webpages because you can use image, iframe, and JavaScript ad tags by retrieving the ad tags and then pasting them in the source code for your mobile website.
+* After you set up your inventory components, you can retrieve the ad request URLs for your ad units through the Inventory tab or construct mobile ad requests.
 
 ### Mobile ad request parameters
 
