@@ -8341,12 +8341,12 @@ An ad tag is a small piece of code that defines the ad space where you want to d
 
 The OpenX Ad Request API supports the following types of ad requests:
 
-* Email. An image-only email ad request that supports server-side tracking
-* iframe. HTML iframe tags (<iframe>) used to request an ad (within a separate HTML document) for a specified ad unit
-* Image. HTML anchor (<a>) and image (<img>) tags used to request ads for a specified ad unit
-* JavaScript. JavaScript used to request ads for individual ad units, multi-ad units, and ad unit groups
-* Mobile. Returns a structured delivery response used to serve ads in your mobile app or site
-* Server-to-server. A custom implementation where you proxy ad requests from the client to a third-party system, which then makes calls to OpenX
+* Email. An image-only email ad request that supports server-side tracking.
+* iframe. HTML iframe tags (<iframe>) used to request an ad (within a separate HTML document) for a specified ad unit.
+* Image. HTML anchor (<a>) and image (<img>) tags used to request ads for a specified ad unit.
+* JavaScript. JavaScript used to request ads for individual ad units, multi-ad units, and ad unit groups.
+* Mobile. Returns a structured delivery response used to serve ads in your mobile app or site.
+* Server-to-server. A custom implementation where you proxy ad requests from the client to a third-party system, which then makes calls to OpenX.
 * Structured response. Returns a response format used for integration with a custom application. You must configure your application to build the ad request URL, make the call, and parse the response.
 * Video. Send a video ad request to OpenX through your video player and receive a VAST 2.0 XML response for video-based ad inventory. You must configure your video player to communicate the contents of the video ad request URL.
 
