@@ -10176,7 +10176,7 @@ The responses for these OX static methods are all void operations.
 </aside>
 
 Method name | Description | Recommended placement in HTML source | Order
---------- | ------------- | ------------- | ---------------
+--------- | ------------- | ------------- | -------------
 addVariable | Specify a key-value pair to add to all ad requests for the current page view. | Header | Before requestAd
 frameCreatives | Determine if creatives returned by that instance are framed (true). If not set, use the default provided by the OX object instance. | Body	| Before requestAd
 load | Asynchronously request an ad for the ad unit and display it in the appropriate ad space.	| Body | Before recordAction
