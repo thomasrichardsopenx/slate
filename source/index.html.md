@@ -8661,278 +8661,150 @@ bcat | array (string) | Blocked categories, the list of advertiser categories bl
 device | Device object | An object containing properties that describe the device through which the impression is viewed, such as on a specific type of mobile phone.
 imp | array (Imp object) | An object containing properties that describe the ad impression for which OpenX Ad Server is soliciting bids
 OpenX supports only one impression per bid request, which is expressed as an array with a single Imp object. This is because OpenX handles each ad unit as a separate ad request.
-regs	Regs object	
-An object containing properties that describe any regulations applicable to the request
-site	Site object	
-An object containing properties that describe the website where the ad will display if the bid request is for an impression on a website
-The bid request can only have a Site OR an App object.
-test
-integer	
-Indicates test mode (1), which is not billable
-The default is 0, which indicates that the auction is billable.
-user	User object	
-An object containing properties that describe the user viewing the impression
-BidRequest.imp
+regs | Regs object | An object containing properties that describe any regulations applicable to the request
+site | Site object | An object containing properties that describe the website where the ad will display if the bid request is for an impression on a website. The bid request can only have a Site OR an App object.
+test | integer | Indicates test mode (1), which is not billable. The default is 0, which indicates that the auction is billable.
+user | User object | An object containing properties that describe the user viewing the impression.
+
+#### BidRequest.imp
+
 Each BidRequest contains an array with a single Imp object to describe the impression. Each Imp object can contain only one of the following objects to describe the ad space:
 Banner
 Native
 In addition, the Imp object can contain a Banner or Native object.
+
 Imp fields that can be passed by publishers
-Field name	Data type	Description
-banner	Banner object	
-An object containing properties that describe the display banner ad unit for this impression opportunity
+
+Field name | Data type | Description
+--------- | --------- | -------------
+banner | Banner object | An object containing properties that describe the display banner ad unit for this impression opportunity
 A Banner object is always sent for banner impression opportunities.
-bidfloor
-float	
-The minimum bid for the impression expressed in CPM
-The default is 0.
-displaymanager
-(recommended)
-string	
-The name of the mediation partner or other third party responsible for rendering the ad
-displaymanagerver
-string	
-The version of the mediation partner or other third party responsible for rendering the ad
-instl
-integer	
-Indicates whether the ad is an interstitial (1) or not (0)
-native
-Native object	
-An object containing properties that describe a native ad impression opportunity
-A Native object is always sent for native ad impression opportunities.
-secure
-integer	
-If this impression must be SSL secured, all creative assets that are returned must use the HTTPS protocol, not HTTP.
-0 = false (the default value)
-1 = true (HTTPS URLs are required.)
-tagid
-string	
-Identifies the ad tag or specific ad placement for debugging purposes
-BidRequest.imp.banner
+bidfloor | float | The minimum bid for the impression expressed in CPM. The default is 0.
+displaymanager (recommended) | string | The name of the mediation partner or other third party responsible for rendering the ad.
+displaymanagerver | string | The version of the mediation partner or other third party responsible for rendering the ad.
+instl | integer | Indicates whether the ad is an interstitial (1) or not (0).
+native | Native object | An object containing properties that describe a native ad impression opportunity. A Native object is always sent for native ad impression opportunities.
+secure | integer | If this impression must be SSL secured, all creative assets that are returned must use the HTTPS protocol, not HTTP. 0 = false (the default value), 1 = true (HTTPS URLs are required.).
+tagid | string | Identifies the ad tag or specific ad placement for debugging purposes.
+
+### BidRequest.imp.banner
+
 Each Imp object can contain one Banner object, which is required for banner impressions. Alternatively, an Imp object can contain a Native object.
+
 Banner fields that can be passed by publishers
-Field name	Data type	Description
-api
-(strongly recommended)
-array (integer)	
-One of the supported API standards or frameworks:
-1 - VPAID 1.0
-2 - VPAID 2.0
-3 - MRAID 1.0
-4 - ORMMA
-5 - MRAID 2.0
-For example: "1, 2"
-For details, see table 5.6 (API Frameworks) of the OpenRTB API specification.
-battr	array (integer)	
-An array of blocked creative attributes
-If no value is specified, all types are allowed.
-For a list of creative attribute values, see table 5.3 (Banner Ad Types ) of the OpenRTB specification.
-btype
-array (integer)	
-An array of blocked banner ad types
-For details, see Table 5.2 (Banner Ad Types) of the OpenRTB specification.
-expdir
-array (integer)	
-The directions in which the banner can expand
-For details, see Table 5.5 (Expandable Direction) of the OpenRTB specification.
-hmax
-integer	
-The maximum height of the ad in pixels
-If h is set for the request, it should be considered to be the preferred height.
-hmin
-integer	
-The minimum height of the ad in pixels
-If h is set for the request, it should be considered to be the preferred height.
-mimes
-array (string)	
-Indicates the supported MIME types
-For example: image/gif
-topframe
-integer	
-Indicates whether the banner is in the top frame (1) or an iframe (0)
-wmax
-integer	
-The maximum width of the ad in pixels
-If w is set for the request, it should be considered to be the preferred width.
-wmin
-integer	
-The minimum width of the ad in pixels
-If w is set for the request, it should be considered to be the preferred width.
-BidRequest.imp.native
-The Native object provides details about a native ad request. A well-structured response must comply with the OpenRTB dynamic native ads API specification.
-Each Imp object can contain one Native object, which is required for native impressions. Alternatively, an Imp object can contain a Banner object.
+
+Field name | Data type | Description
+--------- | --------- | -----------
+api (strongly recommended) | array (integer) | One of the supported API standards or frameworks: 1 - VPAID 1.0, 2 - VPAID 2.0, 3 - MRAID 1.0, 4 - ORMMA, 5 - MRAID 2.0. For example: "1, 2". For details, see table 5.6 (API Frameworks) of the OpenRTB API specification.
+battr | array (integer)	| An array of blocked creative attributes. If no value is specified, all types are allowed. For a list of creative attribute values, see table 5.3 (Banner Ad Types ) of the OpenRTB specification.
+btype | array (integer)	| An array of blocked banner ad types. For details, see Table 5.2 (Banner Ad Types) of the OpenRTB specification.
+expdir | array (integer) | The directions in which the banner can expand. For details, see Table 5.5 (Expandable Direction) of the OpenRTB specification.
+hmax | integer | The maximum height of the ad in pixels. If h is set for the request, it should be considered to be the preferred height.
+hmin | integer | The minimum height of the ad in pixels. | If h is set for the request, it should be considered to be the preferred height.
+mimes | array (string) | Indicates the supported MIME types. For example: image/gif, 
+topframe | integer | Indicates whether the banner is in the top frame (1) or an iframe (0).
+wmax | integer | The maximum width of the ad in pixels. If w is set for the request, it should be considered to be the preferred width.
+wmin | integer | The minimum width of the ad in pixels. If w is set for the request, it should be considered to be the preferred width.
+
+### ```BidRequest.imp.native```
+
+The ```Native``` object provides details about a native ad request. A well-structured response must comply with the OpenRTB dynamic native ads API specification.
+
+Each ```Imp``` object can contain one ```Native``` object, which is required for native impressions. Alternatively, an ```Imp``` object can contain a ```Banner``` object.
+
 You can pass a serialized string of structured JSON data describing the opportunity via the BidRequest.imp.native.request field.
+
 Native fields that can be passed by publishers
-Field name	Data type	Description
-api
-(strongly recommended)
-array (integer)	
-One of the supported API standards or frameworks:
-1 - VPAID 1.0
-2 - VPAID 2.0
-3 - MRAID 1.0
-4 - ORMMA
-5 - MRAID 2.0
-For example: 1, 2
-For details, see table 5.6 (API Frameworks) of the OpenRTB API specification.
-battr	array (integer)	
-An array of blocked creative attributes
-If no value is specified, all types are allowed. For a list of creative attribute values, see table 5.3 (Creative Attributes) of the OpenRTB specification.
-request	string	
-Request markup complying with the OpenRTB dynamic native ads API specification (i.e., a string of JSON data describing the native ad opportunity)
-This field is required if you send a Native object.
-ver	string	
-The version of the native ads API specification
-For example: "1"
-BidRequest.site
-If the available impression is on a website, OpenX Ad Server may include a Site object to describe the website.
-A BidRequest can only contain a single Site OR App object, not both.
-A Site object can reference the Publisher object.
+
+Field name | Data type | Description
+-------- | ---------- | ------------
+api (strongly recommended) | array (integer) | One of the supported API standards or frameworks: 1 - VPAID 1.0, 2 - VPAID 2.0, 3 - MRAID 1.0, 4 - ORMMA, 5 - MRAID 2.0. For example: 1, 2. For details, see table 5.6 (API Frameworks) of the OpenRTB API specification.
+battr | array (integer) | An array of blocked creative attributes. If no value is specified, all types are allowed. For a list of creative attribute values, see table 5.3 (Creative Attributes) of the OpenRTB specification.
+request	| string | Request markup complying with the OpenRTB dynamic native ads API specification (i.e., a string of JSON data describing the native ad opportunity). This field is required if you send a Native object.
+ver | string | The version of the native ads API specification. For example: "1"
+
+### ```BidRequest.site```
+
+If the available impression is on a website, OpenX Ad Server may include a Site object to describe the website. A BidRequest can only contain a single ```Site``` OR ```App``` object, not both.
+
+A ```Site``` object can reference the Publisher object.
+
 Site fields that can be passed by publishers
-Field name	Data type	Description
-content
-Content object	
-An object containing properties that describe the site's content
-keywords
-(recommended)
-string	
-A comma-separated list of keywords describing the site's content
-mobile
-integer	
-Indicates whether the site has been programmed to optimize layout when viewed on mobile devices
-0 = false (the default)
-1 = true (the site uses responsive web design.)
-page	string	
-The URL of the webpage where the impression will display
-pagecat
-array (string)	
-The list of IAB content categories for the webpage as defined in Table 5.1 (Content Categories) of the OpenRTB API specification
-privacypolicy
-integer	
-Indicates whether the site has a privacy policy (1) or not (0)
-publisher	Publisher object	
-An object containing properties that describe the publisher of the Site or App for this impression opportunity
-ref	string	
-The referrer URL that navigated the end-user to the current page
-search
-string	
-The search string that brought the end-user to the current page (if available)
-sectioncat
-array (string)	
-The list of IAB content categories for the site section as defined in Table 5.1 (Content Categories) of the OpenRTB API specification
-BidRequest.app
-If the available impression is within a mobile app, the BidRequest includes the App object to describe the mobile app.
-A BidRequest can only contain a single App OR Site object, not both.
-App fields that can be passed by publishers
-Field name	Data type	Description
-bundle
-(strongly recommended)
-string	
-The unique ID of the app's package (Android), bundle (iOS), or its AppStore ID.
-For example: "com.demo.openx" or "123456789"
-cat
-(recommended)
-array (string)	
-The list of IAB content categories for the app, as defined in table 5.1 (Content Categories) of the OpenRTB API specification
-content
-Content	
-An object containing properties that describe the app's content
-keywords
-(recommended)
-string	
-A comma-separated list of keywords describing the app's content
-name
-(strongly recommended)
-string	
-The name of the app
-pagecat
-array (string)	
-The list of IAB content categories for the current page of the app, as defined in Table 5.1 (Content Categories) of the OpenRTB API specification
-paid
-integer	
-Indicates whether the app is a paid version (1) or free (0)
-privacypolicy
-integer	
-Indicates whether the app has a privacy policy (1) or not (0)
-publisher	
-Publisher object
-An object containing properties that describe the publisher of the app
-sectioncat
-array (string)	
-The list of IAB content categories for the current section of the app, as defined in Table 5.1 (Content Categories) of the OpenRTB API specification
-storeurl
-(recommended)
-string	
-The app store URL for this app
-ver
-string	
-The version of the app
-BidRequest.app.publisher OR BidRequest.site.publisher
+
+Field name | Data type | Description
+--------- | ---------- | -------------
+content | Content object | An object containing properties that describe the site's content.
+keywords (recommended) | string	| A comma-separated list of keywords describing the site's content.
+mobile | integer | Indicates whether the site has been programmed to optimize layout when viewed on mobile devices. 0 = false (the default), 1 = true (the site uses responsive web design.)
+page | string | The URL of the webpage where the impression will display.
+pagecat | array (string) | The list of IAB content categories for the webpage as defined in Table 5.1 (Content Categories) of the OpenRTB API specification.
+privacypolicy | integer	| Indicates whether the site has a privacy policy (1) or not (0).
+publisher | Publisher object | An object containing properties that describe the publisher of the Site or App for this impression opportunity.
+ref | string | The referrer URL that navigated the end-user to the current page.
+search | string | The search string that brought the end-user to the current page (if available).
+sectioncat | array (string) | The list of IAB content categories for the site section as defined in Table 5.1 (Content Categories) of the OpenRTB API specification.
+
+### ```BidRequest.app```
+
+If the available impression is within a mobile app, the BidRequest includes the ```App``` object to describe the mobile app.
+
+A BidRequest can only contain a single ```App``` OR ```Site``` object, not both.
+
+```App``` fields that can be passed by publishers
+
+Field name | Data type | Description
+-------- | ----------- | -------------
+bundle (strongly recommended) | string | The unique ID of the app's package (Android), bundle (iOS), or its AppStore ID. For example: "com.demo.openx" or "123456789"
+cat (recommended) | array (string) | The list of IAB content categories for the app, as defined in table 5.1 (Content Categories) of the OpenRTB API specification.
+content | Content | An object containing properties that describe the app's content.
+keywords (recommended) | string	A comma-separated list of keywords describing the app's content.
+name (strongly recommended) | string | The name of the app.
+pagecat | array (string) | The list of IAB content categories for the current page of the app, as defined in Table 5.1 (Content Categories) of the OpenRTB API specification.
+paid | integer | Indicates whether the app is a paid version (1) or free (0).
+privacypolicy | integer	| Indicates whether the app has a privacy policy (1) or not (0).
+publisher | Publisher object | An object containing properties that describe the publisher of the app.
+sectioncat | array (string) | The list of IAB content categories for the current section of the app, as defined in Table 5.1 (Content Categories) of the OpenRTB API specification.
+storeurl (recommended) | string	| The app store URL for this app.
+ver | string | The version of the app.
+
+### BidRequest.app.publisher OR BidRequest.site.publisher
+
 The Publisher object describes the seller of the ad space (for the App or Site) in which the ad will be displayed.
+
 For more details, refer to section 3.2.8 of the OpenRTB 2.3 specification.
+
 Publisher fields that can be passed by publishers
-Field name	Data type	Description
-cat
-array (string)	
-The list of IAB content categories for the publisher
-For details, see Table 5.1 (Content Categories) of the OpenRTB API specification
-BidRequest.app.content OR BidRequest.site.content
-The Content object describes the type of content of the App or Site in which the ad will be displayed.
-For more details about the Content object, refer to section 3.2.9 of the OpenRTB specification.
+
+Field name | Data type | Description
+---------- | --------- | -----------
+cat | array (string) | The list of IAB content categories for the publisher. For details, see Table 5.1 (Content Categories) of the OpenRTB API specification
+
+### BidRequest.app.content OR BidRequest.site.content
+
+The Content object describes the type of content of the App or Site in which the ad will be displayed. For more details about the Content object, refer to section 3.2.9 of the OpenRTB specification.
+
 Content fields that can be passed by publishers
-Field name	Data type	Description
-cat
-string	
-The list of IAB content categories for the content
-For details, see Table 5.1 (Content Categories) of the OpenRTB API specification.
-context
-string	
-The type of content
-For details, see Table 5.14 (Content Context) of the OpenRTB API specification.
-embeddable
-integer	
-Indicates whether the content is embeddable (1) or not (0)
-episode
-integer	
-An episode number
-keywords
-(recommended)
-string	
-A comma-separated list of keywords describing the content
-language
-string	
-Content language using ISO-639-1-alpha-2
-len
-integer	
-The length of the content in seconds (if applicable)
-livestream
-integer	
-0. Not a live stream
-1. Content is a live stream
-season
-string	
-The content's season
-series
-string	
-The content's series
-sourcerelationship
-integer	
-0. Indirect relationship
-1. Direct relationship
-title
-string	
-The title of the content
-url
-string	
-The URL where the content is located
-userating
-string	
-User rating of the content
-videoquality
-integer	
-The video quality classification
-For details, see Table 5.11 of the OpenRTB API specification.
-BidRequest.device
+
+Field name | Data type | Description
+--------- | ---------- | -------------
+cat | string | The list of IAB content categories for the content. For details, see Table 5.1 (Content Categories) of the OpenRTB API specification.
+context | string | The type of content. For details, see Table 5.14 (Content Context) of the OpenRTB API specification.
+embeddable | integer | Indicates whether the content is embeddable (1) or not (0).
+episode | integer | An episode number.
+keywords (recommended) | string	| A comma-separated list of keywords describing the content.
+language | string | Content language using ISO-639-1-alpha-2.
+len | integer | The length of the content in seconds (if applicable).
+livestream | integer | 0. Not a live stream, 1. Content is a live stream.
+season | string	| The content's season.
+series | string	| The content's series.
+sourcerelationship | integer | 0. Indirect relationship, 1. Direct relationship.
+title | string | The title of the content.
+url | string | The URL where the content is located.
+userating | string | User rating of the content.
+videoquality | integer | The video quality classification. For details, see Table 5.11 of the OpenRTB API specification.
+
+### BidRequest.device
+
 Each BidRequest object may contain a Device object, which provides details about the end-user's computing environment.
 The Device object can reference the Geo object.
 Device fields that can be passed by publishers
